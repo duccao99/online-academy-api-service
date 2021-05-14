@@ -1,0 +1,8 @@
+1. Tài khoản FB 
+2. Tạo Page 
+3. Tạo app 
+4. Thông tin app có Avatar, Policy URL (món này dùng đồ chơi generate), và mấy cái FB yêu cầu
+5. Viết Hàm GET, POST Webhook cho đúng yêu cầu 
+6. Viết hàm getMessage, postMessage cho đúng yêu cầu
+7. Callback URL - Verify Token + Link webhook đã deploy (glitch | heroku | máy nhà)
+8. Kiểm tra  FB signature 
