@@ -1,40 +1,44 @@
 const router = require("express").Router();
+const { getMessage, sendMessage } = require("../utils/chatbot.utils");
 
+// Verify Webhook URL
 router.get("/", function (req, res) {
-  let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-
-  let mode = req.query["hub.mode"];
-  let token = req.query["hub.verify_token"];
-  let challenge = req.query["hub.challenge"];
-
-  if (mode && token) {
-    if (mode === "subscribe" && token === VERIFY_TOKEN) {
-      console.log("Webhook verified!");
-      res.status(200).json(challenge);
-    } else {
-      res.sendStatus(403);
-    }
+  const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+  console.log("Webhook verification step.");
+  if (
+    req.query["hub.mode"] === "subscribe" &&
+    req.query["hub.verify_token"] === VERIFY_TOKEN
+  ) {
+    res.status(200).send(req.query["hub.challenge"]);
+  } else {
+    console.error("Authentication Failed!.");
+    res.sendStatus(403);
   }
 });
 
+// Handle Post Request to receive messages.
 router.post("/", function (req, res) {
-  let body = req.body;
-
-  // Checks this is an event from a page subscription
-  if (body.object === "page") {
-    // Iterates over each entry - there may be multiple if batched
-    body.entry.forEach(function (entry) {
-      // Gets the message. entry.messaging is an array, but
-      // will only ever contain one message, so we get index 0
-      let webhook_event = entry.messaging[0];
-      console.log(webhook_event);
+  console.log("Webhook messaging step.");
+  var chat_data = req.body;
+  // Make sure this is a page subscription
+  if (chat_data.object == "page") {
+    // Iterate over each entry
+    chat_data.entry.forEach(function (page_body) {
+      // Iterate over each message
+      page_body.messaging.forEach(function (message_obj) {
+        console.log(message_obj);
+        if (message_obj.message) {
+          getMessage(message_obj);
+          sendMessage(
+            message_obj.sender.id,
+            "Hế lô Tứ, t Đức nè, con Chatbot này nó tự động nhắn á nha!"
+          );
+        }
+      });
     });
 
-    // Returns a '200 OK' response to all requests
-    res.status(200).send("EVENT_RECEIVED");
-  } else {
-    // Returns a '404 Not Found' if event is not from a page subscription
-    res.sendStatus(404);
+    // Indicate all went well.
+    res.sendStatus(200);
   }
 });
 
