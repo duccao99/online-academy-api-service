@@ -18,6 +18,7 @@ const studentModel = {
 
     return data[0];
   },
+
   add(entity) {
     return db.add(entity, table_name);
   },
@@ -26,6 +27,36 @@ const studentModel = {
   },
   edit(entity, condition) {
     return db.edit(entity, condition, table_name);
+  },
+
+  async detailByUserName(username) {
+    const sql = `select * from ${table_name} u where u.user_name = '${username}'`;
+    const ret = await db.load(sql);
+    return ret[0];
+  },
+  patchRFToken(id, rfToken) {
+    const entity = {
+      rfToken: rfToken,
+    };
+    const condition = {
+      user_id: id,
+    };
+    return db.edit(entity, condition, table_name);
+  },
+  async isValidRFToken(userId, rfToken) {
+    const sql = `select * from ${table_name} 
+      where user_id = ${userId}
+       and rfToken = '${rfToken}' `;
+    const list = await db.load(sql);
+
+    if (list.length > 0) return true;
+    return false;
+  },
+
+  async singleByEmail(email) {
+    const sql = `select * from ${table_name} u where u.email = '${email}'`;
+    const ret = await db.load(sql);
+    return ret[0];
   },
 };
 

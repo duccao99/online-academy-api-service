@@ -32,17 +32,6 @@ router.get("/:id", async function (req, res) {
   });
 });
 
-router.post("/register", async function (req, res) {
-  const user = req.body.user;
-  const ret = await studentModel.add(user);
-
-  console.log(ret);
-
-  return res.json({
-    ret,
-  });
-});
-
 router.delete("/:id", async function (req, res) {
   const student_id = req.params.id;
 
@@ -74,7 +63,7 @@ router.delete("/:id", async function (req, res) {
 });
 
 router.patch("/:id", async function (req, res) {
-  const student_edit_info = req.body.student_edit_info;
+  const student_edit_info = req.body;
   const student_id = +req.params.id;
   // check curr user id is a student
 

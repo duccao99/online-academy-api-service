@@ -9,11 +9,13 @@ const studentModel = {
     `;
     return db.load(sql);
   },
+
   async detail(student_id) {
     const sql = `select *
       from ${table_name} u
       where role_id =2 
       and u.user_id = ${student_id};`;
+
     const data = await db.load(sql);
 
     return data[0];

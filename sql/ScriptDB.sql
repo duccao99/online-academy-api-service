@@ -37,6 +37,7 @@ CREATE TABLE `users`(
     otp_verify_url  nvarchar(4000),
     user_avatar_url  nvarchar(4000),
     role_id int,
+    `rfToken` VARCHAR(255)  DEFAULT NULL,
 
 	foreign key (role_id) references `roles` (role_id) on delete cascade
 );
