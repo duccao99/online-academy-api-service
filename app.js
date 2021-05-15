@@ -30,8 +30,9 @@ app.use(
 );
 
 // API Service
-app.use("/api/student", require("./routes/student.route"));
-app.use("/api/user", require("./routes/user.route"));
+app.use("/api/auth", require("./routes/auth.route"));
+app.use("/api/user", auth, require("./routes/user.route"));
+app.use("/api/student", auth, require("./routes/student.route"));
 app.use("/api/webhook", require("./routes/webhook.route"));
 
 // Handle async errors
