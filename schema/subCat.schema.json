@@ -1,0 +1,17 @@
+{
+	"type":"object",
+	"required": [
+        "subject_name",
+        "cat_id"
+	],
+	"additionalProperties": false,
+	"properties": {
+		"subject_name":{
+			"type":"string"
+		},
+		"cat_id":{
+			"type":"number"
+		}
+	
+	}
+}
