@@ -122,6 +122,7 @@ CREATE TABLE `courses`(
 	course_last_updated TIMESTAMP,
 	is_finished bool,
     subject_id int(10),
+    views int(10) default null,
     
     foreign key (subject_id) references `subjects` (subject_id) on delete cascade
 );
@@ -556,7 +557,6 @@ CREATE TABLE `orders`(
 	order_id int(10) not null auto_increment,
     user_id int(10)  not null ,
 	order_day timestamp,
-    order_total_money varchar(3000),
 
     primary key (order_id),
     foreign key (user_id) references `users` (user_id) on delete cascade
@@ -565,8 +565,36 @@ CREATE TABLE `orders`(
 -------------------------------------------------------------
 -- Records  for `orders`
 -------------------------------------------------------------
-insert into `orders` (user_id,order_day,order_total_money) values (2,str_to_date('12-12-2021','%d-%m-%Y'),'2000000');
-insert into `orders` (user_id,order_day,order_total_money) values (3,str_to_date('13-12-2021','%d-%m-%Y'),'3000000');
+insert into `orders` (user_id,order_day,order_total_money) values (2,str_to_date('12-12-2021','%d-%m-%Y'));
+insert into `orders` (user_id,order_day,order_total_money) values (3,str_to_date('13-12-2021','%d-%m-%Y'));
+
+
+
+-----------------------------------------------------
+-- Table structure for `orders_details`
+-----------------------------------------------------
+DROP TABLE IF EXISTS `orders_details`;
+CREATE TABLE `orders_details`(
+	order_detail_id int(10) not null auto_increment,
+	order_day timestamp,
+    course_id int(10) not null,
+    order_id int(10) not null,
+    total_money varchar(3000),
+
+    primary key (order_detail_id),
+    foreign key (course_id) references `courses` (course_id) on delete cascade,
+	foreign key (order_id) references `orders` (order_id) on delete cascade
+);
+
+-------------------------------------------------------------
+-- Records  for `orders`
+-------------------------------------------------------------
+insert into `orders_details` (order_day,course_id,order_id,total_money) values (str_to_date('12-12-2021','%d-%m-%Y'),1,1,'2000000');
+insert into `orders_details` (order_day,course_id,order_id,total_money) values (str_to_date('13-12-2021','%d-%m-%Y'),2,1,'3000000');
+insert into `orders_details` (order_day,course_id,order_id,total_money) values (str_to_date('14-12-2021','%d-%m-%Y'),2,2,'3000000');
+insert into `orders_details` (order_day,course_id,order_id,total_money) values (str_to_date('14-12-2021','%d-%m-%Y'),2,2,'3000000');
+insert into `orders_details` (order_day,course_id,order_id,total_money) values (str_to_date('14-12-2021','%d-%m-%Y'),2,2,'3000000');
+
 
 
 

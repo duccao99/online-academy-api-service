@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const subCatModel = require("../models/SubCategory.model");
+const subCatModel = require("../models/subCategory.model");
 const validate = require("../middlewares/validate.mdw");
 const subCatSchema = require("../schema/subCat.schema.json");
 
