@@ -55,6 +55,7 @@ const studentModel = {
 
   async singleByEmail(email) {
     const sql = `select * from ${table_name} u where u.email = '${email}'`;
+
     const ret = await db.load(sql);
     return ret[0];
   },

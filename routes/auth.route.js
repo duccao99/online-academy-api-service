@@ -6,7 +6,7 @@ const userModel = require("../models/user.model");
 const SECRET_KEY = process.env.SECRET_KEY_AUTH_ACCESS_TOKEN;
 
 router.post("/", async function (req, res) {
-  const user = await userModel.detailByUserName(req.body.user_name);
+  const user = await userModel.singleByEmail(req.body.email);
   if (user === undefined) {
     return res.json({
       authenticated: false,
@@ -41,8 +41,6 @@ router.post("/refresh", async function (req, res) {
   const { userId } = jsonwebtoken.verify(accessToken, SECRET_KEY, {
     ignoreExpiration: true,
   });
-
-  console.log(userId);
 
   const ret = await userModel.isValidRFToken(userId, refreshToken);
 
