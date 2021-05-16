@@ -5,12 +5,23 @@ const app = express();
 const auth = require("./middlewares/auth.mdw");
 const bodyParser = require("body-parser");
 const { check_fb_signature } = require("./utils/utils.func.js");
+const expressSession = require("express-session");
 
 require("dotenv").config();
 require("express-async-errors");
 
 app.use(cors());
 app.use(express.json());
+
+app.set("trust proxy", 1); // trust first proxy
+app.use(
+  expressSession({
+    secret: "secret_key_session",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  })
+);
 
 app.get("/", function (req, res) {
   res.json({
@@ -31,7 +42,7 @@ app.use(
 
 // API Service
 app.use("/api/auth", require("./routes/auth.route"));
-app.use("/api/user", auth, require("./routes/user.route"));
+app.use("/api/user", require("./routes/user.route"));
 app.use("/api/student", auth, require("./routes/student.route"));
 app.use("/api/webhook", require("./routes/webhook.route"));
 

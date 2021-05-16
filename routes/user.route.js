@@ -18,7 +18,7 @@ router.get("/", async function (req, res) {
   });
 });
 
-router.post("/register", validate(userSchema), async function (req, res) {
+router.post("/sign-up", validate(userSchema), async function (req, res) {
   const user = req.body;
 
   const check_email = await userModel.singleByEmail(user.email);
@@ -40,8 +40,6 @@ router.post("/register", validate(userSchema), async function (req, res) {
   };
   const ret = await userModel.add(user_add);
 
-  console.log(ret);
-
   if (+ret.affectedRows === 1) {
     return res.json({
       message: "User was created!",
@@ -51,4 +49,35 @@ router.post("/register", validate(userSchema), async function (req, res) {
   return res.status(500).json({ error_message: "Something broke!" });
 });
 
+router.post("/sign-in", async function (req, res) {
+  const user = req.body;
+
+  const check_user = await userModel.singleByEmail(user.email);
+
+  if (check_user === undefined) {
+    return res.status(400).json({
+      error_message: "Email not found!",
+    });
+  }
+
+  const check_pass = await bcryptjs.compareSync(
+    user.password,
+    check_user.password
+  );
+
+  console.log(check_pass);
+
+  if (check_pass === true) {
+    req.session.authUser = user;
+    return res.json({
+      message: "Sign in success!",
+      href: "/",
+      user_info: user,
+    });
+  }
+
+  return res.json({
+    check_pass,
+  });
+});
 module.exports = router;
