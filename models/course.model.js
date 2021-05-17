@@ -3,6 +3,13 @@ const table_courses = `courses`;
 const tbl_subjects = `subjects`;
 const tbl_categories = `categories`;
 const tbl_orders_details = `orders_details`;
+const tbl_instructor_courses_uploaded = `instructor_courses_uploaded`;
+const tbl_users = `users`;
+const tbl_chapters = `chapters`;
+const tbl_lessons = `lessons`;
+const tbl_course_reviews = `course_reviews`;
+const tbl_roles = `roles`;
+
 const courseModel = {
   all() {
     const sql = `select * from ${table_courses} `;
@@ -10,8 +17,20 @@ const courseModel = {
   },
 
   async detail(course_id) {
-    const sql = `select * from ${table_courses}
-       where course_id = ${course_id}`;
+    const sql = `select c.course_id, c.course_name, c.course_title, 
+    c.course_thumbnail, c.course_avatar_url, c.course_fee ,
+    c.course_full_description, c.course_short_description,
+    c.course_last_updated, c.is_finished, c.subject_id,c.views ,
+    sj.subject_name,  u.user_name
+    from ${table_courses} c 
+    inner join ${tbl_subjects} sj 
+    on sj.subject_id = c.subject_id
+    inner join ${tbl_instructor_courses_uploaded} i
+    on i.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = i.user_id
+    where c.course_id = ${course_id}
+    and c.is_finished = true ;`;
     const ret = await db.load(sql);
     return ret[0];
   },
@@ -59,6 +78,62 @@ const courseModel = {
       order by c.views desc 
       limit 10;
       `;
+    return db.load(sql);
+  },
+  detailCourseSyllabus(course_id) {
+    const sql = `select l.lesson_id, l.lesson_name, l.lesson_content,
+     l.flag_reviewable, l.duration
+    , ct.chap_id, ct.chap_name
+    from ${table_courses} c
+    inner join ${tbl_chapters} ct
+    on ct.course_id = c.course_id
+    inner join ${tbl_lessons} l
+    on l.chap_id = ct.chap_id 
+    where c.course_id = ${course_id};
+    `;
+    return db.load(sql);
+  },
+  detailCourseInstructor(course_id) {
+    const sql = `select ic.course_id, ic.uploaded_day, u.user_name,
+     u.email, u.role_id, u.user_avatar_url
+    from ${table_courses} c
+    inner join ${tbl_instructor_courses_uploaded} ic
+    on ic.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = ic.user_id
+    where c.course_id = ${course_id};
+    `;
+    return db.load(sql);
+  },
+  detailFiveRelativeCourse(course_id, subject_id) {
+    const sql = `select c.course_id, c.course_name, c.course_title
+    , c.course_thumbnail, c.course_avatar_url, c.course_fee ,
+    c.course_full_description, c.course_short_description
+    ,c.course_last_updated, c.is_finished, c.subject_id,c.views ,
+    sj.subject_name
+    from ${table_courses} c
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    where sj.subject_id = ${subject_id}
+    and c.is_finished = true
+    and c.course_id != ${course_id}
+    limit 5;
+    
+    `;
+    return db.load(sql);
+  },
+
+  detailCourseReviews(course_id) {
+    const sql = `select cr.course_id,c.course_name, cr.star, cr.review_content
+    ,u.user_id, u.user_name, u.user_avatar_url, u.role_id, r.role_name
+    from ${table_courses} c
+    inner join ${tbl_course_reviews} cr
+    on cr.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = cr.user_id
+    inner join ${tbl_roles} r
+    on u.role_id = r.role_id
+    where c.course_id = ${course_id};`;
     return db.load(sql);
   },
 };

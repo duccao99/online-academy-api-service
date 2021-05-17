@@ -49,6 +49,73 @@ router.get("/ten-most-viewed-courses", async function (req, res) {
   });
 });
 
+router.get("/detail/syllabus/:id", async function (req, res) {
+  const id = +req.params.id;
+
+  const course_detail = await courseModel.detail(id);
+
+  if (course_detail === undefined) {
+    return res.status(400).json({ message: "Course not found!" });
+  }
+
+  const ret = await courseModel.detailCourseSyllabus(id);
+
+  return res.json({
+    course_syllabus: ret,
+  });
+});
+
+router.get("/detail/instructor/:id", async function (req, res) {
+  const id = +req.params.id;
+
+  const course_detail = await courseModel.detail(id);
+
+  if (course_detail === undefined) {
+    return res.status(400).json({ message: "Course not found!" });
+  }
+
+  const ret = await courseModel.detailCourseInstructor(id);
+
+  return res.json({
+    course_instructor: ret,
+  });
+});
+
+router.get("/detail/five-relative/:id", async function (req, res) {
+  const id = +req.params.id;
+
+  const course_detail = await courseModel.detail(id);
+
+  if (course_detail === undefined) {
+    return res.status(400).json({ message: "Course not found!" });
+  }
+
+  const ret = await courseModel.detailFiveRelativeCourse(
+    course_detail.course_id,
+    course_detail.subject_id
+  );
+
+  return res.json({
+    five_relative_cat_course: ret,
+  });
+});
+
+router.get("/detail/course-review/:id", async function (req, res) {
+  const id = +req.params.id;
+
+  const course_detail = await courseModel.detail(id);
+
+  if (course_detail === undefined) {
+    return res.status(400).json({ message: "Course not found!" });
+  }
+
+  const ret = await courseModel.detailCourseReviews(course_detail.course_id);
+
+  return res.json({
+    course_reviews: ret,
+  });
+});
+
 router.get("/:id", async function (req, res) {
   const id = +req.params.id;
 

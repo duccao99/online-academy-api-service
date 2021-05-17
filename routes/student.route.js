@@ -12,7 +12,7 @@ router.get("/", async function (req, res) {
   }
 
   return res.json({
-    data: student_data,
+    all_students: student_data,
   });
 });
 
@@ -28,7 +28,7 @@ router.get("/:id", async function (req, res) {
   }
 
   return res.json({
-    data: user_detail,
+    student_detail: user_detail,
   });
 });
 

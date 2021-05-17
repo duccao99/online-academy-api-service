@@ -11,7 +11,7 @@ router.get("/", async function (req, res) {
   }
 
   return res.json({
-    data,
+    all_sub_cats: data,
   });
 });
 
@@ -24,7 +24,7 @@ router.get("/:id", async function (req, res) {
   }
 
   return res.json({
-    data: sub_cat_detail,
+    sub_cat_detail: sub_cat_detail,
   });
 });
 

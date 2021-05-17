@@ -279,6 +279,75 @@ values ('React - The Complete Guide (incl Hooks, React Router, Redux)','React - 
 <div class="clp-component-render">&nbsp;</div>
 </div>','2008-01-01 00:00:01',true,2);
 
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,course_short_description,course_last_updated,is_finished,subject_id) 
+values ('Fast Tracking React','React - Using fastest speed to learn ReactJS','','https://img-c.udemycdn.com/course/240x135/1362070_b9a1_2.jpg?Expires=1621142294&Signature=YkpacdOxrPqJxvFJWomoqv6mUEgYrLYeUyLcyrCzHootBf7kxvDQ7pZMwGq7pi3DZ068d-pN6eEK-bh02uU5PJw0k7b2v~9SUqsjgKJl0foW40YzNq~P1VHsU2zvpIuncDIKmnN24sWh-K2P4kTQcanM3ujeC~ioMEd8FXxXBa1yaTiADlmK1GGbhbRpjQtBBmXM8B2ht0~fZzBwhS551Ksf5PM427cRYp3MJFYnTEb2BKEXXDBLt6GMXXi-qfi8heQk9KBU5q-Vzm4v0OtJn0npX4-Uc~581QwHiY8Nxi8mDvM2dafpIM6pUrI3jwF~g7F5myMPlIvvyII2GsbBVw__&Key-Pair-Id=APKAITJV77WS5ZT7262A','40000000',
+'<div data-purpose="safely-set-inner-html:description:description">
+<p><strong>This course is the most up-to-date, comprehensive and bestselling React course on Udemy!</strong></p>
+<p><strong>It was completely updated and re-recorded from the ground up in May 2021 - it teaches the very latest version of React with all the core, modern features you need to know!</strong></p>
+<p>---</p>
+<p>This course also comes with&nbsp;<strong>two paths</strong>&nbsp;which you can take:&nbsp;The&nbsp;<strong>"complete"&nbsp;path</strong>&nbsp;(full &gt;40h course) and the&nbsp;<strong>"summary"&nbsp;path</strong>&nbsp;(~4h summary module) - you can choose the path that best fits your time requirements!&nbsp;:-)</p>
+<p>---</p>
+<p>React.js is&nbsp;<strong>THE most popular JavaScript library</strong>&nbsp;you can use and learn these days to build modern, reactive user interfaces for the web.</p>
+<p>This course teaches you React in-depth,&nbsp;<strong>from the ground up</strong>, step by step by diving into all the core basics, exploring tons of examples and also introducing you to advanced concepts as well.</p>
+<p>You will get&nbsp;<strong>all the theory, tons of examples and demos, assignments and exercises and tons of important knowledge</strong>&nbsp;that is skipped by most other resources - after all, there is a reason why this course is that huge! :)</p>
+<p>And in case you don t even know why you would want to learn React and you re just here because of some ad or "the algorithm" - no worries: ReactJS is a key technology as a web developer and&nbsp;<strong>in this course I will also explain WHY its that important</strong>!</p>
+<p>&nbsp;</p>
+<p><strong>Welcome to "React - The Complete Guide"!</strong></p>
+<p>This course will teach you React.js in a practice-oriented way, using all the latest patterns and best practices you need. You will learn all the key fundamentals as well as advanced concepts and related topics to turn you into a React.js developer.</p>
+<p>This is a huge course because&nbsp;<strong>it really covers EVERYTHING you need to know and learn to become a React.js developer!</strong></p>
+<p>No matter if you&nbsp;<strong>know nothing about React</strong>&nbsp;or if you already&nbsp;<strong>got some basic React knowledge</strong>&nbsp;(not required but also not a problem), you will get&nbsp;<strong>tons of useful information and knowledge out of this course</strong>!</p>
+<p>My goal with this course is to ensure that you feel confident working with React, so that you can apply for React jobs, use it in your own projects or simply enhance your portfolio as a developer - whatever your goal is: This course gets you there!</p>
+<p>&nbsp;</p>
+<p>I originally created this course in 2017 and I have kept it updated since that -&nbsp;<strong>redoing it from the ground up in 2021</strong>. And of course Im dedicated to keeping this course up-to-date - so that you can rely on this course to learn React in the best possible way!</p>
+<p><strong>Whats in this course?</strong></p>
+
+<p>This really is the "Complete Guide" - promised!</p>
+<p>And best of all?</p>
+<p><strong>You dont need any prior React knowledge!</strong></p>
+<p>This course starts with zero knowledge assumed!&nbsp;<strong>All you need is basic web development and JavaScript knowledge</strong>&nbsp;(though the course even&nbsp;<strong>includes a brief JavaScript refresher</strong>&nbsp;to ensure that we are all on the same page!).</p>
+<p><strong>Check out the full curriculum, the free preview videos and join the course risk-free thanks to the 30-day money-back guarantee!</strong></p>
+</div>
+<div class="styles--audience--2pZ0S" data-purpose="target-audience">
+<h2 class="udlite-heading-xl styles--audience__title--1Sob_">Who this course is for:</h2>
+<ul class="styles--audience__list--3NCqY">
+<li>Students who want to learn how to build reactive and fast web apps</li>
+<li>Anyone whos interested in learning an extremely popular technology used by leading tech companies like Netflix</li>
+<li>Students who want to take their web development skills to the next level and learn a future-proof technology</li>
+</ul>
+</div>
+<div id="eJOY__extension_root" class="eJOY__extension_root_class" style="all: unset;">&nbsp;</div>',
+'<div data-purpose="safely-set-inner-html:description:description">
+<div class="course-landing-page__main-content component-margin">
+<div class="clp-component-render">
+<div class="clp-component-render">
+<div class="ud-component--course-landing-page-udlite--requirements" data-component-props="{&quot;prerequisites&quot;:[&quot;JavaScript + HTML + CSS fundamentals are absolutely required&quot;,&quot;You DONT need to be a JavaScript expert to succeed in this course!&quot;,&quot;ES6+ JavaScript knowledge is beneficial but not a must-have&quot;,&quot;NO prior React or any other JS framework experience is required!&quot;],&quot;isCollapsible&quot;:false}">
+<div>
+<ul class="unstyled-list udlite-block-list">
+<li>
+<div class="udlite-block-list-item udlite-block-list-item-small udlite-block-list-item-tight udlite-block-list-item-neutral udlite-text-sm">
+<div class="udlite-block-list-item-content">JavaScript + HTML + CSS fundamentals are absolutely required</div>
+</div>
+</li>
+<li>
+<div class="udlite-block-list-item udlite-block-list-item-small udlite-block-list-item-tight udlite-block-list-item-neutral udlite-text-sm">
+<div class="udlite-block-list-item-content">You DONT need to be a JavaScript expert to succeed in this course!</div>
+</div>
+</li>
+<li>
+<div class="udlite-block-list-item udlite-block-list-item-small udlite-block-list-item-tight udlite-block-list-item-neutral udlite-text-sm">
+<div class="udlite-block-list-item-content">ES6+ JavaScript knowledge is beneficial but not a must-have</div>
+</div>
+</li>
+
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="clp-component-render">&nbsp;</div>
+</div>','2008-01-01 00:00:01',true,2);
+
 
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,course_short_description,course_last_updated,is_finished,subject_id) 
 values ('Learn and Understand NodeJS','Dive deep under the hood of NodeJS. Learn V8, Express, the MEAN stack, core Javascript concepts, and more.','','https://img-b.udemycdn.com/course/240x135/461160_8d87_6.jpg?secure=tYL9a3DZGrDtHankOr23SA%3D%3D%2C1621150709'
@@ -450,6 +519,8 @@ CREATE TABLE `lessons`(
 -------------------------------------
 insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id) values ('lesson 1 introduction react','',1,SEC_TO_TIME(3600),1);
 insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id) values ('lesson 2 introduction node','',1,SEC_TO_TIME(7600),2);
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id) values ('lesson 2  JSX','',1,SEC_TO_TIME(7600),1);
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id) values ('lesson 3  Todo list','',1,SEC_TO_TIME(7600),1);
 
 -----------------------------------------------------
 -- Table structure for `instructor_courses_uploaded`
@@ -473,8 +544,8 @@ CREATE TABLE `instructor_courses_uploaded`(
 -------------------------------------------------------------
 -- Records  for `instructor_courses_uploaded`
 -------------------------------------------------------------
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (1,1,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (4,2,2,2,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,1,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (8,2,2,2,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 
 
 -----------------------------------------------------
@@ -565,8 +636,8 @@ CREATE TABLE `orders`(
 -------------------------------------------------------------
 -- Records  for `orders`
 -------------------------------------------------------------
-insert into `orders` (user_id,order_day,order_total_money) values (2,str_to_date('12-12-2021','%d-%m-%Y'));
-insert into `orders` (user_id,order_day,order_total_money) values (3,str_to_date('13-12-2021','%d-%m-%Y'));
+insert into `orders` (user_id,order_day) values (2,str_to_date('12-12-2021','%d-%m-%Y'));
+insert into `orders` (user_id,order_day) values (3,str_to_date('13-12-2021','%d-%m-%Y'));
 
 
 
