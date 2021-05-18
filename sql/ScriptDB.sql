@@ -131,7 +131,7 @@ CREATE TABLE `courses`(
 -- Records  for `courses`
 -------------------------------------
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,course_short_description,course_last_updated,is_finished,subject_id,views) 
-values ('React - The Complete Guide (incl Hooks, React Router, Redux)','React - The Complete Guide','','https://img-c.udemycdn.com/course/240x135/1362070_b9a1_2.jpg?Expires=1621142294&Signature=YkpacdOxrPqJxvFJWomoqv6mUEgYrLYeUyLcyrCzHootBf7kxvDQ7pZMwGq7pi3DZ068d-pN6eEK-bh02uU5PJw0k7b2v~9SUqsjgKJl0foW40YzNq~P1VHsU2zvpIuncDIKmnN24sWh-K2P4kTQcanM3ujeC~ioMEd8FXxXBa1yaTiADlmK1GGbhbRpjQtBBmXM8B2ht0~fZzBwhS551Ksf5PM427cRYp3MJFYnTEb2BKEXXDBLt6GMXXi-qfi8heQk9KBU5q-Vzm4v0OtJn0npX4-Uc~581QwHiY8Nxi8mDvM2dafpIM6pUrI3jwF~g7F5myMPlIvvyII2GsbBVw__&Key-Pair-Id=APKAITJV77WS5ZT7262A','40000000',
+values ('React - The Complete Guide','React - The Complete Guide (incl Hooks, React Router, Redux)','','https://img-c.udemycdn.com/course/240x135/1362070_b9a1_2.jpg?Expires=1621142294&Signature=YkpacdOxrPqJxvFJWomoqv6mUEgYrLYeUyLcyrCzHootBf7kxvDQ7pZMwGq7pi3DZ068d-pN6eEK-bh02uU5PJw0k7b2v~9SUqsjgKJl0foW40YzNq~P1VHsU2zvpIuncDIKmnN24sWh-K2P4kTQcanM3ujeC~ioMEd8FXxXBa1yaTiADlmK1GGbhbRpjQtBBmXM8B2ht0~fZzBwhS551Ksf5PM427cRYp3MJFYnTEb2BKEXXDBLt6GMXXi-qfi8heQk9KBU5q-Vzm4v0OtJn0npX4-Uc~581QwHiY8Nxi8mDvM2dafpIM6pUrI3jwF~g7F5myMPlIvvyII2GsbBVw__&Key-Pair-Id=APKAITJV77WS5ZT7262A','40000000',
 '<div data-purpose="safely-set-inner-html:description:description">
 <p><strong>This course is the most up-to-date, comprehensive and bestselling React course on Udemy!</strong></p>
 <p><strong>It was completely updated and re-recorded from the ground up in May 2021 - it teaches the very latest version of React with all the core, modern features you need to know!</strong></p>
@@ -1435,6 +1435,9 @@ CREATE TABLE `instructor_courses_uploaded`(
 -------------------------------------------------------------
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,1,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (8,2,2,2,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (8,3,3,3,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,4,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+
 
 
 -----------------------------------------------------
@@ -1461,6 +1464,16 @@ insert into `course_reviews` (user_id,course_id,review_content,star) values (3,1
 insert into `course_reviews` (user_id,course_id,review_content,star) values (2,1,'Khóa này hay!',5);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (4,2,'Khóa dở tệ!',1);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (5,2,'Khóa này tạm được!',3);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (5,3,'Khóa này tạm được!',3);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (5,1,'Khóa này tạm được!',3);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (2,3,'Khóa này tạm được!',4);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,3,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (1,2,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (2,2,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (7,3,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (7,2,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,2,'Khóa này hay!',5);
+
 
 
 
@@ -1511,6 +1524,7 @@ insert into `orders` (user_id,order_day) values (4,str_to_date('13-12-2021','%d-
 insert into `orders` (user_id,order_day) values (5,str_to_date('13-12-2021','%d-%m-%Y'));
 insert into `orders` (user_id,order_day) values (6,str_to_date('13-12-2021','%d-%m-%Y'));
 insert into `orders` (user_id,order_day) values (1,str_to_date('13-12-2021','%d-%m-%Y'));
+insert into `orders` (user_id,order_day) values (7,str_to_date('13-12-2021','%d-%m-%Y'));
 
 
 
@@ -1539,6 +1553,7 @@ insert into `orders_details` (course_id,order_id,total_money) values (3,1,'30000
 insert into `orders_details` (course_id,order_id,total_money) values (1,2,'3000000');
 insert into `orders_details` (course_id,order_id,total_money) values (2,2,'3000000');
 insert into `orders_details` (course_id,order_id,total_money) values (3,2,'3000000');
+insert into `orders_details` (course_id,order_id,total_money) values (3,2,'3000000');
 insert into `orders_details` (course_id,order_id,total_money) values (3,3,'3000000');
 insert into `orders_details` (course_id,order_id,total_money) values (3,4,'3000000');
 insert into `orders_details` (course_id,order_id,total_money) values (1,5,'3000000');
@@ -1547,6 +1562,7 @@ insert into `orders_details` (course_id,order_id,total_money) values (3,5,'30000
 insert into `orders_details` (course_id,order_id,total_money) values (1,6,'3000000');
 insert into `orders_details` (course_id,order_id,total_money) values (2,6,'3000000');
 insert into `orders_details` (course_id,order_id,total_money) values (3,6,'3000000');
+insert into `orders_details` (course_id,order_id,total_money) values (2,7,'300');
 
 
 

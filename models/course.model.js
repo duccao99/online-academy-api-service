@@ -50,12 +50,26 @@ const courseModel = {
   },
 
   getOutstandingCourse() {
-    const sql = `select *
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, 
+    c.course_fee,sj.subject_id, sj.subject_name, c.views, u.user_name,  rt.avg_rate
     from ${table_courses} c
     inner join ${tbl_orders_details} od
     on od.course_id = c.course_id
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    inner join ${tbl_instructor_courses_uploaded} ins
+    on ins.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = ins.user_id
+    inner join (
+      select *, avg(star) as avg_rate
+      from course_reviews as crw
+      group by crw.course_id
+      ) rt
+    on rt.course_id = c.course_id
     group by c.course_id
-    having count(c.course_id) >= 3
+    having count(od.course_id) >= 3
+    and rt.avg_rate >= 4
     limit 3;`;
 
     return db.load(sql);
