@@ -112,12 +112,12 @@ insert into `subjects`(subject_name,cat_id) values ('Swift',2);
 DROP TABLE IF EXISTS `courses`;
 CREATE TABLE `courses`(
 	course_id int(10) primary key not null auto_increment,
-    course_name nvarchar(1000),
-    course_title nvarchar(1000),
-	course_thumbnail nvarchar(1000),
-	course_avatar_url nvarchar(4000),
+    course_name nvarchar(500),
+    course_title nvarchar(500),
+	course_thumbnail nvarchar(100),
+	course_avatar_url nvarchar(1000),
     course_fee nvarchar(1000),
-    course_full_description nvarchar(8000),
+    course_full_description nvarchar(14000),
 	course_short_description nvarchar(4000),
 	course_last_updated TIMESTAMP,
 	is_finished bool,
@@ -460,6 +460,266 @@ values ('Learn and Understand NodeJS','Dive deep under the hood of NodeJS. Learn
 
 
 
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id) 
+values ('Modern React with Redux','Master React and Redux with React Router, Webpack, and Create-React-App. Includes Hooks!'
+,'','https://d585tldpucybw.cloudfront.net/sfimages/default-source/blogs/templates/reactt-dark_870x220.png?sfvrsn=ef69fd61_3'
+,'9'
+,'<div data-purpose="safely-set-inner-html:description:description" style="box-sizing: border-box; margin: 0px; padding: 0px; color: rgb(60, 59, 55); font-family: "sf pro text", -apple-system, BlinkMacSystemFont, Roboto, "segoe ui", Helvetica, Arial, sans-serif, "apple color emoji", "segoe ui emoji", "segoe ui symbol"; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+    <p style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;"><strong style="box-sizing: border-box; margin: 0px; padding: 0px;"><em style="box-sizing: border-box; margin: 0px; padding: 0px;">Course Last Updated for React v16.6.3 and Redux v4.0.1! &nbsp;All content is brand new! &nbsp;Update includes detailed videos on the new React Hooks system.</em></strong></p>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">Congratulations! &nbsp;You&apos;ve found the&nbsp;<em style="box-sizing: border-box; margin: 0px; padding: 0px;">most&nbsp;</em><strong style="box-sizing: border-box; margin: 0px; padding: 0px;"><em style="box-sizing: border-box; margin: 0px; padding: 0px;">popular</em></strong>,&nbsp;<em style="box-sizing: border-box; margin: 0px; padding: 0px;">most&nbsp;</em><strong style="box-sizing: border-box; margin: 0px; padding: 0px;"><em style="box-sizing: border-box; margin: 0px; padding: 0px;">complete</em></strong>, and&nbsp;<em style="box-sizing: border-box; margin: 0px; padding: 0px;">most&nbsp;</em><strong style="box-sizing: border-box; margin: 0px; padding: 0px;"><em style="box-sizing: border-box; margin: 0px; padding: 0px;">up-to-date</em></strong> resource online for learning React and Redux!</p>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">Thousands of other engineers have learned React and Redux, and you can too. &nbsp;This course uses a&nbsp;<strong style="box-sizing: border-box; margin: 0px; padding: 0px;">time-tested, battle-proven</strong> method to make sure you understand exactly how React and Redux work, and will get you a new job working as a software engineer or help you build that app you&apos;ve always been dreaming about.</p>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;"><strong style="box-sizing: border-box; margin: 0px; padding: 0px;">The difference between this course and all the others: you will understand the design patterns used by top companies to build massively popular web apps.</strong></p>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">React is the most popular Javascript library of the last five years, and the job market is still hotter than ever. &nbsp;Companies large and small can&apos;t hire engineers who understand React and Redux fast enough, and salaries for engineers are at an all time high. &nbsp;It&apos;s a great time to learn React!</p>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">----------------------</p>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;"><strong style="box-sizing: border-box; margin: 0px; padding: 0px;"><em style="box-sizing: border-box; margin: 0px; padding: 0px;">What will you build?</em></strong></p>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">This course features hundreds of videos with&nbsp;<strong style="box-sizing: border-box; margin: 0px; padding: 0px;">dozens of custom diagrams</strong> to help you understand how React and Redux work. &nbsp;No prior experience with either is necessary. Through tireless, patient explanations and many interesting practical examples, you&apos;ll learn the fundamentals of building dynamic and live web apps using React.</p>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">Each topic included in this course is added incrementally, to make sure that you have a solid foundation of knowledge. &nbsp;You&apos;ll find plenty of discussion added in to help you understand exactly when and where to use each feature of React and Redux.</p>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;"><strong style="box-sizing: border-box; margin: 0px; padding: 0px;">My guarantee to you: there is no other course online that teaches more features of React and Redux. &nbsp;This is the most comprehensive resource there is.</strong></p>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;"><br style="box-sizing: border-box; margin: 0px; padding: 0px;"></p>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">Below is a&nbsp;<strong style="box-sizing: border-box; margin: 0px; padding: 0px;"><em style="box-sizing: border-box; margin: 0px; padding: 0px;">partial list&nbsp;</em></strong>of the topics you&apos;ll find in this course:</p>
+    <ul style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px 0px 0px 2.4rem; font-size: inherit; font-weight: 400; max-width: 118.4rem;">
+        <li style="box-sizing: border-box; margin: 0px; padding: 0px 0px 0px 0.8rem;">
+            <p style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">Master the&nbsp;<strong style="box-sizing: border-box; margin: 0px; padding: 0px;">fundamental features</strong> of React, including JSX, state, and props</p>
+        </li>
+        <li style="box-sizing: border-box; margin: 0.4rem 0px 0px; padding: 0px 0px 0px 0.8rem;">
+            <p style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">From square one, understand how to build&nbsp;<strong style="box-sizing: border-box; margin: 0px; padding: 0px;">reusable components</strong></p>
+        </li>
+        <li style="box-sizing: border-box; margin: 0.4rem 0px 0px; padding: 0px 0px 0px 0.8rem;">
+            <p style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">Dive into the&nbsp;<strong style="box-sizing: border-box; margin: 0px; padding: 0px;">source code of Redux&nbsp;</strong>to understand how it works behind the scenes</p>
+        </li>
+        <li style="box-sizing: border-box; margin: 0.4rem 0px 0px; padding: 0px 0px 0px 0.8rem;">
+            <p style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">Test your knowledge and hone your skills with&nbsp;<strong style="box-sizing: border-box; margin: 0px; padding: 0px;">numerous coding exercises</strong></p>
+        </li>
+        <li style="box-sizing: border-box; margin: 0.4rem 0px 0px; padding: 0px 0px 0px 0.8rem;">
+            <p style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">Integrate React with advanced browser features, even&nbsp;<strong style="box-sizing: border-box; margin: 0px; padding: 0px;">geolocation API&apos;s</strong>!</p>
+        </li>
+        <li style="box-sizing: border-box; margin: 0.4rem 0px 0px; padding: 0px 0px 0px 0.8rem;">
+            <p style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">Use popular&nbsp;<strong style="box-sizing: border-box; margin: 0px; padding: 0px;">styling libraries&nbsp;</strong>to build beautiful apps</p>
+        </li>
+        <li style="box-sizing: border-box; margin: 0.4rem 0px 0px; padding: 0px 0px 0px 0.8rem;">
+            <p style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">Master different techniques of&nbsp;<strong style="box-sizing: border-box; margin: 0px; padding: 0px;">deployment</strong> so you can show off the apps you build!</p>
+        </li>
+        <li style="box-sizing: border-box; margin: 0.4rem 0px 0px; padding: 0px 0px 0px 0.8rem;">
+            <p style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">See different methods of building UI&apos;s through&nbsp;<strong style="box-sizing: border-box; margin: 0px; padding: 0px;">composition of components</strong></p>
+            <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;"><br style="box-sizing: border-box; margin: 0px; padding: 0px;"></p>
+        </li>
+    </ul>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">Besides just React and Redux, you&apos;ll pick up countless other tidbits of knowledge, including ES2015 syntax, popular design patterns, even the clearest explanation of the keyword &apos;<strong style="box-sizing: border-box; margin: 0px; padding: 0px;"><em style="box-sizing: border-box; margin: 0px; padding: 0px;">this&apos;</em></strong> in Javascript that you&apos;ll ever hear.</p>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">This is the course I wanted to take when I&nbsp;first learned React: complete, up-to-date, and clear.</p>
+    <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;"><br style="box-sizing: border-box; margin: 0px; padding: 0px;"></p>
+</div>
+<div class="styles--audience--2pZ0S" data-purpose="target-audience" style="box-sizing: border-box; margin: 3.2rem 0px 0px; padding: 0px; color: rgb(60, 59, 55); font-family: "sf pro text", -apple-system, BlinkMacSystemFont, Roboto, "segoe ui", Helvetica, Arial, sans-serif, "apple color emoji", "segoe ui emoji", "segoe ui symbol"; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+    <h2 class="udlite-heading-xl styles--audience__title--1Sob_" style="box-sizing: border-box; margin: 0px 0px 1.6rem; padding: 0px; font-size: 2.4rem; font-weight: 700; max-width: 118.4rem; font-family: "sf pro display", -apple-system, BlinkMacSystemFont, Roboto, "segoe ui", Helvetica, Arial, sans-serif, "apple color emoji", "segoe ui emoji", "segoe ui symbol"; line-height: 1.2; letter-spacing: -0.02rem;">Who this course is for:</h2>
+    <ul class="styles--audience__list--3NCqY" style="box-sizing: border-box; margin: 0px; padding: 0px 0px 0px 2.4rem; font-size: inherit; font-weight: 400; max-width: 118.4rem;">
+        <li style="box-sizing: border-box; margin: 0.4rem 0px 0px; padding: 0px 0px 0px 0.8rem;">Programmers looking to learn React</li>
+        <li style="box-sizing: border-box; margin: 0.4rem 0px 0px; padding: 0px 0px 0px 0.8rem;">Developers who want to grow out of just using jQuery</li>
+        <li style="box-sizing: border-box; margin: 0.4rem 0px 0px; padding: 0px 0px 0px 0.8rem;">Engineers who have researched React but have had trouble mastering some concepts</li>
+    </ul>
+</div>'
+,'<h2>What you ll learn</h2>
+<div>
+<ul>
+<li>
+<div data-purpose="objective">
+<div>Build amazing single page applications with React JS and Redux</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Master fundamental concepts behind structuring Redux applications</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Realize the power of building composable components</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Be the engineer who explains how Redux works to everyone else, because you know the fundamentals so well</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Become fluent in the toolchain supporting React, including NPM, Webpack, Babel, and ES6/ES2015 Javascript syntax</div>
+</div>
+</li>
+</ul>
+</div>','2021-05-05- 00:00:01',true,2);
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id) 
+values ('Javascript Projects for Complete Beginners','Learn and Deploy Four projects with pure JavaScript (No frameworks or libraries)
+','','https://blog.alvasky.com/wp-content/uploads/2019/03/javascript-illustration.png','10'
+,'<div data-purpose="safely-set-inner-html:description:description">
+<p>This is a Javascript projects course specifically design for those of you that have completed a javascript book or course yet you cant build a project from scratch and STRICTLY for <strong>Absolutely beginners / Intermediate.&nbsp;</strong>No what is javascript or variables, we start coding straight up.</p>
+<p><strong><em>#### WHATS INCLUDED? ####</em></strong></p>
+<ul>
+<li>
+<p><strong>CRUD:&nbsp;</strong>Deploying a Mini Blog that enable you to understand what it takes to<strong>&nbsp;Create, Read, Update and Delete.</strong></p>
+</li>
+<li>
+<p><strong>DOM Manipulation:&nbsp;</strong>Selectors, traversing the DOM, removing elements, event listeners</p>
+</li>
+<li>
+<p><strong>OOP:</strong>&nbsp;ES5 prototypes, inheritance, ES2015 classes &amp; sub-classes, constructors</p>
+</li>
+<li>
+<p><strong>Async JS:&nbsp;</strong>Fetch API, callbacks, promises, async / await</p>
+</li>
+<li>
+<p><strong>ES2015+:&nbsp;</strong>Arrow functions, template strings.</p>
+</li>
+<li>
+<p><strong>4 Projects</strong></p>
+</li>
+</ul>
+<p><strong><em>#### PROJECTS ####</em></strong></p>
+<p>1. Airport Finder</p>
+<p>2. WeatherJs App</p>
+<p>3. Movify Web Application</p>
+<p>4. Mini Blog</p>
+</div>
+<div data-purpose="target-audience">
+<h2>Who this course is for:</h2>
+<ul>
+<li>People that want to learn how to start a JavaScript project from beginning to advanced without libraries and frameworks</li>
+<li>You are confused and cant start a project after completing a javascript course</li>
+</ul>
+</div>'
+,'<div data-purpose="safely-set-inner-html:description:description">
+<h2>What youll learn</h2>
+<div>
+<ul>
+<li>
+<div data-purpose="objective">
+<div>Build Airport Finder, WeatherJS App &amp; Mini Blog From scratch</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Learn How to Start a Projects From Scratch</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Work with REST API, Mini HTTP Library, Classes, Promises, Arrow Function &amp; Async / Await</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>CRUD using Pure Javascript Newest Syntax, No frameworks or libraries</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Kick Start project using Materialize CSS &amp; Bulma CSS Frameworks</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>ES6, ES7 ES8 Syntax</div>
+</div>
+</li>
+</ul>
+</div>
+</div>','2021-05-05- 00:00:01',true,3);
+
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id) 
+values (
+'The Complete React Native '
+,'Understand React Native v0.62.2 with Hooks, Context, and React Navigation.'
+,''
+,'https://isoftglobe.com/wp-content/uploads/2021/02/react-native.png'
+,'9.99'
+,'<div data-purpose="safely-set-inner-html:description:description">
+<div data-purpose="safely-set-inner-html:description:description">
+<p>If youre tired of spinning your wheels learning Swift or Android, this is the course for you.</p>
+<p><strong>Authentication?</strong>&nbsp;You will learn it. <strong>Hooks?&nbsp;</strong>Included. <strong>Navigation?&nbsp;</strong>Of course!</p>
+<p>This course will get you up and running with React Native&nbsp;quickly, and teach you the core knowledge you need to deeply understand and build React components for mobile devices.</p>
+<p><strong>Both OSX and Windows supported - develop iOS or Android!</strong></p>
+<p>This course includes content on both v0.62.2 and the legacy v0.30.x, which is widely used in industry.</p>
+<p>We start by mastering the fundamentals of React, including JSX, &ldquo;props", &ldquo;state", and event handling. Source code is provided for each lecture, so you will always&nbsp;<strong>stay up-to-date</strong>&nbsp;with the course pacing. Special attention has been paid to creating&nbsp;<strong>reusable components</strong>&nbsp;that youll be able to make use of on your own fantastic projects.</p>
+<p>React Native is an excellent solution for developing apps on mobile in a fraction of the time it takes to make an equivalent iOS or Swift app. Youll love seeing your changes instantly appear on your own device, rather than waiting for Swift/Java code to recompile! This quick feedback loop, along with excellent cross platform support, is what has catapulted React Native to the top must-have skill for Javascript engineers.</p>
+<p>If you are new to React, or if youve been working to learn it but sometimes feel like you still dont quite get it, this is the React course for you! To learn React you have to understand it.</p>
+<ul>
+<li>
+<p>Learn how to use Reacts custom markup language, JSX, to clean up your Javascript code</p>
+</li>
+<li>
+<p>Master the process of breaking down a complex component into many smaller, interchangeable components</p>
+</li>
+<li>
+<p>Grasp the difference between &ldquo;props" and &ldquo;state" and when to use each</p>
+</li>
+<li>
+<p>Render interactive, media-rich components in beautifully styled apps</p>
+</li>
+<li>
+<p>Develop apps that are unique, fun, and responsive</p>
+</li>
+<li>
+<p>Build on&nbsp;<strong>both Android and iOS</strong>&nbsp;platforms</p>
+</li>
+<li>
+<p>Master integration with&nbsp;<strong>Firebase for user authentication</strong></p>
+</li>
+<li>
+<p>Learn the core principles of&nbsp;<strong>navigation</strong>&nbsp;with React Native</p>
+</li>
+</ul>
+<p>Ive built the course that I would have wanted to take when I was learning React Native. A course that explains the concepts and how theyre implemented in the best order for you to learn and deeply understand them.</p>
+</div>
+<div data-purpose="target-audience">
+<h2>Who this course is for:</h2>
+<ul>
+<li>This course is for anyone looking to make native apps with React Native</li>
+</ul>
+</div>
+</div>'
+,'<div data-purpose="safely-set-inner-html:description:description">
+<h2>What youll learn</h2>
+<div>
+<ul>
+<li>
+<div data-purpose="objective">
+<div>Create real-world native apps using React Native</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Make truly reusable components that look great</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Understand the terminology and concepts of Redux</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Prototype and deploy your own applications to the Apple and Google Play Stores</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Get up to speed with React design principles and methodologies</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Discover mobile design patterns used by experienced engineers</div>
+</div>
+</li>
+</ul>
+</div>
+</div>'
+,'2021-05-05- 00:00:01',true,7);
+
 -------------------------------------
 -- Table structure for `sales`
 -------------------------------------
@@ -574,27 +834,6 @@ insert into `course_reviews` (user_id,course_id,review_content,star) values (4,2
 insert into `course_reviews` (user_id,course_id,review_content,star) values (5,2,'Khóa này tạm được!',3);
 
 
------------------------------------------------------
--- Table structure for `student_courses_bought`
------------------------------------------------------
-DROP TABLE IF EXISTS `student_courses_bought`;
-CREATE TABLE `student_courses_bought`(
-	user_id int(10) not null ,
-    course_id int(10)  not null ,
-	bought_day timestamp,
-
-    primary key (user_id,course_id),
-    
-    foreign key (user_id) references `users` (user_id) on delete cascade,
-	foreign key (course_id) references `courses` (course_id) on delete cascade
-);
-
--------------------------------------------------------------
--- Records  for `student_courses_bought`
--------------------------------------------------------------
-insert into `student_courses_bought` (user_id,course_id,bought_day) values (2,2,str_to_date('12-12-2022','%d-%m-%Y'));
-insert into `student_courses_bought` (user_id,course_id,bought_day) values (3,2,str_to_date('12-12-2022','%d-%m-%Y'));
-
 
 -----------------------------------------------------
 -- Table structure for `carts`
@@ -629,6 +868,7 @@ CREATE TABLE `orders`(
     user_id int(10)  not null ,
 	order_day timestamp,
 
+
     primary key (order_id),
     foreign key (user_id) references `users` (user_id) on delete cascade
 );
@@ -638,6 +878,8 @@ CREATE TABLE `orders`(
 -------------------------------------------------------------
 insert into `orders` (user_id,order_day) values (2,str_to_date('12-12-2021','%d-%m-%Y'));
 insert into `orders` (user_id,order_day) values (3,str_to_date('13-12-2021','%d-%m-%Y'));
+insert into `orders` (user_id,order_day) values (4,str_to_date('13-12-2021','%d-%m-%Y'));
+insert into `orders` (user_id,order_day) values (5,str_to_date('13-12-2021','%d-%m-%Y'));
 
 
 
@@ -647,9 +889,8 @@ insert into `orders` (user_id,order_day) values (3,str_to_date('13-12-2021','%d-
 DROP TABLE IF EXISTS `orders_details`;
 CREATE TABLE `orders_details`(
 	order_detail_id int(10) not null auto_increment,
-	order_day timestamp,
+	order_id int(10) not null,
     course_id int(10) not null,
-    order_id int(10) not null,
     total_money varchar(3000),
 
     primary key (order_detail_id),
@@ -660,11 +901,14 @@ CREATE TABLE `orders_details`(
 -------------------------------------------------------------
 -- Records  for `orders`
 -------------------------------------------------------------
-insert into `orders_details` (order_day,course_id,order_id,total_money) values (str_to_date('12-12-2021','%d-%m-%Y'),1,1,'2000000');
-insert into `orders_details` (order_day,course_id,order_id,total_money) values (str_to_date('13-12-2021','%d-%m-%Y'),2,1,'3000000');
-insert into `orders_details` (order_day,course_id,order_id,total_money) values (str_to_date('14-12-2021','%d-%m-%Y'),2,2,'3000000');
-insert into `orders_details` (order_day,course_id,order_id,total_money) values (str_to_date('14-12-2021','%d-%m-%Y'),2,2,'3000000');
-insert into `orders_details` (order_day,course_id,order_id,total_money) values (str_to_date('14-12-2021','%d-%m-%Y'),2,2,'3000000');
+insert into `orders_details` (course_id,order_id,total_money) values (1,1,'2000000');
+insert into `orders_details` (course_id,order_id,total_money) values (2,1,'3000000');
+insert into `orders_details` (course_id,order_id,total_money) values (3,1,'3000000');
+insert into `orders_details` (course_id,order_id,total_money) values (1,2,'3000000');
+insert into `orders_details` (course_id,order_id,total_money) values (2,2,'3000000');
+insert into `orders_details` (course_id,order_id,total_money) values (3,2,'3000000');
+insert into `orders_details` (course_id,order_id,total_money) values (3,3,'3000000');
+insert into `orders_details` (course_id,order_id,total_money) values (3,4,'3000000');
 
 
 

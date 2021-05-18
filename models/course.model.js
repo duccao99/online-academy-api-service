@@ -93,32 +93,59 @@ const courseModel = {
     `;
     return db.load(sql);
   },
+  allChapters(course_id) {
+    const sql = `select *
+    from ${tbl_chapters} c
+    where c.course_id = ${course_id} ;`;
+    return db.load(sql);
+  },
+  allLessons(course_id) {
+    const sql = `select l.lesson_id, l.lesson_name, l.lesson_content, l.flag_reviewable
+    , l.duration, l.chap_id, c.chap_name, c.course_id
+    from ${tbl_lessons} l
+    inner join ${tbl_chapters} c 
+    on c.chap_id = l.chap_id
+    where c.course_id =${course_id};
+    `;
+    return db.load(sql);
+  },
+
   detailCourseInstructor(course_id) {
     const sql = `select ic.course_id, ic.uploaded_day, u.user_name,
-     u.email, u.role_id, u.user_avatar_url
+     u.email, u.role_id, u.user_avatar_url, r.role_name
     from ${table_courses} c
     inner join ${tbl_instructor_courses_uploaded} ic
     on ic.course_id = c.course_id
     inner join ${tbl_users} u
     on u.user_id = ic.user_id
+    inner join ${tbl_roles} r
+    on r.role_id = u.role_id
     where c.course_id = ${course_id};
     `;
     return db.load(sql);
   },
-  detailFiveRelativeCourse(course_id, subject_id) {
+  detailFiveRelativeCourseBoughtTheMost(course_id, subject_id) {
     const sql = `select c.course_id, c.course_name, c.course_title
     , c.course_thumbnail, c.course_avatar_url, c.course_fee ,
     c.course_full_description, c.course_short_description
-    ,c.course_last_updated, c.is_finished, c.subject_id,c.views ,
-    sj.subject_name
+    ,c.course_last_updated, c.is_finished, c.subject_id,c.views 
+    ,sj.subject_name, scb.num_stu_bought
     from ${table_courses} c
     inner join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
+    inner join (
+    select * , count(*) num_stu_bought
+    from ${tbl_orders_details} scb 
+    group by scb.course_id
+    having count(scb.course_id) > 0
+    order by count(scb.course_id) desc
+    ) scb
+    on scb.course_id = c.course_id
     where sj.subject_id = ${subject_id}
     and c.is_finished = true
     and c.course_id != ${course_id}
+    order by c.course_id
     limit 5;
-    
     `;
     return db.load(sql);
   },
