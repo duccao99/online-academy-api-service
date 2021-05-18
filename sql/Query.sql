@@ -86,17 +86,37 @@ on u.user_id = ic.user_id
 where c.course_id = 1;
 
 ----------------------------------------------------
+--   all course bought most
+----------------------------------------------------
+select * , count(*) num_stu_bought
+from `orders_details` scb 
+group by scb.course_id
+having count(scb.course_id) > 0
+order by count(scb.course_id) desc;
+
+
+
+----------------------------------------------------
 --  detail five course relative category
 ----------------------------------------------------
 select c.course_id, c.course_name, c.course_title, c.course_thumbnail, c.course_avatar_url, c.course_fee ,
 c.course_full_description, c.course_short_description,c.course_last_updated, c.is_finished, c.subject_id,c.views ,
-sj.subject_name
+sj.subject_name, scb.num_stu_bought
 from `courses` c
 inner join `subjects` sj
 on sj.subject_id = c.subject_id
+inner join (
+select * , count(*) num_stu_bought
+from `orders_details` scb 
+group by scb.course_id
+having count(scb.course_id) > 0
+order by count(scb.course_id) desc
+) scb
+on scb.course_id = c.course_id
 where sj.subject_id = 2
 and c.is_finished = true
-and c.course_id != 1
+and c.course_id != 2
+order by c.course_id
 limit 5;
 
 ----------------------------------------------------
@@ -113,6 +133,20 @@ inner join `roles` r
 on u.role_id = r.role_id
 where c.course_id = 1;
 
+----------------------------------------------------
+--  detail all chapters, lessons
+----------------------------------------------------
+select *
+from `chapters` c
+where c.course_id =1;
+
+select l.lesson_id, l.lesson_name, l.lesson_content, l.flag_reviewable
+, l.duration, l.chap_id, c.chap_name, c.course_id
+from `lessons` l
+inner join `chapters` c 
+on c.chap_id = l.chap_id
+where c.course_id =1;
+
 
 select * from `roles`;
 select * from `categories`;
@@ -124,8 +158,8 @@ select * from `courses`;
 select * from `orders`;
 select * from `orders_details`;
 select * from `course_reviews`;
+select * from `student_courses_bought`;
 select * from `instructor_courses_uploaded`;
-
 
 
 
