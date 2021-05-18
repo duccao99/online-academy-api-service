@@ -19,7 +19,7 @@ where u.role_id=2;
 --  outstanding courses (most bought)
 ----------------------------------------------------------
 select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.course_fee,
-sj.subject_id, sj.subject_name, c.views, u.user_name, rt.avg_rate
+sj.subject_id, sj.subject_name, c.views, u.user_name, rt.avg_rate, c.course_last_updated
 from `courses` c
 inner join `orders_details` od
 on od.course_id = c.course_id
@@ -35,6 +35,7 @@ from course_reviews as crw
 group by crw.course_id
 ) rt
 on rt.course_id = c.course_id
+where datediff(curdate(),c.course_last_updated ) <=7
 group by c.course_id
 having count(od.course_id) >= 3
 and rt.avg_rate >= 4
@@ -42,16 +43,23 @@ limit 3;
 
 
 
+
+
+
 ----------------------------
 -- Get 10 newsest courses
 ----------------------------
-select *
+select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.course_fee,
+sj.subject_id, sj.subject_name, c.views, u.user_name, c.course_last_updated
 from `courses` c
-inner join `subjects` s
-on s.subject_id = c.subject_id
-inner join `categories` cat 
-on cat.cat_id = s.cat_id
-and c.is_finished = 1
+inner join `subjects` sj
+on sj.subject_id = c.subject_id
+inner join `instructor_courses_uploaded` ins
+on ins.course_id = c.course_id
+inner join `users` u
+on u.user_id = ins.user_id
+where c.is_finished = 1
+group by c.course_id
 order by c.course_last_updated desc
 limit 10;
 

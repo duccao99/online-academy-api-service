@@ -277,7 +277,7 @@ values ('React - The Complete Guide','React - The Complete Guide (incl Hooks, Re
 </div>
 </div>
 <div class="clp-component-render">&nbsp;</div>
-</div>','2008-01-01 00:00:01',true,2,10);
+</div>',curdate(),true,2,10);
 
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,course_short_description,course_last_updated,is_finished,subject_id,views) 
 values ('Fast Tracking React','React - Using fastest speed to learn ReactJS','','https://img-c.udemycdn.com/course/240x135/1362070_b9a1_2.jpg?Expires=1621142294&Signature=YkpacdOxrPqJxvFJWomoqv6mUEgYrLYeUyLcyrCzHootBf7kxvDQ7pZMwGq7pi3DZ068d-pN6eEK-bh02uU5PJw0k7b2v~9SUqsjgKJl0foW40YzNq~P1VHsU2zvpIuncDIKmnN24sWh-K2P4kTQcanM3ujeC~ioMEd8FXxXBa1yaTiADlmK1GGbhbRpjQtBBmXM8B2ht0~fZzBwhS551Ksf5PM427cRYp3MJFYnTEb2BKEXXDBLt6GMXXi-qfi8heQk9KBU5q-Vzm4v0OtJn0npX4-Uc~581QwHiY8Nxi8mDvM2dafpIM6pUrI3jwF~g7F5myMPlIvvyII2GsbBVw__&Key-Pair-Id=APKAITJV77WS5ZT7262A','40000000',
@@ -346,7 +346,7 @@ values ('Fast Tracking React','React - Using fastest speed to learn ReactJS','',
 </div>
 </div>
 <div class="clp-component-render">&nbsp;</div>
-</div>','2008-01-01 00:00:01',true,2,9);
+</div>',curdate(),true,2,9);
 
 
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,course_short_description,course_last_updated,is_finished,subject_id,views) 
@@ -456,7 +456,7 @@ values ('Learn and Understand NodeJS','Dive deep under the hood of NodeJS. Learn
 </ul>
 </div>
 </div>
-</div>','2021-05-05- 00:00:01',true,1,8);
+</div>',curdate(),true,1,8);
 
 
 
@@ -547,7 +547,7 @@ values ('Modern React with Redux','Master React and Redux with React Router, Web
 </div>
 </li>
 </ul>
-</div>','2021-05-05- 00:00:01',true,2,7);
+</div>',curdate(),true,2,7);
 
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
 course_short_description,course_last_updated,is_finished,subject_id,views) 
@@ -625,7 +625,7 @@ values ('Javascript Projects for Complete Beginners','Learn and Deploy Four proj
 </li>
 </ul>
 </div>
-</div>','2021-05-05- 00:00:01',true,3,6);
+</div>',curdate(),true,3,6);
 
 
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
@@ -718,7 +718,7 @@ values (
 </ul>
 </div>
 </div>'
-,'2021-05-05- 00:00:01',true,7,5);
+,curdate(),true,7,5);
 
 
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
@@ -814,7 +814,7 @@ values (
 </li>
 </ul>
 </div>'
-,'2021-05-05- 00:00:01',true,7,4);
+,curdate(),true,7,4);
 
 
 
@@ -1092,7 +1092,7 @@ values (
 </ul>
 </div>
 </div>'
-,'2021-05-05- 00:00:01',true,10,2);
+,curdate(),true,10,2);
 
 
 
@@ -1348,7 +1348,7 @@ values (
 </div>
 </div>
 </div>'
-,'2021-05-05- 00:00:01',true,4,1);
+,curdate(),true,4,1);
 -------------------------------------
 -- Table structure for `sales`
 -------------------------------------
