@@ -47,7 +47,6 @@ app.use("/api/student", auth, require("./routes/student.route"));
 app.use("/api/category", require("./routes/category.route"));
 app.use("/api/sub-category", require("./routes/subCategory.route"));
 app.use("/api/course", require("./routes/course.route"));
-
 app.use("/api/webhook", require("./routes/webhook.route"));
 
 // Handle async errors

@@ -54,7 +54,9 @@ const courseModel = {
     from ${table_courses} c
     inner join ${tbl_orders_details} od
     on od.course_id = c.course_id
-    having count(c.course_id) > 10;`;
+    group by c.course_id
+    having count(c.course_id) >= 3
+    limit 3;`;
 
     return db.load(sql);
   },
@@ -65,8 +67,8 @@ const courseModel = {
     on s.subject_id = c.subject_id
     inner join ${tbl_categories} cat 
     on cat.cat_id = s.cat_id
-    where datediff(curdate(),c.course_last_updated) <7 
     and c.is_finished = 1
+    order by c.course_last_updated desc
     limit 10;
       `;
 

@@ -16,18 +16,20 @@ from `users` u
 where u.role_id=2;
 
 ----------------------------------------------------------
--- Get outstanding courses (most bought)
+--  outstanding courses (most bought)
 ----------------------------------------------------------
 select *
 from `courses` c
 inner join `orders_details` od
 on od.course_id = c.course_id
-having count(c.course_id) > 10;
+group by c.course_id
+having count(c.course_id) >= 3
+limit 3;
 
 
 
 ----------------------------
--- Get 10 newsst courses
+-- Get 10 newsest courses
 ----------------------------
 select *
 from `courses` c
@@ -35,8 +37,8 @@ inner join `subjects` s
 on s.subject_id = c.subject_id
 inner join `categories` cat 
 on cat.cat_id = s.cat_id
-where datediff(curdate(),c.course_last_updated) <7 
 and c.is_finished = 1
+order by c.course_last_updated desc
 limit 10;
 
 ----------------------------
