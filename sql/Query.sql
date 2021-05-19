@@ -204,6 +204,17 @@ on c.chap_id = l.chap_id
 where c.course_id =1;
 
 
+
+----------------------------------------------------
+--  all course with pagi
+----------------------------------------------------
+select  *
+from `courses` c 
+where c.is_finished = true 
+limit 9
+offset 10;
+
+
 select * from `roles`;
 select * from `categories`;
 select * from `subjects`;

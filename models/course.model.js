@@ -1,5 +1,5 @@
 const db = require("../config/db");
-const table_courses = `courses`;
+const tbl_courses = `courses`;
 const tbl_subjects = `subjects`;
 const tbl_categories = `categories`;
 const tbl_orders_details = `orders_details`;
@@ -13,7 +13,21 @@ const tbl_student_enrolls = `student_enrolls`;
 
 const courseModel = {
   all() {
-    const sql = `select * from ${table_courses} `;
+    const sql = `select * from ${tbl_courses} `;
+    return db.load(sql);
+  },
+
+  allWithFinished() {
+    const sql = `select * from ${tbl_courses} c
+    where c.is_finished = true `;
+    return db.load(sql);
+  },
+  allWithPagi(limit, offset) {
+    const sql = `select  *
+      from ${tbl_courses} c 
+      where c.is_finished = true 
+      limit ${limit}
+      offset ${offset} `;
     return db.load(sql);
   },
 
@@ -23,7 +37,7 @@ const courseModel = {
     c.course_full_description, c.course_short_description,
     c.course_last_updated, c.is_finished, c.subject_id,c.views ,
     sj.subject_name,  u.user_name
-    from ${table_courses} c 
+    from ${tbl_courses} c 
     inner join ${tbl_subjects} sj 
     on sj.subject_id = c.subject_id
     inner join ${tbl_instructor_courses_uploaded} i
@@ -37,23 +51,23 @@ const courseModel = {
   },
 
   async singleByCourseName(course_name) {
-    const sql = `select * from ${table_courses} as c
+    const sql = `select * from ${tbl_courses} as c
     where c.course_name = '${course_name}'`;
     const ret = await db.load(sql);
     return ret[0];
   },
 
   del(condition) {
-    return db.del(condition, table_courses);
+    return db.del(condition, tbl_courses);
   },
   edit(entity, condition) {
-    return db.edit(entity, condition, table_courses);
+    return db.edit(entity, condition, tbl_courses);
   },
 
   getOutstandingCourse() {
     const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, 
     c.course_fee,sj.subject_id, sj.subject_name, c.views, u.user_name,  rt.avg_rate
-    from ${table_courses} c
+    from ${tbl_courses} c
     inner join ${tbl_orders_details} od
     on od.course_id = c.course_id
     inner join ${tbl_subjects} sj
@@ -81,7 +95,7 @@ const courseModel = {
     const sql = `select c.course_id, c.course_name, c.course_title,
      c.course_avatar_url, c.course_fee,
     sj.subject_id, sj.subject_name, c.views, u.user_name, c.course_last_updated
-    from ${table_courses} c
+    from ${tbl_courses} c
     inner join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
     inner join ${tbl_instructor_courses_uploaded} ins
@@ -100,8 +114,8 @@ const courseModel = {
     const sql = `select c.course_id, c.course_name, c.course_title, 
     c.course_avatar_url, c.course_fee,
     c.course_last_updated, c.is_finished, c.views, sj.subject_name, u.user_id,
-    u.user_name
-    from ${table_courses} c 
+    u.user_name, rt.avg_rate
+    from ${tbl_courses} c 
     inner join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
     inner join ${tbl_instructor_courses_uploaded} ins 
@@ -125,7 +139,7 @@ const courseModel = {
     const sql = `select  count(*) as num_student_enroll,
     cat.cat_name, sj.subject_id, sj.subject_name, c.course_id 
     from ${tbl_student_enrolls} se 
-    inner join ${table_courses} c 
+    inner join ${tbl_courses} c 
     on c.course_id = se.course_id 
     inner join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
@@ -139,7 +153,7 @@ const courseModel = {
     const sql = `select l.lesson_id, l.lesson_name, l.lesson_content,
      l.flag_reviewable, l.duration
     , ct.chap_id, ct.chap_name
-    from ${table_courses} c
+    from ${tbl_courses} c
     inner join ${tbl_chapters} ct
     on ct.course_id = c.course_id
     inner join ${tbl_lessons} l
@@ -168,7 +182,7 @@ const courseModel = {
   detailCourseInstructor(course_id) {
     const sql = `select ic.course_id, ic.uploaded_day, u.user_name,
      u.email, u.role_id, u.user_avatar_url, r.role_name
-    from ${table_courses} c
+    from ${tbl_courses} c
     inner join ${tbl_instructor_courses_uploaded} ic
     on ic.course_id = c.course_id
     inner join ${tbl_users} u
@@ -185,7 +199,7 @@ const courseModel = {
     c.course_full_description, c.course_short_description
     ,c.course_last_updated, c.is_finished, c.subject_id,c.views 
     ,sj.subject_name, scb.num_stu_bought
-    from ${table_courses} c
+    from ${tbl_courses} c
     inner join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
     inner join (
@@ -208,7 +222,7 @@ const courseModel = {
   detailCourseReviews(course_id) {
     const sql = `select cr.course_id,c.course_name, cr.star, cr.review_content
     ,u.user_id, u.user_name, u.user_avatar_url, u.role_id, r.role_name
-    from ${table_courses} c
+    from ${tbl_courses} c
     inner join ${tbl_course_reviews} cr
     on cr.course_id = c.course_id
     inner join ${tbl_users} u

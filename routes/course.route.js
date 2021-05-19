@@ -13,6 +13,38 @@ router.get("/", async function (req, res) {
   });
 });
 
+router.get("/all-with-finished", async function (req, res) {
+  const ret = await courseModel.all();
+
+  if (ret.length === 0) {
+    return res.status(204).json({ message: "No content!" });
+  }
+
+  if (req.query.pagi === undefined) {
+    req.query.pagi = 1;
+  }
+
+  let curr_page = +req.query.pagi;
+
+  if (curr_page === 0) {
+    curr_page = 1;
+  }
+
+  const limit = 9;
+  const offset = limit * (curr_page - 1);
+
+  const total_courses = ret.length;
+  const total_num_pagi_stuff = Math.ceil(total_courses / limit);
+
+  const ret_pagi = await courseModel.allWithPagi(limit, offset);
+
+  return res.json({
+    all_courses_finished: ret_pagi,
+    total_num_pagi_stuff,
+    curr_page,
+  });
+});
+
 router.post("/", async function (req, res) {
   return res.json({ message: "Update later!" });
 });
