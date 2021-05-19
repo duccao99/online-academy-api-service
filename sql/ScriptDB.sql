@@ -826,7 +826,7 @@ values(
 'The Complete Android N Developer Course'
 ,'Learn Android App Development with Android 7 Nougat by building real apps including Uber, Whatsapp and Instagram!'
 ,''
-,'https://miro.medium.com/max/5144/1*m8V2pAYonX7i9jEJt9yx3w.pnghttps://kynangso.net/wp-content/uploads/2019/06/Android-Banner.png'
+,'https://kynangso.net/wp-content/uploads/2019/06/Android-Banner.png'
 ,'9.99'
 ,'<div data-purpose="safely-set-inner-html:description:description">
 <p><strong><em>Please note support for this course has now stopped, and that&nbsp;there is a newer version of the course (The Complete Android Oreo Developer Course) available.</em></strong></p>
@@ -934,7 +934,7 @@ values(
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
 course_short_description,course_last_updated,is_finished,subject_id,views) 
 values (
-'iOS & Swift - The Complete iOS App Development Bootcamp',
+'iOS & Swift - The Complete iOS App Development',
 'From Beginner to iOS App Developer with Just One Course! Fully Updated with a Comprehensive Module Dedicated to SwiftUI!',
 '',
 'https://theme.hstatic.net/1000255974/1000341244/14/banner_product_home_2.jpg?v=55',
@@ -1434,9 +1434,15 @@ CREATE TABLE `instructor_courses_uploaded`(
 -- Records  for `instructor_courses_uploaded`
 -------------------------------------------------------------
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,1,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (8,2,2,2,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (8,3,3,3,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,4,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,2,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,3,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,4,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (8,5,2,2,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (8,6,3,3,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,7,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,8,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,9,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,10,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 
 
 
@@ -1460,20 +1466,27 @@ CREATE TABLE `course_reviews`(
 -- Records  for `course_reviews`
 -------------------------------------------------------------
 insert into `course_reviews` (user_id,course_id,review_content,star) values (4,1,'Khóa này hay nè!',5);
-insert into `course_reviews` (user_id,course_id,review_content,star) values (3,1,'Khóa này hay ghê like!',5);
+
 insert into `course_reviews` (user_id,course_id,review_content,star) values (2,1,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (2,2,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (2,3,'Khóa này tạm được!',4);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (4,2,'Khóa dở tệ!',1);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (5,2,'Khóa này tạm được!',3);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (5,3,'Khóa này tạm được!',3);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (5,1,'Khóa này tạm được!',3);
-insert into `course_reviews` (user_id,course_id,review_content,star) values (2,3,'Khóa này tạm được!',4);
-insert into `course_reviews` (user_id,course_id,review_content,star) values (3,3,'Khóa này hay!',5);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (1,2,'Khóa này hay!',5);
-insert into `course_reviews` (user_id,course_id,review_content,star) values (2,2,'Khóa này hay!',5);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (7,3,'Khóa này hay!',5);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (7,2,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,1,'Khóa này hay ghê like!',5);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (3,2,'Khóa này hay!',5);
-
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,3,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,4,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,5,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,6,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,7,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,8,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,9,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,10,'Khóa này hay!',5);
 
 
 
@@ -1568,8 +1581,38 @@ insert into `orders_details` (course_id,order_id,total_money) values (2,7,'300')
 
 
 
+-----------------------------------------------------
+-- Table structure for `student_enrolls`
+-----------------------------------------------------
+DROP TABLE IF EXISTS `student_enrolls`;
+CREATE TABLE `student_enrolls`(
+	enroll_id int(10) not null auto_increment,
+    user_id int(10)  not null ,
+    course_id int(10)  not null ,
 
+    primary key (enroll_id),
+    foreign key (user_id) references `users` (user_id) on delete cascade,
+	foreign key (course_id) references `courses` (course_id) on delete cascade
+);
 
+-------------------------------------------------------------
+-- Records  for `orders`
+-------------------------------------------------------------
+insert into `student_enrolls` (user_id,course_id) values (2,1);
+insert into `student_enrolls` (user_id,course_id) values (2,2);
+insert into `student_enrolls` (user_id,course_id) values (2,3);
+insert into `student_enrolls` (user_id,course_id) values (2,4);
+insert into `student_enrolls` (user_id,course_id) values (2,5);
+insert into `student_enrolls` (user_id,course_id) values (3,1);
+insert into `student_enrolls` (user_id,course_id) values (3,2);
+insert into `student_enrolls` (user_id,course_id) values (3,3);
+insert into `student_enrolls` (user_id,course_id) values (3,4);
+insert into `student_enrolls` (user_id,course_id) values (3,5);
+insert into `student_enrolls` (user_id,course_id) values (4,7);
+insert into `student_enrolls` (user_id,course_id) values (4,6);
+insert into `student_enrolls` (user_id,course_id) values (1,7);
+insert into `student_enrolls` (user_id,course_id) values (1,6);
+insert into `student_enrolls` (user_id,course_id) values (1,1);
 
 
 

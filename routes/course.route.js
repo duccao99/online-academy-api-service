@@ -49,6 +49,17 @@ router.get("/ten-most-viewed-courses", async function (req, res) {
   });
 });
 
+router.get("/top-sub-cat", async function (req, res) {
+  const ret = await courseModel.topSubCat();
+
+  if (ret.length === 0) {
+    return res.status(204).json({ message: "No content!" });
+  }
+  return res.json({
+    top_sub_cat: ret,
+  });
+});
+
 router.get("/detail/syllabus/:id", async function (req, res) {
   const id = +req.params.id;
 

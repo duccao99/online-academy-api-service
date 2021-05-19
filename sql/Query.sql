@@ -36,6 +36,7 @@ group by crw.course_id
 ) rt
 on rt.course_id = c.course_id
 where datediff(curdate(),c.course_last_updated ) <=7
+and  c.is_finished = 1
 group by c.course_id
 having count(od.course_id) >= 3
 and rt.avg_rate >= 4
@@ -66,8 +67,24 @@ limit 10;
 ----------------------------
 --  10 most viewed courses
 ----------------------------
-select *
+select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.course_fee,
+c.course_last_updated, c.is_finished, c.views, sj.subject_name, u.user_id,
+u.user_name
 from `courses` c 
+inner join `subjects` sj
+on sj.subject_id = c.subject_id
+inner join `instructor_courses_uploaded` ins 
+on ins.course_id = c.course_id 
+inner join `users` u
+on u.user_id = ins.user_id
+inner join (
+select *, avg(cr.star) as avg_rate
+from course_reviews cr
+group by cr.course_id
+) rt
+on rt.course_id = c.course_id
+where c.is_finished = 1
+group by c.course_id
 order by c.views desc 
 limit 10;
 
@@ -85,6 +102,21 @@ on i.course_id = c.course_id
 inner join `users` u
 on u.user_id = i.user_id
 where c.course_id = 1;
+
+----------------------------------------------------------
+-- top sub cat (last week)
+----------------------------------------------------------
+select  count(*) as num_student_enroll, cat.cat_name, sj.subject_id, sj.subject_name, c.course_id 
+from `student_enrolls` se 
+inner join `courses` c 
+on c.course_id = se.course_id 
+inner join `subjects` sj
+on sj.subject_id = c.subject_id
+inner join `categories` cat 
+on cat.cat_id = sj.cat_id
+group by se.course_id
+order by num_student_enroll desc ;
+
 
 ----------------------------
 --  course syllabus
