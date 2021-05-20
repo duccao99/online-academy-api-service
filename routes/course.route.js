@@ -15,7 +15,7 @@ router.get("/", async function (req, res) {
 });
 
 router.get("/all-with-finished", async function (req, res) {
-  const ret = await courseModel.allWithFinished();
+  const ret = await courseModel.allWithNoPagi();
 
   if (ret.length === 0) {
     return res.status(204).json({ message: "No content!" });
@@ -25,10 +25,10 @@ router.get("/all-with-finished", async function (req, res) {
     req.query.pagi = 1;
   }
 
-  let curr_page = +req.query.pagi;
+  let curr_pagi = +req.query.pagi;
 
   const limit = 9;
-  const offset = limit * (curr_page - 1);
+  const offset = limit * (curr_pagi - 1);
 
   const total_courses = ret.length;
 
@@ -39,7 +39,7 @@ router.get("/all-with-finished", async function (req, res) {
   return res.json({
     all_courses_finished: ret_pagi,
     total_num_pagi_stuff,
-    curr_page,
+    curr_pagi,
   });
 });
 
@@ -208,6 +208,107 @@ router.get("/by-full-text-search-subcat/:text", async function (req, res) {
     curr_pagi,
   });
 });
+
+router.get("/byRate/asc", async function (req, res) {
+  const all_courses = await courseModel.byRateASCNoPagi();
+
+  if (all_courses.length === 0) {
+    return res.status(204).json({ message: "No content!" });
+  }
+
+  let curr_pagi = 1;
+  if (req.query.pagi !== undefined) {
+    curr_pagi = +req.query.pagi;
+  }
+
+  const limit = 9;
+  const offset = limit * (curr_pagi - 1);
+
+  const total_num_pagi_stuff = Math.ceil(all_courses.length / limit);
+  const course_by_rate_asc = await courseModel.byRateASCPagi(limit, offset);
+
+  return res.json({
+    course_by_rate: course_by_rate_asc,
+    total_num_pagi_stuff,
+    curr_pagi,
+  });
+});
+
+router.get("/byRate/desc", async function (req, res) {
+  const all_courses = await courseModel.byRateDESCNoPagi();
+
+  if (all_courses.length === 0) {
+    return res.status(204).json({ message: "No content!" });
+  }
+
+  let curr_pagi = 1;
+  if (req.query.pagi !== undefined) {
+    curr_pagi = +req.query.pagi;
+  }
+
+  const limit = 9;
+  const offset = limit * (curr_pagi - 1);
+
+  const total_num_pagi_stuff = Math.ceil(all_courses.length / limit);
+  const course_by_rate_desc = await courseModel.byRateDESCPagi(limit, offset);
+
+  return res.json({
+    course_by_rate: course_by_rate_desc,
+    total_num_pagi_stuff,
+    curr_pagi,
+  });
+});
+
+router.get("/byPrice/asc", async function (req, res) {
+  const all_courses = await courseModel.byPriceASCNoPagi();
+
+  if (all_courses.length === 0) {
+    return res.status(204).json({ message: "No content!" });
+  }
+
+  let curr_pagi = 1;
+  if (req.query.pagi !== undefined) {
+    curr_pagi = +req.query.pagi;
+  }
+
+  const limit = 9;
+  const offset = limit * (curr_pagi - 1);
+
+  const total_num_pagi_stuff = Math.ceil(all_courses.length / limit);
+  const byprice = await courseModel.byPriceASCPagi(limit, offset);
+
+  return res.json({
+    course_by_price: byprice,
+    total_num_pagi_stuff,
+    curr_pagi,
+  });
+});
+
+router.get("/byPrice/desc", async function (req, res) {
+  const all_courses = await courseModel.byPriceDESCNoPagi();
+
+  if (all_courses.length === 0) {
+    return res.status(204).json({ message: "No content!" });
+  }
+
+  let curr_pagi = 1;
+  if (req.query.pagi !== undefined) {
+    curr_pagi = +req.query.pagi;
+  }
+
+  const limit = 9;
+  const offset = limit * (curr_pagi - 1);
+
+  const total_num_pagi_stuff = Math.ceil(all_courses.length / limit);
+  const byprice = await courseModel.byPriceDESCPagi(limit, offset);
+
+  return res.json({
+    course_by_price: byprice,
+    total_num_pagi_stuff,
+    curr_pagi,
+  });
+});
+
 router.get("/detail/syllabus/:id", async function (req, res) {
   const id = +req.params.id;
 

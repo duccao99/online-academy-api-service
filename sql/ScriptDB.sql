@@ -117,7 +117,7 @@ CREATE TABLE `courses`(
     course_title nvarchar(500),
 	course_thumbnail nvarchar(100),
 	course_avatar_url nvarchar(1000),
-    course_fee nvarchar(1000),
+    course_fee int(10),
     course_full_description nvarchar(14000),
 	course_short_description nvarchar(4000),
 	course_last_updated TIMESTAMP,
@@ -133,7 +133,7 @@ CREATE TABLE `courses`(
 -- Records  for `courses`
 -------------------------------------
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,course_short_description,course_last_updated,is_finished,subject_id,views) 
-values ('React - The Complete Guide','React - The Complete Guide (incl Hooks, React Router, Redux)','','https://img-c.udemycdn.com/course/240x135/1362070_b9a1_2.jpg?Expires=1621142294&Signature=YkpacdOxrPqJxvFJWomoqv6mUEgYrLYeUyLcyrCzHootBf7kxvDQ7pZMwGq7pi3DZ068d-pN6eEK-bh02uU5PJw0k7b2v~9SUqsjgKJl0foW40YzNq~P1VHsU2zvpIuncDIKmnN24sWh-K2P4kTQcanM3ujeC~ioMEd8FXxXBa1yaTiADlmK1GGbhbRpjQtBBmXM8B2ht0~fZzBwhS551Ksf5PM427cRYp3MJFYnTEb2BKEXXDBLt6GMXXi-qfi8heQk9KBU5q-Vzm4v0OtJn0npX4-Uc~581QwHiY8Nxi8mDvM2dafpIM6pUrI3jwF~g7F5myMPlIvvyII2GsbBVw__&Key-Pair-Id=APKAITJV77WS5ZT7262A','40000000',
+values ('React - The Complete Guide','React - The Complete Guide (incl Hooks, React Router, Redux)','','https://img-c.udemycdn.com/course/240x135/1362070_b9a1_2.jpg?Expires=1621142294&Signature=YkpacdOxrPqJxvFJWomoqv6mUEgYrLYeUyLcyrCzHootBf7kxvDQ7pZMwGq7pi3DZ068d-pN6eEK-bh02uU5PJw0k7b2v~9SUqsjgKJl0foW40YzNq~P1VHsU2zvpIuncDIKmnN24sWh-K2P4kTQcanM3ujeC~ioMEd8FXxXBa1yaTiADlmK1GGbhbRpjQtBBmXM8B2ht0~fZzBwhS551Ksf5PM427cRYp3MJFYnTEb2BKEXXDBLt6GMXXi-qfi8heQk9KBU5q-Vzm4v0OtJn0npX4-Uc~581QwHiY8Nxi8mDvM2dafpIM6pUrI3jwF~g7F5myMPlIvvyII2GsbBVw__&Key-Pair-Id=APKAITJV77WS5ZT7262A',20,
 '<div data-purpose="safely-set-inner-html:description:description">
 <p><strong>This course is the most up-to-date, comprehensive and bestselling React course on Udemy!</strong></p>
 <p><strong>It was completely updated and re-recorded from the ground up in May 2021 - it teaches the very latest version of React with all the core, modern features you need to know!</strong></p>
@@ -282,7 +282,8 @@ values ('React - The Complete Guide','React - The Complete Guide (incl Hooks, Re
 </div>',curdate(),true,2,10);
 
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,course_short_description,course_last_updated,is_finished,subject_id,views) 
-values ('Fast Tracking React','React - Using fastest speed to learn ReactJS','','https://img-c.udemycdn.com/course/240x135/1362070_b9a1_2.jpg?Expires=1621142294&Signature=YkpacdOxrPqJxvFJWomoqv6mUEgYrLYeUyLcyrCzHootBf7kxvDQ7pZMwGq7pi3DZ068d-pN6eEK-bh02uU5PJw0k7b2v~9SUqsjgKJl0foW40YzNq~P1VHsU2zvpIuncDIKmnN24sWh-K2P4kTQcanM3ujeC~ioMEd8FXxXBa1yaTiADlmK1GGbhbRpjQtBBmXM8B2ht0~fZzBwhS551Ksf5PM427cRYp3MJFYnTEb2BKEXXDBLt6GMXXi-qfi8heQk9KBU5q-Vzm4v0OtJn0npX4-Uc~581QwHiY8Nxi8mDvM2dafpIM6pUrI3jwF~g7F5myMPlIvvyII2GsbBVw__&Key-Pair-Id=APKAITJV77WS5ZT7262A','40000000',
+values ('Fast Tracking React','React - Using fastest speed to learn ReactJS','','https://img-c.udemycdn.com/course/240x135/1362070_b9a1_2.jpg?Expires=1621142294&Signature=YkpacdOxrPqJxvFJWomoqv6mUEgYrLYeUyLcyrCzHootBf7kxvDQ7pZMwGq7pi3DZ068d-pN6eEK-bh02uU5PJw0k7b2v~9SUqsjgKJl0foW40YzNq~P1VHsU2zvpIuncDIKmnN24sWh-K2P4kTQcanM3ujeC~ioMEd8FXxXBa1yaTiADlmK1GGbhbRpjQtBBmXM8B2ht0~fZzBwhS551Ksf5PM427cRYp3MJFYnTEb2BKEXXDBLt6GMXXi-qfi8heQk9KBU5q-Vzm4v0OtJn0npX4-Uc~581QwHiY8Nxi8mDvM2dafpIM6pUrI3jwF~g7F5myMPlIvvyII2GsbBVw__&Key-Pair-Id=APKAITJV77WS5ZT7262A'
+,12,
 '<div data-purpose="safely-set-inner-html:description:description">
 <p><strong>This course is the most up-to-date, comprehensive and bestselling React course on Udemy!</strong></p>
 <p><strong>It was completely updated and re-recorded from the ground up in May 2021 - it teaches the very latest version of React with all the core, modern features you need to know!</strong></p>
@@ -353,7 +354,7 @@ values ('Fast Tracking React','React - Using fastest speed to learn ReactJS','',
 
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,course_short_description,course_last_updated,is_finished,subject_id,views) 
 values ('Learn and Understand NodeJS','Dive deep under the hood of NodeJS. Learn V8, Express, the MEAN stack, core Javascript concepts, and more.','','https://img-b.udemycdn.com/course/240x135/461160_8d87_6.jpg?secure=tYL9a3DZGrDtHankOr23SA%3D%3D%2C1621150709'
-,'2000000',
+,15,
 '<div data-purpose="safely-set-inner-html:description:description">
 <div class="course-landing-page__main-content component-margin">
 <div class="clp-component-render">
@@ -467,7 +468,7 @@ insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_ur
 course_short_description,course_last_updated,is_finished,subject_id,views) 
 values ('Modern React with Redux','Master React and Redux with React Router, Webpack, and Create-React-App. Includes Hooks!'
 ,'','https://d585tldpucybw.cloudfront.net/sfimages/default-source/blogs/templates/reactt-dark_870x220.png?sfvrsn=ef69fd61_3'
-,'9'
+,9
 ,'<div data-purpose="safely-set-inner-html:description:description" style="box-sizing: border-box; margin: 0px; padding: 0px; color: rgb(60, 59, 55); font-family: "sf pro text", -apple-system, BlinkMacSystemFont, Roboto, "segoe ui", Helvetica, Arial, sans-serif, "apple color emoji", "segoe ui emoji", "segoe ui symbol"; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
     <p style="box-sizing: border-box; margin: 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;"><strong style="box-sizing: border-box; margin: 0px; padding: 0px;"><em style="box-sizing: border-box; margin: 0px; padding: 0px;">Course Last Updated for React v16.6.3 and Redux v4.0.1! &nbsp;All content is brand new! &nbsp;Update includes detailed videos on the new React Hooks system.</em></strong></p>
     <p style="box-sizing: border-box; margin: 0.8rem 0px 0px; padding: 0px; font-size: inherit; font-weight: 400; max-width: 118.4rem;">Congratulations! &nbsp;You&apos;ve found the&nbsp;<em style="box-sizing: border-box; margin: 0px; padding: 0px;">most&nbsp;</em><strong style="box-sizing: border-box; margin: 0px; padding: 0px;"><em style="box-sizing: border-box; margin: 0px; padding: 0px;">popular</em></strong>,&nbsp;<em style="box-sizing: border-box; margin: 0px; padding: 0px;">most&nbsp;</em><strong style="box-sizing: border-box; margin: 0px; padding: 0px;"><em style="box-sizing: border-box; margin: 0px; padding: 0px;">complete</em></strong>, and&nbsp;<em style="box-sizing: border-box; margin: 0px; padding: 0px;">most&nbsp;</em><strong style="box-sizing: border-box; margin: 0px; padding: 0px;"><em style="box-sizing: border-box; margin: 0px; padding: 0px;">up-to-date</em></strong> resource online for learning React and Redux!</p>
@@ -554,7 +555,8 @@ values ('Modern React with Redux','Master React and Redux with React Router, Web
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
 course_short_description,course_last_updated,is_finished,subject_id,views) 
 values ('Javascript Projects for Complete Beginners','Learn and Deploy Four projects with pure JavaScript (No frameworks or libraries)
-','','https://blog.alvasky.com/wp-content/uploads/2019/03/javascript-illustration.png','10'
+','','https://blog.alvasky.com/wp-content/uploads/2019/03/javascript-illustration.png'
+,2
 ,'<div data-purpose="safely-set-inner-html:description:description">
 <p>This is a Javascript projects course specifically design for those of you that have completed a javascript book or course yet you cant build a project from scratch and STRICTLY for <strong>Absolutely beginners / Intermediate.&nbsp;</strong>No what is javascript or variables, we start coding straight up.</p>
 <p><strong><em>#### WHATS INCLUDED? ####</em></strong></p>
@@ -637,7 +639,7 @@ values (
 ,'Understand React Native v0.62.2 with Hooks, Context, and React Navigation.'
 ,''
 ,'https://isoftglobe.com/wp-content/uploads/2021/02/react-native.png'
-,'9.99'
+,8
 ,'<div data-purpose="safely-set-inner-html:description:description">
 <div data-purpose="safely-set-inner-html:description:description">
 <p>If youre tired of spinning your wheels learning Swift or Android, this is the course for you.</p>
@@ -730,7 +732,7 @@ values (
 ,'Use React Native and your React knowledge to build native iOS and Android Apps - incl. Push Notifications, Hooks, Redux'
 ,''
 ,'https://miro.medium.com/max/5144/1*m8V2pAYonX7i9jEJt9yx3w.png'
-,'9.99'
+,7
 ,'<div data-purpose="safely-set-inner-html:description:description">
 <p><strong>This course was completely updated and now does not only cover the latest version of React Native but also includes refreshers on JavaScript &amp;&nbsp;React.js!</strong></p>
 <p>In addition, a&nbsp;<strong>whole section&nbsp;</strong>on "<strong>Push&nbsp;Notifications</strong>" was added.</p>
@@ -829,7 +831,7 @@ values(
 ,'Learn Android App Development with Android 7 Nougat by building real apps including Uber, Whatsapp and Instagram!'
 ,''
 ,'https://kynangso.net/wp-content/uploads/2019/06/Android-Banner.png'
-,'9.99'
+,6
 ,'<div data-purpose="safely-set-inner-html:description:description">
 <p><strong><em>Please note support for this course has now stopped, and that&nbsp;there is a newer version of the course (The Complete Android Oreo Developer Course) available.</em></strong></p>
 <p><em>In this Android N&nbsp;version of the&nbsp;course I use Android Studio versions 2.0 and 2.1.2, and recommend students do the same.</em></p>
@@ -940,7 +942,7 @@ values (
 'From Beginner to iOS App Developer with Just One Course! Fully Updated with a Comprehensive Module Dedicated to SwiftUI!',
 '',
 'https://theme.hstatic.net/1000255974/1000341244/14/banner_product_home_2.jpg?v=55',
-'9.99',
+100,
 '<div data-purpose="safely-set-inner-html:description:description">
 <div data-purpose="safely-set-inner-html:description:description">
 <p>Welcome to the&nbsp;<strong>Complete iOS App Development Bootcamp</strong>. With over 39,000 5 star ratings and a 4.8 average my iOS course is the HIGHEST RATED iOS Course in the history of Udemy!</p>
@@ -1105,7 +1107,7 @@ values (
 ,'PHP for Beginners: learn everything you need to become a professional PHP developer with practical exercises & projects.'
 ,''
 ,'https://thietkeweb9999.com/data/upload/Banner-Thietkeweb-PHP.jpg'
-,'9.99'
+,9
 ,'<div data-purpose="safely-set-inner-html:description:description">
 <div data-purpose="safely-set-inner-html:description:description">
 <div data-purpose="safely-set-inner-html:description:description">
@@ -1360,7 +1362,7 @@ values (
 ,'Understand React Native with Hooks, Context, and React Navigation.'
 ,''
 ,'https://augnitive.com/wp-content/uploads/2019/10/reactbanner.png'
-,'9.99'
+,9
 ,'<div data-purpose="safely-set-inner-html:description:description">
 <p>If youre tired of spinning your wheels learning Swift or Android, this is the course for you.</p>
 <p><strong>Authentication?</strong>&nbsp;You will learn it. <strong>Hooks?&nbsp;</strong>Included. <strong>Navigation?&nbsp;</strong>Of course!</p>
@@ -1450,7 +1452,7 @@ values (
 ,'Become a Senior React Developer! Build a massive E-commerce app with Redux, Hooks, GraphQL, ContextAPI, Stripe, Firebase'
 ,''
 ,'https://js.devexpress.com/Content/ImagesNew/Overview/react-banner.jpg'
-,'9.99'
+,9
 ,''
 ,''
 ,curdate(),true,2,12);
@@ -1463,7 +1465,7 @@ values (
 ,'Learn Modern React 16.8+ Including Hooks, Context API, Full Stack MERN & Redux By Building Real Life Projects'
 ,''
 ,'https://techvedika.com/wp-content/uploads/2018/01/react.jpg'
-,'9.99'
+,9
 ,''
 ,''
 ,curdate(),true,2,1);
@@ -1476,7 +1478,7 @@ values (
 ,'Walkthroughs on advanced React v16.6.3 and Redux v4.0.0 - Authentication, Testing, Middlewares, HOCs, and Deployment'
 ,''
 ,'https://www.cloudways.com/blog/wp-content/uploads/Why-ReactJS-Should-be-a-Perfect-Choice-for-Your-Next-Front-end-Application-Banner.jpg'
-,'9.99'
+,9
 ,''
 ,''
 ,curdate(),true,2,12);
@@ -1494,7 +1496,7 @@ values (
 ,'Understand React Native with Hooks, Context, and React Navigation.'
 ,''
 ,'https://augnitive.com/wp-content/uploads/2019/10/reactbanner.png'
-,'9.99'
+,9
 ,''
 ,''
 ,curdate(),true,2,12);
@@ -1506,7 +1508,7 @@ values (
 ,'Master React Native for iOS and Android Mobile App Development using JavaScript. Build a modern e-commerce mobile app!'
 ,''
 ,'https://www.dreamsoft4u.com/images/react-banner.jpg'
-,'9.99'
+,9
 ,''
 ,''
 ,curdate(),true,2,0);
@@ -1518,7 +1520,7 @@ values (
 ,'Master React Native for iOS and Android Mobile App Development using JavaScript. Build a modern e-commerce mobile app!'
 ,''
 ,'https://www.dreamsoft4u.com/images/react-banner.jpg'
-,'9.99'
+,9
 ,''
 ,''
 ,curdate(),true,2,0);
@@ -1530,7 +1532,7 @@ values (
 ,'Master React Native for iOS and Android Mobile App Development using JavaScript. Build a modern e-commerce mobile app!'
 ,''
 ,'https://www.dreamsoft4u.com/images/react-banner.jpg'
-,'9.99'
+,9
 ,''
 ,''
 ,curdate(),true,2,0);
@@ -1543,7 +1545,7 @@ values (
 ,'Build, deploy, and scale an E-Commerce app using Microservices built with Node, React, Docker and Kubernetes'
 ,''
 ,'https://www.linkites.com/wp-content/uploads/2019/04/React-native-Banner.png'
-,'9.99'
+,9
 ,''
 ,''
 ,curdate(),true,2,0);
@@ -1698,8 +1700,9 @@ insert into `course_reviews` (user_id,course_id,review_content,star) values (3,7
 insert into `course_reviews` (user_id,course_id,review_content,star) values (3,8,'Khóa này hay!',5);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (3,9,'Khóa này hay!',5);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (3,10,'Khóa này hay!',5);
-
-
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,11,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,12,'Khóa này hay!',5);
+insert into `course_reviews` (user_id,course_id,review_content,star) values (3,13,'Khóa này hay!',5);
 
 -----------------------------------------------------
 -- Table structure for `carts`

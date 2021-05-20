@@ -323,6 +323,76 @@ group by c.course_id
 limit 9
 offset 0; 
 
+----------------------------------------------------
+-- sort by rate ascending not pagi
+----------------------------------------------------
+select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
+ins.user_id, u.user_name, rt.avg_rate
+from `courses` c
+inner join `subjects` sj
+on sj.subject_id = c.subject_id
+inner join `instructor_courses_uploaded` ins
+on ins.course_id = c.course_id
+inner join `users` u
+on u.user_id = ins.user_id 
+inner join (
+select *, avg(star) as avg_rate
+from course_reviews crw
+group by crw.course_id
+) rt
+on rt.course_id = c.course_id 
+where c.is_finished = true
+group by c.course_id
+order by rt.avg_rate asc;
+
+----------------------------------------------------
+-- all courses not pagi
+----------------------------------------------------
+
+select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
+    u.user_id, u.user_name, rt.avg_rate
+    from `courses` c
+    inner join `subjects` sj
+    on sj.subject_id = c.subject_id
+    inner join `instructor_courses_uploaded` ins
+    on ins.course_id = c.course_id
+    inner join `users` u
+    on u.user_id = ins.user_id
+    inner join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw 
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id
+    where c.is_finished = true
+    group by c.course_id;
+    
+    
+----------------------------------------------------
+-- by price asc
+----------------------------------------------------
+    
+    select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
+ins.user_id, u.user_name, rt.avg_rate
+from `courses` c
+inner join `subjects` sj
+on sj.subject_id = c.subject_id
+inner join `instructor_courses_uploaded` ins
+on ins.course_id = c.course_id
+inner join `users` u
+on u.user_id = ins.user_id 
+inner join (
+select *, avg(star) as avg_rate
+from course_reviews crw
+group by crw.course_id
+) rt
+on rt.course_id = c.course_id 
+where c.is_finished = true
+group by c.course_id
+order by c.course_fee asc;
 
 
 use `SPA_ONLINE_ACADEMY`;

@@ -22,6 +22,28 @@ const courseModel = {
     where c.is_finished = true `;
     return db.load(sql);
   },
+  allWithNoPagi() {
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
+    u.user_id, u.user_name, rt.avg_rate
+    from ${tbl_courses} c
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    inner join ${tbl_instructor_courses_uploaded} ins
+    on ins.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = ins.user_id
+    inner join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw 
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id
+    where c.is_finished = true
+    group by c.course_id
+     ; `;
+    return db.load(sql);
+  },
   allWithPagi(limit, offset) {
     const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
@@ -388,6 +410,190 @@ const courseModel = {
     group by c.course_id
     limit ${limit}
     offset ${offset}; `;
+    return db.load(sql);
+  },
+  byRateASCNoPagi() {
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
+    ins.user_id, u.user_name, rt.avg_rate
+    from ${tbl_courses} c
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    inner join ${tbl_instructor_courses_uploaded} ins
+    on ins.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = ins.user_id 
+    inner join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id 
+    where c.is_finished = true
+    group by c.course_id
+    order by rt.avg_rate asc;`;
+    return db.load(sql);
+  },
+  byRateASCPagi(limit, offset) {
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
+    ins.user_id, u.user_name, rt.avg_rate
+    from ${tbl_courses} c
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    inner join ${tbl_instructor_courses_uploaded} ins
+    on ins.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = ins.user_id 
+    inner join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id 
+    where c.is_finished = true
+    group by c.course_id
+    order by rt.avg_rate asc
+    limit ${limit}
+    offset ${offset};`;
+    return db.load(sql);
+  },
+  byRateDESCNoPagi() {
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
+    ins.user_id, u.user_name, rt.avg_rate
+    from ${tbl_courses} c
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    inner join ${tbl_instructor_courses_uploaded} ins
+    on ins.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = ins.user_id 
+    inner join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id 
+    where c.is_finished = true
+    group by c.course_id
+    order by rt.avg_rate desc;`;
+    return db.load(sql);
+  },
+  byRateDESCPagi(limit, offset) {
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
+    ins.user_id, u.user_name, rt.avg_rate
+    from ${tbl_courses} c
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    inner join ${tbl_instructor_courses_uploaded} ins
+    on ins.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = ins.user_id 
+    inner join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id 
+    where c.is_finished = true
+    group by c.course_id
+    order by rt.avg_rate desc
+    limit ${limit}
+    offset ${offset};`;
+    return db.load(sql);
+  },
+  byPriceASCNoPagi() {
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
+    ins.user_id, u.user_name, rt.avg_rate
+    from ${tbl_courses} c
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    inner join ${tbl_instructor_courses_uploaded} ins
+    on ins.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = ins.user_id 
+    inner join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id 
+    where c.is_finished = true
+    group by c.course_id
+    order by c.course_fee asc;`;
+    return db.load(sql);
+  },
+  byPriceASCPagi(limit, offset) {
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
+    ins.user_id, u.user_name, rt.avg_rate
+    from ${tbl_courses} c
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    inner join ${tbl_instructor_courses_uploaded} ins
+    on ins.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = ins.user_id 
+    inner join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id 
+    where c.is_finished = true
+    group by c.course_id
+    order by c.course_fee asc
+    limit ${limit}
+    offset ${offset};`;
+    return db.load(sql);
+  },
+  byPriceDESCNoPagi() {
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
+    ins.user_id, u.user_name, rt.avg_rate
+    from ${tbl_courses} c
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    inner join ${tbl_instructor_courses_uploaded} ins
+    on ins.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = ins.user_id 
+    inner join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id 
+    where c.is_finished = true
+    group by c.course_id
+    order by c.course_fee desc;`;
+    return db.load(sql);
+  },
+  byPriceDESCPagi(limit, offset) {
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
+    ins.user_id, u.user_name, rt.avg_rate
+    from ${tbl_courses} c
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    inner join ${tbl_instructor_courses_uploaded} ins
+    on ins.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = ins.user_id 
+    inner join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id 
+    where c.is_finished = true
+    group by c.course_id
+    order by c.course_fee desc
+    limit ${limit}
+    offset ${offset};`;
     return db.load(sql);
   },
 };
