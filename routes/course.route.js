@@ -379,6 +379,20 @@ router.get("/detail/course-review/:id", async function (req, res) {
     course_reviews: ret,
   });
 });
+router.get("/detail/cat-price-num/:id", async function (req, res) {
+  const id = +req.params.id;
+  const ret = await courseModel.detailCatPriceNum(id);
+
+  if (ret === undefined) {
+    return res.status(400).json({
+      message: "Course not found!",
+    });
+  }
+
+  return res.json({
+    cat_price_num: ret,
+  });
+});
 
 router.get("/:id", async function (req, res) {
   const id = +req.params.id;

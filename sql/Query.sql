@@ -394,6 +394,47 @@ where c.is_finished = true
 group by c.course_id
 order by c.course_fee asc;
 
+    
+----------------------------------------------------
+-- Detail: cat price num
+----------------------------------------------------
+select c.course_id, sj.subject_name, c.course_fee, sal.sale_percent,
+rt.avg_rate, num_stu.num_stu_rate, num_stu_en.num_stu_enrolls
+from `courses` c
+inner join `subjects` sj
+on sj.subject_id = c.subject_id
+inner join `instructor_courses_uploaded` ins
+on ins.course_id = c.course_id
+inner join `users` u
+on u.user_id = ins.user_id 
+inner join (
+select *, avg(star) as avg_rate
+from course_reviews crw
+group by crw.course_id
+) rt
+on rt.course_id = c.course_id 
+inner join `sales` sal
+on sal.course_id = c.course_id
+inner join (
+select *, count(*) as num_stu_rate 
+from `course_reviews` crw
+group by crw.course_id
+) num_stu
+on num_stu.course_id = c.course_id
+inner join (
+select *, count(*) as num_stu_enrolls 
+from `student_enrolls` ste
+group by ste.course_id
+) num_stu_en
+on num_stu_en.course_id = c.course_id
+where c.is_finished = true
+and  c.course_id = 4;
+
+
+
+select *, count(*) as num_stu_enrolls from `student_enrolls` ste
+group by ste.course_id;
+
 
 use `SPA_ONLINE_ACADEMY`;
 select * from `roles`;
@@ -403,13 +444,14 @@ select * from `users`;
 select * from `chapters`;
 select * from `lessons`;
 select * from `courses`;
+select * from `sales`;
 select count(*) from `courses`;
 select * from `orders`;
 select * from `orders_details`;
 select * from `course_reviews`;
 select * from `student_courses_bought`;
 select * from `instructor_courses_uploaded`;
-
+select * from `student_enrolls`;
 
 
 

@@ -10,6 +10,7 @@ const tbl_lessons = `lessons`;
 const tbl_course_reviews = `course_reviews`;
 const tbl_roles = `roles`;
 const tbl_student_enrolls = `student_enrolls`;
+const tbl_sales = `sales`;
 
 const courseModel = {
   all() {
@@ -595,6 +596,44 @@ const courseModel = {
     limit ${limit}
     offset ${offset};`;
     return db.load(sql);
+  },
+
+  async detailCatPriceNum(course_id) {
+    const sql = `select c.course_id, sj.subject_name, 
+    c.course_fee, sal.sale_percent,
+    rt.avg_rate, num_stu.num_stu_rate, num_stu_en.num_stu_enrolls
+    from ${tbl_courses} c
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    inner join ${tbl_instructor_courses_uploaded} ins
+    on ins.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = ins.user_id 
+    inner join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id 
+    inner join ${tbl_sales} sal
+    on sal.course_id = c.course_id
+    inner join (
+    select *, count(*) as num_stu_rate 
+    from ${tbl_course_reviews} crw
+    group by crw.course_id
+    ) num_stu
+    on num_stu.course_id = c.course_id
+    inner join (
+    select *, count(*) as num_stu_enrolls 
+    from ${tbl_student_enrolls} ste
+    group by ste.course_id
+    ) num_stu_en
+    on num_stu_en.course_id = c.course_id
+    where c.is_finished = true
+    and c.course_id = ${course_id}`;
+    const ret = await db.load(sql);
+
+    return ret[0];
   },
 };
 
