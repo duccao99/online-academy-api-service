@@ -31,6 +31,17 @@ const courseModel = {
     return db.load(sql);
   },
 
+  allCourseBySubCat(sub_cat, limit, offset) {
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name
+    from ${tbl_courses} c
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    where sj.subject_name = '${sub_cat}'
+    limit ${limit}
+    offset ${offset};`;
+    return db.load(sql);
+  },
   async detail(course_id) {
     const sql = `select c.course_id, c.course_name, c.course_title, 
     c.course_thumbnail, c.course_avatar_url, c.course_fee ,

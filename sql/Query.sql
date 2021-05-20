@@ -214,7 +214,20 @@ where c.is_finished = true
 limit 9
 offset 10;
 
+----------------------------------------------------
+--  all course by sub cat 
+----------------------------------------------------
+select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name
+from `courses` c
+inner join `subjects` sj
+on sj.subject_id = c.subject_id
+where sj.subject_name = 'reactjs'
+limit 9
+offset 0;
 
+
+use `SPA_ONLINE_ACADEMY`;
 select * from `roles`;
 select * from `categories`;
 select * from `subjects`;

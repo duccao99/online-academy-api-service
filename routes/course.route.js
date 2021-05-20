@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const courseModel = require("../models/course.model");
+const subCatModel = require("../models/subCategory.model");
 
 router.get("/", async function (req, res) {
   const courses = await courseModel.all();
@@ -89,6 +90,37 @@ router.get("/top-sub-cat", async function (req, res) {
   }
   return res.json({
     top_sub_cat: ret,
+  });
+});
+
+router.get("/byCat/:sub_cat_name", async function (req, res) {
+  const sub_cat_name = req.params.sub_cat_name;
+
+  const check_cat = await subCatModel.detailByName(sub_cat_name);
+
+  if (check_cat === undefined) {
+    return res.status(400).json({
+      message: "Sub category not found!",
+    });
+  }
+
+  let curr_pagi = 1;
+
+  if (req.query.pagi !== undefined) {
+    curr_pagi = +req.query.pagi;
+  }
+
+  const limit = 9;
+  const offset = limit * (curr_pagi - 1);
+
+  const ret = await courseModel.allCourseBySubCat(sub_cat_name, limit, offset);
+
+  const total_num_pagi_stuff = Math.ceil(ret.length / limit);
+
+  return res.json({
+    course_by_sub_cat: ret,
+    curr_pagi,
+    total_num_pagi_stuff,
   });
 });
 

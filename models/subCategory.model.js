@@ -14,6 +14,15 @@ const subCatModel = {
 
     return data[0];
   },
+  async detailByName(name) {
+    const sql = `select *
+    from ${table_name} s
+    where s.subject_name = '${name}';`;
+
+    const data = await db.load(sql);
+
+    return data[0];
+  },
   add(entity) {
     return db.add(entity, table_name);
   },
