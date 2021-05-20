@@ -203,10 +203,28 @@ inner join `chapters` c
 on c.chap_id = l.chap_id
 where c.course_id =1;
 
-
-
 ----------------------------------------------------
---  all course with pagi
+--  all card course without pagi
+----------------------------------------------------
+select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
+    u.user_id, u.user_name, rt.avg_rate, count(*) num_course
+    from `courses` c
+    inner join `subjects` sj
+    on sj.subject_id = c.subject_id
+    inner join `instructor_courses_uploaded` ins
+    on ins.course_id = c.course_id
+    inner join `users`u
+    on u.user_id = ins.user_id
+    inner join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw 
+    group by crw.course_id
+    ) rt
+    where c.is_finished = true
+    group by c.course_id;
+----------------------------------------------------
+--  all card course with pagi
 ----------------------------------------------------
 select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
@@ -225,8 +243,8 @@ select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     ) rt
     where c.is_finished = true
     group by c.course_id
-    limit 10
-    offset 0;
+    limit 9
+    offset 17;
 ----------------------------------------------------
 --  all course by sub cat 
 ----------------------------------------------------
@@ -315,6 +333,7 @@ select * from `users`;
 select * from `chapters`;
 select * from `lessons`;
 select * from `courses`;
+select count(*) from `courses`;
 select * from `orders`;
 select * from `orders_details`;
 select * from `course_reviews`;

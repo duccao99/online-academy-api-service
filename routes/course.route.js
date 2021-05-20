@@ -15,7 +15,7 @@ router.get("/", async function (req, res) {
 });
 
 router.get("/all-with-finished", async function (req, res) {
-  const ret = await courseModel.all();
+  const ret = await courseModel.allWithFinished();
 
   if (ret.length === 0) {
     return res.status(204).json({ message: "No content!" });
@@ -27,14 +27,11 @@ router.get("/all-with-finished", async function (req, res) {
 
   let curr_page = +req.query.pagi;
 
-  if (curr_page === 0) {
-    curr_page = 1;
-  }
-
   const limit = 9;
   const offset = limit * (curr_page - 1);
 
   const total_courses = ret.length;
+
   const total_num_pagi_stuff = Math.ceil(total_courses / limit);
 
   const ret_pagi = await courseModel.allWithPagi(limit, offset);
@@ -113,9 +110,18 @@ router.get("/byCat/:sub_cat_name", async function (req, res) {
   const limit = 9;
   const offset = limit * (curr_pagi - 1);
 
-  const ret = await courseModel.allCourseBySubCat(sub_cat_name, limit, offset);
+  const len_course = await courseModel.allCourseBySubCatNoPagi(
+    sub_cat_name,
+    limit,
+    offset
+  );
+  const ret = await courseModel.allCourseBySubCatPagi(
+    sub_cat_name,
+    limit,
+    offset
+  );
 
-  const total_num_pagi_stuff = Math.ceil(ret.length / limit);
+  const total_num_pagi_stuff = Math.ceil(len_course.length / limit);
 
   return res.json({
     course_by_sub_cat: ret,
@@ -136,8 +142,9 @@ router.get("/by-full-text-search/:text", async function (req, res) {
   const limit = 9;
   const offset = limit * (curr_pagi - 1);
 
-  const ret = await courseModel.fullTextSearch(text, limit, offset);
-  const total_num_pagi_stuff = Math.ceil(ret.length / limit);
+  const check_len = await courseModel.fullTextSearchNoPagi(text);
+  const total_num_pagi_stuff = Math.ceil(check_len.length / limit);
+  const ret = await courseModel.fullTextSearchPagi(text, limit, offset);
 
   if (ret.length === 0) {
     return res.status(204).json({ message: "No content!" });

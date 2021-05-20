@@ -1351,6 +1351,205 @@ values (
 </div>
 </div>'
 ,curdate(),true,4,1);
+
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id,views)
+values (
+'The Complete React Native + Hooks Course'
+,'Understand React Native with Hooks, Context, and React Navigation.'
+,''
+,'https://augnitive.com/wp-content/uploads/2019/10/reactbanner.png'
+,'9.99'
+,'<div data-purpose="safely-set-inner-html:description:description">
+<p>If youre tired of spinning your wheels learning Swift or Android, this is the course for you.</p>
+<p><strong>Authentication?</strong>&nbsp;You will learn it. <strong>Hooks?&nbsp;</strong>Included. <strong>Navigation?&nbsp;</strong>Of course!</p>
+<p>This course will get you up and running with React Native&nbsp;quickly, and teach you the core knowledge you need to deeply understand and build React components for mobile devices.</p>
+<p><strong>Both OSX and Windows supported - develop iOS or Android!</strong></p>
+<p>This course includes content on both v0.62.2 and the legacy v0.30.x, which is widely used in industry.</p>
+<p>Well start by mastering the fundamentals of React, including JSX, &ldquo;props", &ldquo;state", and event handling. Source code is provided for each lecture, so you will always&nbsp;<strong>stay up-to-date</strong>&nbsp;with the course pacing. Special attention has been paid to creating&nbsp;<strong>reusable components</strong>&nbsp;that youl be able to make use of on your own fantastic projects.</p>
+<p>React Native is an excellent solution for developing apps on mobile in a fraction of the time it takes to make an equivalent iOS or Swift app. Youll love seeing your changes instantly appear on your own device, rather than waiting for Swift/Java code to recompile! This quick feedback loop, along with excellent cross platform support, is what has catapulted React Native to the top must-have skill for Javascript engineers.</p>
+<p>If you are new to React, or if youve been working to learn it but sometimes feel like you still dont quite get it, this is the React course for you! To learn React you have to understand it.</p>
+<ul>
+<li>
+<p>Learn how to use Reacts custom markup language, JSX, to clean up your Javascript code</p>
+</li>
+<li>
+<p>Master the process of breaking down a complex component into many smaller, interchangeable components</p>
+</li>
+<li>
+<p>Grasp the difference between &ldquo;props" and &ldquo;state" and when to use each</p>
+</li>
+<li>
+<p>Render interactive, media-rich components in beautifully styled apps</p>
+</li>
+<li>
+<p>Develop apps that are unique, fun, and responsive</p>
+</li>
+<li>
+<p>Build on&nbsp;<strong>both Android and iOS</strong>&nbsp;platforms</p>
+</li>
+<li>
+<p>Master integration with&nbsp;<strong>Firebase for user authentication</strong></p>
+</li>
+<li>
+<p>Learn the core principles of&nbsp;<strong>navigation</strong>&nbsp;with React Native</p>
+</li>
+</ul>
+<p>Ive built the course that I would have wanted to take when I was learning React Native. A course that explains the concepts and how theyre implemented in the best order for you to learn and deeply understand them.</p>
+</div>
+<div data-purpose="target-audience">
+<h2>Who this course is for:</h2>
+<ul>
+<li>This course is for anyone looking to make native apps with React Native</li>
+</ul>
+</div>'
+,'<h2>What youll learn</h2>
+<div>
+<ul>
+<li>
+<div data-purpose="objective">
+<div>Create real-world native apps using React Native</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Make truly reusable components that look great</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Understand the terminology and concepts of Redux</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Prototype and deploy your own applications to the Apple and Google Play Stores</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Get up to speed with React design principles and methodologies</div>
+</div>
+</li>
+<li>
+<div data-purpose="objective">
+<div>Discover mobile design patterns used by experienced engineers</div>
+</div>
+</li>
+</ul>
+</div>'
+,curdate(),true,2,12);
+
+
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id,views)
+values (
+'Complete React Developer in 2021 (w/ Redux, Hooks, GraphQL)'
+,'Become a Senior React Developer! Build a massive E-commerce app with Redux, Hooks, GraphQL, ContextAPI, Stripe, Firebase'
+,''
+,'https://js.devexpress.com/Content/ImagesNew/Overview/react-banner.jpg'
+,'9.99'
+,''
+,''
+,curdate(),true,2,12);
+
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id,views)
+values (
+'React Front To Back'
+,'Learn Modern React 16.8+ Including Hooks, Context API, Full Stack MERN & Redux By Building Real Life Projects'
+,''
+,'https://techvedika.com/wp-content/uploads/2018/01/react.jpg'
+,'9.99'
+,''
+,''
+,curdate(),true,2,1);
+
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id,views)
+values (
+'Advanced React and Redux'
+,'Walkthroughs on advanced React v16.6.3 and Redux v4.0.0 - Authentication, Testing, Middlewares, HOCs, and Deployment'
+,''
+,'https://www.cloudways.com/blog/wp-content/uploads/Why-ReactJS-Should-be-a-Perfect-Choice-for-Your-Next-Front-end-Application-Banner.jpg'
+,'9.99'
+,''
+,''
+,curdate(),true,2,12);
+
+
+
+
+
+
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id,views)
+values (
+'The Complete React Native + Hooks Course'
+,'Understand React Native with Hooks, Context, and React Navigation.'
+,''
+,'https://augnitive.com/wp-content/uploads/2019/10/reactbanner.png'
+,'9.99'
+,''
+,''
+,curdate(),true,2,12);
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id,views)
+values (
+'Complete React Native in 2021: Zero to Mastery [with Hooks]'
+,'Master React Native for iOS and Android Mobile App Development using JavaScript. Build a modern e-commerce mobile app!'
+,''
+,'https://www.dreamsoft4u.com/images/react-banner.jpg'
+,'9.99'
+,''
+,''
+,curdate(),true,2,0);
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id,views)
+values (
+'Complete React Native in 2021: Zero to Mastery [with Hooks]'
+,'Master React Native for iOS and Android Mobile App Development using JavaScript. Build a modern e-commerce mobile app!'
+,''
+,'https://www.dreamsoft4u.com/images/react-banner.jpg'
+,'9.99'
+,''
+,''
+,curdate(),true,2,0);
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id,views)
+values (
+'MERN Stack Front To Back: Full Stack React, Redux & Node.js'
+,'Master React Native for iOS and Android Mobile App Development using JavaScript. Build a modern e-commerce mobile app!'
+,''
+,'https://www.dreamsoft4u.com/images/react-banner.jpg'
+,'9.99'
+,''
+,''
+,curdate(),true,2,0);
+
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id,views)
+values (
+'Microservices with Node JS and React'
+,'Build, deploy, and scale an E-Commerce app using Microservices built with Node, React, Docker and Kubernetes'
+,''
+,'https://www.linkites.com/wp-content/uploads/2019/04/React-native-Banner.png'
+,'9.99'
+,''
+,''
+,curdate(),true,2,0);
+
+
+
 -------------------------------------
 -- Table structure for `sales`
 -------------------------------------
@@ -1445,6 +1644,16 @@ insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,u
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,8,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,9,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,10,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,11,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,12,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,13,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,14,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,15,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,16,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,17,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,18,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+
 
 
 
