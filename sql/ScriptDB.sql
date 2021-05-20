@@ -86,8 +86,9 @@ CREATE TABLE `subjects`(
 	subject_id int(10) primary key not null auto_increment,
     subject_name nvarchar(4000),
     cat_id int(10),
-    foreign key (cat_id) references `categories` (cat_id) on delete cascade
-);
+    foreign key (cat_id) references `categories` (cat_id) on delete cascade,
+    fulltext(subject_name)
+)ENGINE=InnoDB;
 
 -------------------------------------
 -- Records  for `subjects`
@@ -124,8 +125,9 @@ CREATE TABLE `courses`(
     subject_id int(10),
     views int(10) default null,
     
-    foreign key (subject_id) references `subjects` (subject_id) on delete cascade
-);
+    foreign key (subject_id) references `subjects` (subject_id) on delete cascade,
+    fulltext(course_name)
+)ENGINE=InnoDB;
 
 -------------------------------------
 -- Records  for `courses`

@@ -124,6 +124,83 @@ router.get("/byCat/:sub_cat_name", async function (req, res) {
   });
 });
 
+router.get("/by-full-text-search/:text", async function (req, res) {
+  const text = req.params.text;
+
+  let curr_pagi = 1;
+
+  if (req.query.pagi !== undefined) {
+    curr_pagi = +req.query.pagi;
+  }
+
+  const limit = 9;
+  const offset = limit * (curr_pagi - 1);
+
+  const ret = await courseModel.fullTextSearch(text, limit, offset);
+  const total_num_pagi_stuff = Math.ceil(ret.length / limit);
+
+  if (ret.length === 0) {
+    return res.status(204).json({ message: "No content!" });
+  }
+
+  return res.json({
+    all_courses: ret,
+    total_num_pagi_stuff,
+    curr_pagi,
+  });
+});
+
+router.get("/by-full-text-search-name/:text", async function (req, res) {
+  const text = req.params.text;
+
+  let curr_pagi = 1;
+
+  if (req.query.pagi !== undefined) {
+    curr_pagi = +req.query.pagi;
+  }
+
+  const limit = 9;
+  const offset = limit * (curr_pagi - 1);
+
+  const ret = await courseModel.fullTextByName(text, limit, offset);
+  const total_num_pagi_stuff = Math.ceil(ret.length / limit);
+
+  if (ret.length === 0) {
+    return res.status(204).json({ message: "No content!" });
+  }
+
+  return res.json({
+    all_courses: ret,
+    total_num_pagi_stuff,
+    curr_pagi,
+  });
+});
+
+router.get("/by-full-text-search-subcat/:text", async function (req, res) {
+  const text = req.params.text;
+
+  let curr_pagi = 1;
+
+  if (req.query.pagi !== undefined) {
+    curr_pagi = +req.query.pagi;
+  }
+
+  const limit = 9;
+  const offset = limit * (curr_pagi - 1);
+
+  const ret = await courseModel.fullTextBySubcat(text, limit, offset);
+  const total_num_pagi_stuff = Math.ceil(ret.length / limit);
+
+  if (ret.length === 0) {
+    return res.status(204).json({ message: "No content!" });
+  }
+
+  return res.json({
+    all_courses: ret,
+    total_num_pagi_stuff,
+    curr_pagi,
+  });
+});
 router.get("/detail/syllabus/:id", async function (req, res) {
   const id = +req.params.id;
 
