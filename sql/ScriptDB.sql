@@ -1567,8 +1567,9 @@ CREATE TABLE `sales`(
 -------------------------------------
 -- Records  for `sales`
 -------------------------------------
-insert into `sales` (sale_percent,course_id) values (90,1);
+insert into `sales` (sale_percent,course_id) values (5,1);
 insert into `sales` (sale_percent,course_id) values (10,2);
+insert into `sales` (sale_percent,course_id) values (5,3);
 
 -------------------------------------
 -- Table structure for `chapters`

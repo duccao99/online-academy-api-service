@@ -47,6 +47,15 @@ router.post("/", async function (req, res) {
   return res.json({ message: "Update later!" });
 });
 
+router.get("/most-student-enroll", async function (req, res) {
+  const ret = await courseModel.mostStudentEnroll();
+
+  if (ret.length === 0) return res.status(204);
+  return res.json({
+    most_student_enroll: ret,
+  });
+});
+
 router.get("/outstanding-courses", async function (req, res) {
   const ret = await courseModel.getOutstandingCourse();
 
@@ -87,6 +96,17 @@ router.get("/top-sub-cat", async function (req, res) {
   }
   return res.json({
     top_sub_cat: ret,
+  });
+});
+
+router.get("/all-sales", async function (req, res) {
+  const ret = await courseModel.allSales();
+
+  if (ret.length === 0) {
+    return res.status(204).json({ message: "No content!" });
+  }
+  return res.json({
+    all_sales: ret,
   });
 });
 

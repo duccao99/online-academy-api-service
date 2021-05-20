@@ -17,6 +17,10 @@ const courseModel = {
     const sql = `select * from ${tbl_courses} `;
     return db.load(sql);
   },
+  allSales() {
+    const sql = `select * from ${tbl_sales}; `;
+    return db.load(sql);
+  },
 
   allWithFinished() {
     const sql = `select * from ${tbl_courses} c
@@ -146,35 +150,40 @@ const courseModel = {
   },
 
   getOutstandingCourse() {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, 
-    c.course_fee,sj.subject_id, sj.subject_name, c.views, u.user_name,  rt.avg_rate
+    const sql = `select c.course_id, c.course_name, c.course_avatar_url, c.course_fee,
+    c.views, c.course_last_updated, c.is_finished, sj.subject_id,  rt.avg_rate,
+    sj.subject_name, ins.user_id, u.user_name, sal.sale_percent, ste.num_stu_enroll
+   
     from ${tbl_courses} c
-    inner join ${tbl_orders_details} od
-    on od.course_id = c.course_id
     inner join ${tbl_subjects} sj
-    on sj.subject_id = c.subject_id
+    on sj.subject_id = c.subject_id 
     inner join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
     inner join ${tbl_users} u
     on u.user_id = ins.user_id
     inner join (
-      select *, avg(star) as avg_rate
-      from course_reviews as crw
-      group by crw.course_id
-      ) rt
-    on rt.course_id = c.course_id
-    where datediff(curdate(),c.course_last_updated ) <=7
-    and  c.is_finished = 1
-    group by c.course_id
-    having count(od.course_id) >= 3
-    and rt.avg_rate >= 4
-    limit 3;`;
+    select *, avg(star) as avg_rate
+    from course_reviews crw
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id 
+    inner join ${tbl_sales} sal 
+    on sal.course_id = c.course_id
+    inner join (
+    select *,count(*) as num_stu_enroll
+    from ${tbl_student_enrolls} ste
+    group by ste.course_id
+    ) ste
+    on ste.course_id = c.course_id
+    group by c.course_id 
+    limit 3
+    ;`;
 
     return db.load(sql);
   },
   tenNewestCourses() {
     const sql = `select c.course_id, c.course_name, c.course_title,
-     c.course_avatar_url, c.course_fee,
+     c.course_avatar_url, c.course_fee, 
     sj.subject_id, sj.subject_name, c.views, u.user_name, c.course_last_updated
     from ${tbl_courses} c
     inner join ${tbl_subjects} sj
@@ -634,6 +643,35 @@ const courseModel = {
     const ret = await db.load(sql);
 
     return ret[0];
+  },
+
+  mostStudentEnroll() {
+    const sql = `select c.course_id, c.course_name, c.course_avatar_url, c.course_fee,
+    c.views, c.course_last_updated, c.is_finished, sj.subject_id, 
+    sj.subject_name, ins.user_id, u.user_name, sal.sale_percent, ste.num_stu_enroll
+    from ${tbl_courses} c
+    inner join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id 
+    inner join ${tbl_instructor_courses_uploaded} ins
+    on ins.course_id = c.course_id
+    inner join ${tbl_users} u
+    on u.user_id = ins.user_id
+    inner join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id 
+    inner join ${tbl_sales} sal 
+    on sal.course_id = c.course_id
+    inner join (
+    select *,count(*) as num_stu_enroll
+    from ${tbl_student_enrolls} ste
+    group by ste.course_id
+    ) ste
+    on ste.course_id = c.course_id
+    group by c.course_id ;`;
+    return db.load(sql);
   },
 };
 

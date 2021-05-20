@@ -374,7 +374,7 @@ select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
 -- by price asc
 ----------------------------------------------------
     
-    select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
 c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
 ins.user_id, u.user_name, rt.avg_rate
 from `courses` c
@@ -431,9 +431,35 @@ where c.is_finished = true
 and  c.course_id = 4;
 
 
+----------------------------------------------------
+-- Most enroll course
+----------------------------------------------------
+select c.course_id, c.course_name, c.course_avatar_url, c.course_fee,
+c.views, c.course_last_updated, c.is_finished, sj.subject_id, 
+sj.subject_name, ins.user_id, u.user_name, sal.sale_percent, ste.num_stu_enroll
+from `courses` c
+inner join `subjects` sj
+on sj.subject_id = c.subject_id 
+inner join `instructor_courses_uploaded` ins
+on ins.course_id = c.course_id
+inner join `users` u
+on u.user_id = ins.user_id
+inner join (
+select *, avg(star) as avg_rate
+from course_reviews crw
+group by crw.course_id
+) rt
+on rt.course_id = c.course_id 
+inner join `sales` sal 
+on sal.course_id = c.course_id
+inner join (
+select *,count(*) as num_stu_enroll
+from `student_enrolls` ste
+group by ste.course_id
+) ste
+on ste.course_id = c.course_id
+group by c.course_id ;
 
-select *, count(*) as num_stu_enrolls from `student_enrolls` ste
-group by ste.course_id;
 
 
 use `SPA_ONLINE_ACADEMY`;
