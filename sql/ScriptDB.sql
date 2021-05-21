@@ -1548,7 +1548,32 @@ values (
 ,9
 ,''
 ,''
-,curdate(),true,2,0);
+,curdate(),true,10,0);
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id,views)
+values (
+'Course no finished 1'
+,'Build, deploy, and scale an E-Commerce app using Microservices built with Node, React, Docker and Kubernetes'
+,''
+,'https://www.linkites.com/wp-content/uploads/2019/04/React-native-Banner.png'
+,3
+,''
+,''
+,curdate(),false,10,0);
+
+insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
+course_short_description,course_last_updated,is_finished,subject_id,views)
+values (
+'Course no finished 2'
+,'Build, deploy, and scale an E-Commerce app using Microservices built with Node, React, Docker and Kubernetes'
+,''
+,'https://www.linkites.com/wp-content/uploads/2019/04/React-native-Banner.png'
+,3
+,''
+,''
+,curdate(),false,10,0);
+
 
 
 

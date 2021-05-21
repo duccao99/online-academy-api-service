@@ -471,6 +471,15 @@ inner join `users` u
 on u.user_id = cr.user_id;
 
 
+----------------------------------------------------
+-- accept all course by sub cat
+----------------------------------------------------
+update `courses` c 
+set c.is_finished = true
+where c.subject_id = 10;
+
+
+
 use `SPA_ONLINE_ACADEMY`;
 select * from `roles`;
 select * from `categories`;

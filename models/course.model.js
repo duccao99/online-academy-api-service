@@ -694,6 +694,13 @@ const courseModel = {
     where cr.course_id = ${course_id};`;
     return db.load(sql);
   },
+  acceptAllCourseBySubcat(subject_id) {
+    const sql = `update ${tbl_courses} c 
+    set c.is_finished = true
+    where c.subject_id = ${subject_id};
+    `;
+    return db.load(sql);
+  },
 };
 
 module.exports = courseModel;

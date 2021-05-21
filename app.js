@@ -48,6 +48,7 @@ app.use("/api/category", require("./routes/category.route"));
 app.use("/api/sub-category", require("./routes/subCategory.route"));
 app.use("/api/course", require("./routes/course.route"));
 app.use("/api/webhook", require("./routes/webhook.route"));
+app.use("/api/chatbot", require("./routes/chatbot.route"));
 
 // Handle async errors
 app.use(function (er, req, res, next) {

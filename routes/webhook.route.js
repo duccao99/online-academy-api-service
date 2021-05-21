@@ -31,7 +31,7 @@ router.post("/", function (req, res) {
           getMessage(message_obj);
           sendMessage(
             message_obj.sender.id,
-            "Hế lô Tứ, t Đức nè, con Chatbot này nó tự động nhắn á nha!"
+            "This message was sent from Online Academy API Service server!"
           );
         }
       });
