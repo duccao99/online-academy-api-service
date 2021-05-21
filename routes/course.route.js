@@ -414,6 +414,21 @@ router.get("/detail/cat-price-num/:id", async function (req, res) {
   });
 });
 
+router.get("/detail/feedback/:id", async function (req, res) {
+  const id = +req.params.id;
+  const ret = await courseModel.feedback(id);
+
+  if (ret === undefined) {
+    return res.status(400).json({
+      message: "Course not found!",
+    });
+  }
+
+  return res.json({
+    feedback: ret,
+  });
+});
+
 router.get("/:id", async function (req, res) {
   const id = +req.params.id;
 

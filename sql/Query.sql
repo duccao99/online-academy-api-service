@@ -461,6 +461,15 @@ on ste.course_id = c.course_id
 group by c.course_id ;
 
 
+----------------------------------------------------
+-- Feedbacks
+----------------------------------------------------
+select cr.user_id, cr.course_id, cr.review_content, cr.star ,
+u.user_name
+from `course_reviews` cr
+inner join `users` u
+on u.user_id = cr.user_id;
+
 
 use `SPA_ONLINE_ACADEMY`;
 select * from `roles`;

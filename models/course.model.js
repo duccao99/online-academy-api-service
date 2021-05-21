@@ -288,10 +288,20 @@ const courseModel = {
     , c.course_thumbnail, c.course_avatar_url, c.course_fee ,
     c.course_full_description, c.course_short_description
     ,c.course_last_updated, c.is_finished, c.subject_id,c.views 
-    ,sj.subject_name, scb.num_stu_bought
+    ,sj.subject_name, scb.num_stu_bought, u.user_name, rt.avg_rate
     from ${tbl_courses} c
     inner join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
+    inner join ${tbl_instructor_courses_uploaded} ins 
+    on ins.course_id = c.course_id
+    inner join ${tbl_users} u 
+    on u.user_id = ins.user_id
+    inner join (
+      select *, avg(star) avg_rate
+      from ${tbl_course_reviews} crw
+      group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id
     inner join (
     select * , count(*) num_stu_bought
     from ${tbl_orders_details} scb 
@@ -303,7 +313,8 @@ const courseModel = {
     where sj.subject_id = ${subject_id}
     and c.is_finished = true
     and c.course_id != ${course_id}
-    order by c.course_id
+    group by c.course_id
+    order by scb.num_stu_bought desc
     limit 5;
     `;
     return db.load(sql);
@@ -671,6 +682,16 @@ const courseModel = {
     ) ste
     on ste.course_id = c.course_id
     group by c.course_id ;`;
+    return db.load(sql);
+  },
+
+  feedback(course_id) {
+    const sql = `select cr.user_id, cr.course_id, cr.review_content, cr.star ,
+    u.user_name
+    from ${tbl_course_reviews} cr
+    inner join ${tbl_users} u
+    on u.user_id = cr.user_id
+    where cr.course_id = ${course_id};`;
     return db.load(sql);
   },
 };
