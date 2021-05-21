@@ -25,6 +25,7 @@ router.post("/", function (req, res) {
   var chat_data = req.body;
 
   console.log(chat_data);
+  console.log("Chat data object: ", chat_data.object);
 
   if (chat_data.object == "page") {
     chat_data.entry.forEach((page_body) => {

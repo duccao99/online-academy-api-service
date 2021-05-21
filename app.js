@@ -1,13 +1,14 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const chalk = require("chalk");
-const app = express();
 const auth = require("./middlewares/auth.mdw");
 const bodyParser = require("body-parser");
 const { check_fb_signature } = require("./utils/utils.func.js");
 const expressSession = require("express-session");
+const passport = require("passport");
 
-require("dotenv").config();
+const app = express();
 require("express-async-errors");
 
 app.use(cors());
@@ -22,6 +23,11 @@ app.use(
     cookie: { secure: true },
   })
 );
+
+// Initialize Passport and restore authentication state, if any, from the
+// session.
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.get("/", function (req, res) {
   res.json({
@@ -49,6 +55,12 @@ app.use("/api/sub-category", require("./routes/subCategory.route"));
 app.use("/api/course", require("./routes/course.route"));
 app.use("/api/webhook", require("./routes/webhook.route"));
 app.use("/api/chatbot", require("./routes/chatbot.route"));
+
+require("./config/passport")(app);
+app.get("/api/facebook/callback", function (req, res) {
+  console.log("cb");
+});
+app.get("/auth/facebook", passport.authenticate("facebook"));
 
 // Handle async errors
 app.use(function (er, req, res, next) {
