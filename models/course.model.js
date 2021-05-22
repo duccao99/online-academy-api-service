@@ -184,7 +184,7 @@ const courseModel = {
   tenNewestCourses() {
     const sql = `select c.course_id, c.course_name, c.course_title,
      c.course_avatar_url, c.course_fee, 
-    sj.subject_id, sj.subject_name, c.views, u.user_name, c.course_last_updated
+    sj.subject_id, sj.subject_name, c.views, u.user_id, u.user_name, c.course_last_updated
     from ${tbl_courses} c
     inner join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
