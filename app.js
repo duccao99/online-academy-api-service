@@ -55,6 +55,7 @@ app.use("/api/sub-category", require("./routes/subCategory.route"));
 app.use("/api/course", require("./routes/course.route"));
 app.use("/api/webhook", require("./routes/webhook.route"));
 app.use("/api/chatbot", require("./routes/chatbot.route"));
+app.use("/api/order", require("./routes/order.route"));
 
 require("./config/passport")(app);
 app.get("/api/facebook/callback", function (req, res) {

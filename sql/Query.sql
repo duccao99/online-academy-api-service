@@ -490,12 +490,14 @@ select * from `lessons`;
 select * from `courses`;
 select * from `sales`;
 select count(*) from `courses`;
+select * from `carts`;
 select * from `orders`;
 select * from `orders_details`;
 select * from `course_reviews`;
 select * from `student_courses_bought`;
 select * from `instructor_courses_uploaded`;
 select * from `student_enrolls`;
+
 
 
 

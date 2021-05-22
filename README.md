@@ -1,2 +1,3 @@
-# Online-Accademy-API-Service
-Advanced web course final project - Online-Accademy-API-Service
+# Online-Academy-API-Service
+
+Advanced web course final project - Online-Academy-API-Service
