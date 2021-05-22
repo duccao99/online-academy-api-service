@@ -479,12 +479,47 @@ set c.is_finished = true
 where c.subject_id = 10;
 
 
+----------------------------------------------------
+-- get verify account status
+----------------------------------------------------
+select u.is_verified 
+from `users` u
+where u.email = 'duccao1@gmail.com';
+
+----------------------------------------------------
+-- add otp link
+----------------------------------------------------
+update `users` u
+set u.otp_verify_url = ''
+where u.email = '';
+
+
+--------------------------------------------------
+-- get otp link 
+----------------------------------------------------
+select u.otp_verify_url 
+from `users` u
+where u.email='';
+--------------------------------------------------
+-- verify account
+----------------------------------------------------
+update `users` u
+set u.is_verified=true 
+where u.otp_verify_url='';
+
+
+--------------------------------------------------
+-- del user 
+----------------------------------------------------
+delete from `users` u
+where u.email='caovanducs@gmail.com';
+
 
 use `SPA_ONLINE_ACADEMY`;
+select * from `users`;
+select * from `subjects`;
 select * from `roles`;
 select * from `categories`;
-select * from `subjects`;
-select * from `users`;
 select * from `chapters`;
 select * from `lessons`;
 select * from `courses`;

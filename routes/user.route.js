@@ -3,6 +3,8 @@ const bcryptjs = require("bcryptjs");
 const validate = require("../middlewares/validate.mdw");
 const userModel = require("../models/user.model");
 const userSchema = require("../schema/user.schema.json");
+const randomstring = require("randomstring");
+const { sendOTP } = require("../config/nodemailer");
 
 router.get("/", async function (req, res) {
   const user_data = await userModel.all();
@@ -40,12 +42,22 @@ router.post("/sign-up", validate(userSchema), async function (req, res) {
   };
   const ret = await userModel.add(user_add);
 
+  // send otp
+  const link_otp = `${process.env.DEV_URL}/${randomstring.generate(80)}`;
+
+  const ret_add_link_otp = await userModel.addLinkOTP(link_otp, user_add.email);
+
+  sendOTP(user_add.email, link_otp);
+
   if (+ret.affectedRows === 1) {
     return res.json({
       message: "User was created!",
       user_created_info: user_add,
+      ret_add_link_otp: ret_add_link_otp.message,
+      link_otp,
     });
   }
+
   return res.status(500).json({ error_message: "Something broke!" });
 });
 
@@ -64,8 +76,6 @@ router.post("/sign-in", async function (req, res) {
     user.password,
     check_user.password
   );
-
-  console.log(check_pass);
 
   if (check_pass === true) {
     req.session.authUser = user;
@@ -98,6 +108,13 @@ router.post("/facebook/sign-in", async function (req, res) {
     };
     const check_register = await userModel.add(new_user);
 
+    // send otp
+    const link_otp = `${process.env.DEV_URL}/${randomstring.generate(80)}`;
+
+    const ret_add_link_otp = await userModel.addLinkOTP(link_otp, user.email);
+
+    sendOTP(user.email, link_otp);
+
     if (+check_register.affectedRows === 1) {
       return res.json({
         message: "User was created!",
@@ -106,6 +123,8 @@ router.post("/facebook/sign-in", async function (req, res) {
           email: user["email"],
         },
         href: "/",
+        ret_add_link_otp: ret_add_link_otp.message,
+        link_otp,
       });
     } else {
       return res.status(500).json({ error_message: "Something broke!" });
@@ -118,9 +137,49 @@ router.post("/facebook/sign-in", async function (req, res) {
     message: "Sign in success!",
     href: "/",
     user_info: {
-      user_name: user["user_name"],
-      email: user["email"],
+      user_name: check_email["user_name"],
+      email: check_email["email"],
     },
+  });
+});
+
+router.get("/check-verify-account/:email", async function (req, res) {
+  const email = req.params.email;
+  const ret = await userModel.getVerifyAccountStatus(email);
+
+  if (ret === null) {
+    return res.status(400).json({
+      message: "User is not a student!",
+    });
+  }
+
+  if (ret === true) {
+    return res.json({
+      isVerified: true,
+    });
+  }
+  return res.json({
+    isVerified: false,
+  });
+});
+
+router.get("/link-otp/:email", async function (req, res) {
+  const email = req.params.email;
+
+  const ret = await userModel.getLinkOTP(email);
+
+  return res.json({
+    link_otp: ret,
+  });
+});
+
+router.get("/access-link-otp/:link", async function (req, res) {
+  const link = req.params.link;
+
+  const ret = await userModel.verifyAccount(link);
+
+  return res.json({
+    verify_status: ret,
   });
 });
 
