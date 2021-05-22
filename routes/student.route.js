@@ -93,4 +93,18 @@ router.patch("/:id", async function (req, res) {
   return res.status(500);
 });
 
+router.get("/purchased-courses/:email", async function (req, res) {
+  const email = req.params.email;
+
+  const ret = await studentModel.getPurchasedCourses(email);
+
+  if (ret.length === 0) {
+    return res.status(204).json({ message: "No content" });
+  }
+
+  return res.json({
+    purchased_courses: ret,
+  });
+});
+
 module.exports = router;

@@ -49,7 +49,7 @@ app.use(
 // API Service
 app.use("/api/auth", require("./routes/auth.route"));
 app.use("/api/user", require("./routes/user.route"));
-app.use("/api/student", auth, require("./routes/student.route"));
+app.use("/api/student", require("./routes/student.route"));
 app.use("/api/category", require("./routes/category.route"));
 app.use("/api/sub-category", require("./routes/subCategory.route"));
 app.use("/api/course", require("./routes/course.route"));
@@ -66,7 +66,7 @@ app.get("/auth/facebook", passport.authenticate("facebook"));
 // Handle async errors
 app.use(function (er, req, res, next) {
   console.log("Error:", er.stack);
-  res.json({
+  return res.status(500).json({
     error: er,
   });
 });

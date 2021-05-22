@@ -119,6 +119,7 @@ router.post("/facebook/sign-in", async function (req, res) {
       return res.json({
         message: "User was created!",
         user_info: {
+          user_id: check_register.insertId,
           user_name: user["user_name"],
           email: user["email"],
         },
@@ -137,6 +138,7 @@ router.post("/facebook/sign-in", async function (req, res) {
     message: "Sign in success!",
     href: "/",
     user_info: {
+      user_id: check_email["user_id"],
       user_name: check_email["user_name"],
       email: check_email["email"],
     },

@@ -507,22 +507,48 @@ update `users` u
 set u.is_verified=true 
 where u.otp_verify_url='';
 
-
 --------------------------------------------------
--- del user 
+-- get purchased courses
 ----------------------------------------------------
-delete from `users` u
-where u.email='caovanducs@gmail.com';
+select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+c.course_fee, c.views, u.user_name, u.user_id, sj.subject_name, sj.subject_id
+from `orders` od
+inner join `orders_details` odd
+on od.order_id = odd.order_id
+inner join `courses` c
+on c.course_id = odd.course_id 
+inner join `users` u
+on u.user_id = od.user_id 
+inner join `subjects` sj
+on sj.subject_id = c.subject_id
+where u.email = 'caovanducs@gmail.com';
+
+
+select od.order_id, od.user_id, od.order_day, odd.course_id,
+odd.total_money, c.course_name, c.course_avatar_url, sj.subject_id,
+sj.subject_name, u.email
+from `orders` od
+inner join `orders_details` odd
+on od.order_id = odd.order_id
+inner join `users` u 
+on u.user_id = od.user_id 
+inner join `courses` c
+on c.course_id = odd.course_id
+inner join `subjects` sj 
+on sj.subject_id = c.subject_id
+where u.user_id = 7;
+
 
 
 use `SPA_ONLINE_ACADEMY`;
 select * from `users`;
+select * from `courses`;
 select * from `subjects`;
 select * from `roles`;
 select * from `categories`;
 select * from `chapters`;
 select * from `lessons`;
-select * from `courses`;
+
 select * from `sales`;
 select count(*) from `courses`;
 select * from `carts`;
@@ -534,6 +560,13 @@ select * from `instructor_courses_uploaded`;
 select * from `student_enrolls`;
 
 
+
+
+--------------------------------------------------
+-- del user 
+----------------------------------------------------
+delete from `users` u
+where u.email='caovanducs@gmail.com';
 
 
 
