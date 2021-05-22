@@ -72,7 +72,7 @@ router.post("/sign-in", async function (req, res) {
     return res.json({
       message: "Sign in success!",
       href: "/",
-      user_info: user,
+      user_info: check_user,
     });
   }
 
@@ -80,4 +80,48 @@ router.post("/sign-in", async function (req, res) {
     check_pass,
   });
 });
+
+router.post("/facebook/sign-in", async function (req, res) {
+  const user = req.body;
+
+  const check_email = await userModel.singleByEmail(user.email);
+
+  if (check_email === undefined) {
+    user.password = "123123";
+    const hashed_pass = await bcryptjs.hashSync(user.password, 10);
+    const new_user = {
+      ...user,
+      role_id: 2,
+      is_verified: false,
+      otp_verify_url: "",
+      password: hashed_pass,
+    };
+    const check_register = await userModel.add(new_user);
+
+    if (+check_register.affectedRows === 1) {
+      return res.json({
+        message: "User was created!",
+        user_info: {
+          user_name: user["user_name"],
+          email: user["email"],
+        },
+        href: "/",
+      });
+    } else {
+      return res.status(500).json({ error_message: "Something broke!" });
+    }
+  }
+
+  req.session.authUser = user;
+
+  return res.json({
+    message: "Sign in success!",
+    href: "/",
+    user_info: {
+      user_name: user["user_name"],
+      email: user["email"],
+    },
+  });
+});
+
 module.exports = router;
