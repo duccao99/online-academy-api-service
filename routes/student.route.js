@@ -6,8 +6,8 @@ router.get("/", async function (req, res) {
   const student_data = await studentModel.all();
 
   if (student_data.length === 0) {
-    return res.status(204).json({
-      message: "No content",
+    return res.status(404).json({
+      message: "Student not found",
     });
   }
 
@@ -22,8 +22,8 @@ router.get("/:id", async function (req, res) {
   const user_detail = await studentModel.detail(user_id);
 
   if (user_detail === undefined) {
-    return res.status(204).json({
-      message: "No content",
+    return res.status(404).json({
+      message: "Student not found",
     });
   }
 
@@ -41,8 +41,8 @@ router.delete("/:id", async function (req, res) {
   if (student_detail === undefined) {
     // if does not in
 
-    return res.status(204).json({
-      message: "No content",
+    return res.status(404).json({
+      message: "Student not found",
     });
   }
 
