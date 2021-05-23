@@ -15,6 +15,18 @@ router.get("/", async function (req, res) {
   });
 });
 
+router.get("/count-course-in-sub-cat", async function (req, res) {
+  const ret = await subCatModel.getCountCourseInSubCat();
+
+  if (ret.length === 0) {
+    return res.status(204).json({ message: "No content!" });
+  }
+
+  return res.json({
+    count_course: ret,
+  });
+});
+
 router.get("/:id", async function (req, res) {
   const id = +req.params.id;
   const sub_cat_detail = await subCatModel.detail(id);

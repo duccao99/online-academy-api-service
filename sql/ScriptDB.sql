@@ -46,8 +46,9 @@ CREATE TABLE `users`(
 -- Records  for `users`
 -------------------------------------
 insert into `users` (user_name,password,email,date_of_birth,is_verified,otp_verify_url,user_avatar_url,role_id) values ('duccao','duccao','duc@gmail.com',STR_TO_DATE('27-03-1999','%d-%m-%Y'),false,'https://','https://',1);
-insert into `users` (user_name,password,email,date_of_birth,is_verified,otp_verify_url,user_avatar_url,role_id) values ('duccao_admin','duccao_admin','caovanducss@gmail.com',STR_TO_DATE('27-03-1999','%d-%m-%Y'),true,'https://','https://',4);
+insert into `users` (user_name,password,email,date_of_birth,is_verified,otp_verify_url,user_avatar_url,role_id) values ('duccao_admin','123123','caovanducss@gmail.com',STR_TO_DATE('27-03-1999','%d-%m-%Y'),true,'https://','https://',4);
 insert into `users` (user_name,password,email,date_of_birth,is_verified,otp_verify_url,user_avatar_url,role_id) values ('lamtu_admin','lamtu_admin','chanestdevil@gmail.com',STR_TO_DATE('27-03-1999','%d-%m-%Y'),true,'https://','https://',4);
+insert into `users` (user_name,password,email,date_of_birth,is_verified,otp_verify_url,user_avatar_url,role_id) values ('admin','123123','admin@gmail.com',STR_TO_DATE('27-03-1999','%d-%m-%Y'),true,'https://','https://',4);
 
 insert into `users` (user_name,password,email,date_of_birth,is_verified,otp_verify_url,user_avatar_url,role_id) values ('student01','student01','student01@gmail.com',STR_TO_DATE('27-03-1999','%d-%m-%Y'),true,'https://','https://',2);
 insert into `users` (user_name,password,email,date_of_birth,is_verified,otp_verify_url,user_avatar_url,role_id) values ('student02','student02','student02@gmail.com',STR_TO_DATE('27-03-1999','%d-%m-%Y'),true,'https://','https://',2);
@@ -104,7 +105,8 @@ insert into `subjects`(subject_name,cat_id) values ('Flutter',2);
 insert into `subjects`(subject_name,cat_id) values ('Android',2);
 insert into `subjects`(subject_name,cat_id) values ('IOS',2);
 insert into `subjects`(subject_name,cat_id) values ('Swift',2);
-
+insert into `subjects`(subject_name,cat_id) values ('Advanced React',1);
+insert into `subjects`(subject_name,cat_id) values ('Advanced Javascript',1);
 
 
 -------------------------------------

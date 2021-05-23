@@ -72,6 +72,26 @@ router.post("/sign-in", async function (req, res) {
     });
   }
 
+  if (+check_user.role_id === 4) {
+    // if admin
+    const check_pass = await userModel.checkPass(
+      check_user.email,
+      user.password
+    );
+    if (check_pass === true) {
+      req.session.authUser = user;
+      return res.json({
+        message: "Sign in success!",
+        href: "/admin",
+        user_info: check_user,
+      });
+    } else {
+      return res.status(400).json({
+        check_pass,
+      });
+    }
+  }
+
   const check_pass = await bcryptjs.compareSync(
     user.password,
     check_user.password
@@ -86,7 +106,7 @@ router.post("/sign-in", async function (req, res) {
     });
   }
 
-  return res.json({
+  return res.status(400).json({
     check_pass,
   });
 });
@@ -122,6 +142,7 @@ router.post("/facebook/sign-in", async function (req, res) {
           user_id: check_register.insertId,
           user_name: user["user_name"],
           email: user["email"],
+          role_id: 2,
         },
         href: "/",
         ret_add_link_otp: ret_add_link_otp.message,
@@ -141,6 +162,7 @@ router.post("/facebook/sign-in", async function (req, res) {
       user_id: check_email["user_id"],
       user_name: check_email["user_name"],
       email: check_email["email"],
+      role_id: 2,
     },
   });
 });

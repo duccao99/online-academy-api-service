@@ -94,6 +94,19 @@ const studentModel = {
     where u.otp_verify_url='https://localhost:3000/${link}';`;
     return db.load(sql);
   },
+  async checkPass(email, password) {
+    const sql = `select  u.email, u.password
+    from ${tbl_users} u
+    where u.email='${email}'
+    and u.password= '${password}';
+    `;
+    const ret = await db.load(sql);
+
+    if (ret.length > 0) {
+      return true;
+    }
+    return false;
+  },
 };
 
 module.exports = studentModel;

@@ -538,6 +538,26 @@ inner join `subjects` sj
 on sj.subject_id = c.subject_id
 where u.user_id = 7;
 
+-------------------------------------------------
+-- check pass
+----------------------------------------------------
+select *
+from `users` u
+where u.email='caovanducss@gmail.com'
+and u.password = 'duccao_admin';
+
+-------------------------------------------------
+-- get count course in sub cat
+----------------------------------------------------
+select sj.subject_id, sj.subject_name, cat.cat_name , count(*) as count_course
+from `subjects` sj
+inner join `categories` cat
+on cat.cat_id = sj.cat_id 
+inner join `courses` c
+on c.subject_id = sj.subject_id
+group by  sj.subject_id
+order by count_course desc;
+
 
 
 use `SPA_ONLINE_ACADEMY`;
