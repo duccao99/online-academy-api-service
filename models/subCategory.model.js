@@ -18,10 +18,12 @@ const subCatModel = {
     const sql = `select * from ${tbl_subjects} `;
     return db.load(sql);
   },
-  async detail(cat_id) {
-    const sql = `select *
-    from ${tbl_subjects} s
-    where s.subject_id = ${cat_id};`;
+  async detail(sub_id) {
+    const sql = `select  sj.subject_id, sj.subject_name, c.cat_id, c.cat_name
+    from ${tbl_subjects} sj
+    inner join ${tbl_categories} c
+    on c.cat_id = sj.cat_id 
+    where sj.subject_id = ${sub_id} ;`;
 
     const data = await db.load(sql);
 

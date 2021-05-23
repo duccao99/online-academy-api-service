@@ -559,6 +559,15 @@ group by  sj.subject_id
 order by count_course desc;
 
 
+-------------------------------------------------
+-- subcat detail
+----------------------------------------------------
+select  sj.subject_id, sj.subject_name, c.cat_id, c.cat_name
+from `subjects` sj
+inner join `categories` c
+on c.cat_id = sj.cat_id 
+where sj.subject_id =1;
+
 
 use `SPA_ONLINE_ACADEMY`;
 select * from `users`;

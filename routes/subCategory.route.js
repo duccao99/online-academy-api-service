@@ -32,7 +32,7 @@ router.get("/:id", async function (req, res) {
   const sub_cat_detail = await subCatModel.detail(id);
 
   if (sub_cat_detail === undefined) {
-    return res.status(204).json({ message: "No content!" });
+    return res.status(400).json({ message: "Sub cat not found!" });
   }
 
   return res.json({
