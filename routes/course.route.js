@@ -1,6 +1,8 @@
 const router = require("express").Router();
+const chapterModel = require("../models/chapter.model");
 const courseModel = require("../models/course.model");
 const subCatModel = require("../models/subCategory.model");
+const insUploadModel = require("../models/insUpload.model");
 
 router.get("/", async function (req, res) {
   const courses = await courseModel.all();
@@ -50,6 +52,10 @@ router.post("/", async function (req, res) {
 router.get("/most-student-enroll", async function (req, res) {
   const ret = await courseModel.mostStudentEnroll();
 
+  if (ret.length === 0) {
+    return res.status(400).json({ message: "Course not found!" });
+  }
+
   if (ret.length === 0) return res.status(204);
   return res.json({
     most_student_enroll: ret,
@@ -60,7 +66,7 @@ router.get("/outstanding-courses", async function (req, res) {
   const ret = await courseModel.getOutstandingCourse();
 
   if (ret.length === 0) {
-    return res.status(204).json({ message: "No content!" });
+    return res.status(400).json({ message: "Course not found!" });
   }
   return res.json({
     outstanding_courses: ret,
@@ -71,7 +77,7 @@ router.get("/ten-newest-courses", async function (req, res) {
   const ret = await courseModel.tenNewestCourses();
 
   if (ret.length === 0) {
-    return res.status(204).json({ message: "No content!" });
+    return res.status(400).json({ message: "Course not found!" });
   }
   return res.json({
     ten_newest_courses: ret,
@@ -79,9 +85,8 @@ router.get("/ten-newest-courses", async function (req, res) {
 });
 router.get("/ten-most-viewed-courses", async function (req, res) {
   const ret = await courseModel.tenMostViewedCourses();
-
   if (ret.length === 0) {
-    return res.status(204).json({ message: "No content!" });
+    return res.status(400).json({ message: "Course not found!" });
   }
   return res.json({
     ten_most_viewed_courses: ret,
@@ -446,11 +451,18 @@ router.get("/:id", async function (req, res) {
 router.delete("/:id", async function (req, res) {
   const id = +req.params.id;
 
-  const course_detail = await courseModel.detail(id);
+  // // del ins upload
+  const del_ins_upload_con = {
+    course_id: id,
+  };
+  const ret_del_ins_upload = await insUploadModel.del(del_ins_upload_con);
 
-  if (course_detail === undefined) {
-    return res.status(400).json({ message: "Course not found!" });
-  }
+  // // del chapter
+  // const del_chap_con = {
+  //   course_id: id,
+  // };
+  // const ret_del_chap = await chapterModel.del(del_chap_con);
+
   const condition = {
     course_id: id,
   };
@@ -460,7 +472,9 @@ router.delete("/:id", async function (req, res) {
   if (+ret.affectedRows === 1) {
     return res.json({
       message: "Course was deleted!",
-      info: course_detail,
+      // chap_del_info: ret_del_chap,
+      // ret_del_ins_upload,
+      course_del_info: ret,
     });
   }
   return res.status(500).json({ error_message: "Something broke!" });

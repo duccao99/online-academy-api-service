@@ -1604,20 +1604,36 @@ insert into `sales` (sale_percent,course_id) values (5,3);
 DROP TABLE IF EXISTS `chapters`;
 CREATE TABLE `chapters`(
 	chap_id int(10) primary key not null auto_increment,
-    chap_name nvarchar(1000),
-   course_id int(10),
-
-    foreign key (course_id) references `courses` (course_id) on delete cascade
+    chap_name nvarchar(1000)
 );
 
 -------------------------------------
 -- Records  for `chapters`
 -------------------------------------
-insert into `chapters` (chap_name,course_id) values ('Introduction',1);
-insert into `chapters` (chap_name,course_id) values ('Getting started with React',1);
-insert into `chapters` (chap_name,course_id) values ('Learn and Understand NodeJS',2);
-insert into `chapters` (chap_name,course_id) values ('Big words and nodejs',2);
+insert into `chapters` (chap_name) values ('Introduction');
+insert into `chapters` (chap_name) values ('Getting started with React');
+insert into `chapters` (chap_name) values ('Learn and Understand NodeJS');
+insert into `chapters` (chap_name) values ('Big words and nodejs');
 
+insert into `chapters` (chap_name) values ('Introduction');
+insert into `chapters` (chap_name) values ('Getting started with React');
+insert into `chapters` (chap_name) values ('Learn and Understand NodeJS');
+insert into `chapters` (chap_name) values ('Big words and nodejs');
+
+insert into `chapters` (chap_name) values ('Introduction');
+insert into `chapters` (chap_name) values ('Getting started with React');
+insert into `chapters` (chap_name) values ('Learn and Understand NodeJS');
+insert into `chapters` (chap_name) values ('Big words and nodejs');
+
+insert into `chapters` (chap_name) values ('Introduction');
+insert into `chapters` (chap_name) values ('Getting started with React');
+insert into `chapters` (chap_name) values ('Learn and Understand NodeJS');
+insert into `chapters` (chap_name) values ('Big words and nodejs');
+
+insert into `chapters` (chap_name) values ('Introduction');
+insert into `chapters` (chap_name) values ('Getting started with React');
+insert into `chapters` (chap_name) values ('Learn and Understand NodeJS');
+insert into `chapters` (chap_name) values ('Big words and nodejs');
 
 -------------------------------------
 -- Table structure for `lessons`
@@ -1655,10 +1671,17 @@ CREATE TABLE `instructor_courses_uploaded`(
 
     primary key (user_id,course_id,chap_id,lesson_id),
     
-    foreign key (user_id) references `users` (user_id) on delete cascade,
-	foreign key (course_id) references `courses` (course_id) on delete cascade,
-	foreign key (chap_id) references `chapters` (chap_id) on delete cascade,
-	foreign key (lesson_id) references `lessons` (lesson_id) on delete cascade
+    
+    
+       foreign key (user_id) references `users` (user_id) ,
+	foreign key (course_id) references `courses` (course_id) ,
+	foreign key (chap_id) references `chapters` (chap_id) ,
+	foreign key (lesson_id) references `lessons` (lesson_id) 
+    
+--     foreign key (user_id) references `users` (user_id) on delete cascade,
+-- 	foreign key (course_id) references `courses` (course_id) on delete cascade,
+-- 	foreign key (chap_id) references `chapters` (chap_id) on delete cascade,
+-- 	foreign key (lesson_id) references `lessons` (lesson_id) on delete cascade
 );
 
 -------------------------------------------------------------
@@ -1667,22 +1690,28 @@ CREATE TABLE `instructor_courses_uploaded`(
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,1,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,2,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,3,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,4,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,4,1,2,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (8,5,2,2,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (8,6,3,3,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,7,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,8,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,9,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,10,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,11,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,12,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,13,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,14,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,15,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,16,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,17,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,18,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,11,1,5,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,12,1,6,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,13,1,7,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,14,1,8,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,15,1,9,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,16,1,10,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,17,1,11,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,18,1,12,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,13,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,14,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,15,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,16,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,17,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,18,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,19,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 
 
 

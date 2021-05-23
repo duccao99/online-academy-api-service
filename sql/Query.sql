@@ -39,7 +39,7 @@ where datediff(curdate(),c.course_last_updated ) <=7
 and  c.is_finished = 1
 group by c.course_id
 having count(od.course_id) >= 3
-and rt.avg_rate >= 4
+and rt.avg_rate >= 1
 limit 3;
 
 
@@ -568,6 +568,20 @@ inner join `categories` c
 on c.cat_id = sj.cat_id 
 where sj.subject_id =1;
 
+-------------------------------------------------
+-- delete course
+----------------------------------------------------
+delete 
+from `instructor_courses_uploaded` ins
+where ins.course_id =1;
+
+delete 
+from `courses` cs
+where c.course_id =1;
+
+
+
+
 
 use `SPA_ONLINE_ACADEMY`;
 select * from `users`;
@@ -584,7 +598,6 @@ select * from `carts`;
 select * from `orders`;
 select * from `orders_details`;
 select * from `course_reviews`;
-select * from `student_courses_bought`;
 select * from `instructor_courses_uploaded`;
 select * from `student_enrolls`;
 
