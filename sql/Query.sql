@@ -580,7 +580,26 @@ from `courses` cs
 where c.course_id =1;
 
 
+-------------------------------------------------
+-- all ins
+----------------------------------------------------
+select  *
+from `users` u
+where u.role_id =3;
 
+-------------------------------------------------
+-- edit ins
+----------------------------------------------------
+update `users` u
+set u.user_name='new'
+and u.email = 'mew' 
+where u.role_id = 3
+and u.user_id = 7;
+
+update users u
+      set u.user_name='new 2', u.email = 'new@2g.com'
+      where u.role_id = 3
+      and u.user_id = 8;
 
 
 use `SPA_ONLINE_ACADEMY`;
