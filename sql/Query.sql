@@ -609,6 +609,20 @@ select *
 from `courses` c
 where c.course_name = '1';
 
+-------------------------------------------------
+-- get uploaded courses
+----------------------------------------------------
+select iu.user_id, u.user_name, iu.course_id, iu.chap_id, 
+iu.lesson_id, iu.uploaded_day, c.course_name, c.course_title,
+c.course_avatar_url, c.course_fee, sj.subject_id, sj.subject_name
+    from `instructor_courses_uploaded` iu
+    inner join `users` u
+    on u.user_id = iu.user_id 
+    inner join `courses` c
+    on c.course_id = iu.course_id
+    inner join `subjects` sj
+    on sj.subject_id = c.subject_id
+    where u.email = 'ch01@yopmail.com';
 
 
 use `SPA_ONLINE_ACADEMY`;

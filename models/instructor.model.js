@@ -77,6 +77,20 @@ const instructorModel = {
     }
     return true;
   },
+  uploadedCourse(email) {
+    const sql = `select iu.user_id, u.user_name, iu.course_id, iu.chap_id, 
+    iu.lesson_id, iu.uploaded_day, c.course_name, c.course_title,
+    c.course_avatar_url, c.course_fee, sj.subject_id, sj.subject_name
+        from ${tbl_instructor_courses_uploaded} iu
+        inner join ${tbl_users} u
+        on u.user_id = iu.user_id 
+        inner join ${tbl_courses} c
+        on c.course_id = iu.course_id
+        inner join ${tbl_subjects} sj
+        on sj.subject_id = c.subject_id
+        where u.email = '${email}';`;
+    return db.load(sql);
+  },
 };
 
 module.exports = instructorModel;

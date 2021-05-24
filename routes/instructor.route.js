@@ -9,6 +9,15 @@ const fs = require("fs");
 const path = require("path");
 const moment = require("moment");
 const courseModel = require("../models/course.model");
+const cloudinary = require("cloudinary").v2;
+const streamifier = require("streamifier");
+const { Base64 } = require("js-base64");
+
+cloudinary.config({
+  cloud_name: "duccao",
+  api_key: `${process.env.CLOUNDINARY_API_KEY}`,
+  api_secret: `${process.env.CLOUNDINARY_API_SECRET}`,
+});
 
 router.get("/", async function (req, res) {
   const ret = await instructorModel.all();
@@ -21,6 +30,21 @@ router.get("/", async function (req, res) {
 
   return res.json({
     instructors: ret,
+  });
+});
+
+router.get("/uploaded-course/:email", async function (req, res) {
+  const email = req.params.email;
+  const ret = await instructorModel.uploadedCourse(email);
+
+  if (ret.length === 0) {
+    return res.status(404).json({
+      message: "Course not found!",
+    });
+  }
+
+  return res.json({
+    uploaded_course: ret,
   });
 });
 
@@ -50,6 +74,7 @@ router.post("/upload-course", async function (req, res) {
       },
     });
 
+    // const upload = multer({ storage }).array("ava", 3);
     const upload = multer({ storage }).single("ava");
 
     upload(req, res, async function (err) {
@@ -58,7 +83,39 @@ router.post("/upload-course", async function (req, res) {
           console.log(err);
           throw new Error(err);
         } else {
+          cloudinary.uploader.upload(
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
+            (er, ret) => {
+              console.log(er);
+              console.log(ret);
+            }
+          );
           const course = req.body;
+
+          // console.log(req.file);
+          // console.log(req.file);
+
+          // console.log(req.files);
+
+          // let streamUpload = (req) => {
+          //   return new Promise((resolve, reject) => {
+          //     let stream = cloudinary.uploader.upload_stream((er, ret) => {
+          //       if (ret) {
+          //         resolve(ret);
+          //       } else {
+          //         reject(er);
+          //       }
+          //     });
+          //     return streamifier.createReadStream(req.file.buffer).pipe(stream);
+          //   });
+          // };
+
+          // async function upLoadImage(req) {
+          //   let ret = await streamUpload(req);
+          //   console.log("ret upload image cl: ", ret);
+          // }
+
+          // upLoadImage(req);
 
           // check name
           const isNameExists = await instructorModel.isCourseNameExists(
@@ -70,6 +127,40 @@ router.post("/upload-course", async function (req, res) {
               message: "Course name exists!",
             });
           }
+          // convert file to base64
+
+          // var fileInfor = [];
+          // for (var i = 0; i < req.files.length; i++) {
+          //   fileInfo.push({
+          //     originalName: req.files[i].originalName,
+          //     size: req.files[i].size,
+          //     b64: new Buffer(fs.readFileSync(req.files[i].path)).toString(
+          //       "base64"
+          //     ),
+          //   });
+          //   fs.unlink(req.files[i].path);
+          // }
+
+          console.log("req file ", req.file);
+          // console.log("req files ", req.files);
+
+          // console.log("Buffer from file ", Buffer.from(req.file));
+          // AbortController.replace(/([^:]\/)\/+/g, "$1");
+
+          var imageAsBase64 = await fs.readFileSync(
+            `${saveImagePath}`,
+            "base64"
+          );
+          console.log("img path base 64 ", imageAsBase64);
+
+          const path = saveImagePath.replace(/([^:]\/)\/+/g, "$1");
+          const filePathCloudn = saveImagePath;
+
+          let secure_url = "";
+          console.log(saveImagePath);
+
+          console.log(secure_url);
+
           const toDay = Date.now();
 
           const course_tobe_add = {
@@ -82,16 +173,16 @@ router.post("/upload-course", async function (req, res) {
             is_finished: false,
             views: 0,
             course_last_updated: moment(toDay).format("YYYY/MM/DD HH:mm:ss"),
-            course_avatar_url: saveImagePath,
+            course_avatar_url: secure_url,
           };
           // add to `courses`
-          const ret = await courseModel.add(course_tobe_add);
+          const ret_add_course = await courseModel.add(course_tobe_add);
 
           // add to `instructor_courses_uploaded`
 
           const insUp_entity = {
             user_id: course.user_id,
-            course_id: ret.insertId,
+            course_id: ret_add_course.insertId,
             lesson_id: null,
             chap_id: null,
             uploaded_day: moment(toDay).format("YYYY/MM/DD HH:mm:ss"),
@@ -100,7 +191,7 @@ router.post("/upload-course", async function (req, res) {
 
           return res.json({
             message: "Upload course success!",
-            ret_add: ret,
+            ret_add_course: ret_add_course,
             ret_ins_up: ret_ins_up,
           });
         }
