@@ -13,6 +13,9 @@ const tbl_student_enrolls = `student_enrolls`;
 const tbl_sales = `sales`;
 
 const insUploadModel = {
+  add(entity) {
+    return db.add(entity, tbl_instructor_courses_uploaded);
+  },
   del(condition) {
     return db.del(condition, tbl_instructor_courses_uploaded);
   },

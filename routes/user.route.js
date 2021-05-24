@@ -173,7 +173,7 @@ router.get("/check-verify-account/:email", async function (req, res) {
 
   if (ret === null) {
     return res.status(400).json({
-      message: "User is not a student!",
+      message: "Not found email!",
     });
   }
 

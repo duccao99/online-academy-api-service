@@ -122,7 +122,7 @@ CREATE TABLE `courses`(
     course_fee int(10),
     course_full_description nvarchar(14000),
 	course_short_description nvarchar(4000),
-	course_last_updated TIMESTAMP,
+	course_last_updated datetime,
 	is_finished bool,
     subject_id int(10),
     views int(10) default null,
@@ -1665,11 +1665,11 @@ DROP TABLE IF EXISTS `instructor_courses_uploaded`;
 CREATE TABLE `instructor_courses_uploaded`(
 	user_id int(10) not null ,
     course_id int(10)  not null ,
-    lesson_id int(10) not null ,
-    chap_id int(10) not null ,
-	uploaded_day timestamp,
+    lesson_id int(10) default null ,
+    chap_id int(10) default null ,
+	uploaded_day datetime,
 
-    primary key (user_id,course_id,chap_id,lesson_id),
+    primary key (user_id,course_id),
     
     
     
@@ -1706,12 +1706,8 @@ insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,u
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,17,1,11,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,18,1,12,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,13,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,14,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,15,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,16,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,17,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,18,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,19,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+-- insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (15,22,null,null,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+
 
 
 

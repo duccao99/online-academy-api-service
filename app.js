@@ -1,5 +1,7 @@
 require("dotenv").config();
 const express = require("express");
+require("express-async-errors");
+
 const cors = require("cors");
 const chalk = require("chalk");
 const auth = require("./middlewares/auth.mdw");
@@ -9,7 +11,6 @@ const expressSession = require("express-session");
 const passport = require("passport");
 
 const app = express();
-require("express-async-errors");
 
 app.use(cors());
 app.use(express.json());
@@ -65,8 +66,9 @@ app.get("/api/facebook/callback", function (req, res) {
 app.get("/auth/facebook", passport.authenticate("facebook"));
 
 // Handle async errors
-app.use(function (er, req, res, next) {
+app.use(async function (er, req, res, next) {
   console.log("Error:", er.stack);
+
   return res.status(500).json({
     error: er,
   });

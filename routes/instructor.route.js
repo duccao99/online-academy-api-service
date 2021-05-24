@@ -4,6 +4,11 @@ const insUploadModel = require("../models/insUpload.model");
 const bcryptjs = require("bcryptjs");
 const randomstring = require("randomstring");
 const { sendOTP } = require("../config/nodemailer");
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
+const moment = require("moment");
+const courseModel = require("../models/course.model");
 
 router.get("/", async function (req, res) {
   const ret = await instructorModel.all();
@@ -30,6 +35,86 @@ router.get("/:id", async function (req, res) {
   return res.json({
     instructor_detail: ret[0],
   });
+});
+
+router.post("/upload-course", async function (req, res) {
+  try {
+    const saveImagePath = path.join(__dirname, "../public/images");
+
+    const storage = multer.diskStorage({
+      destination: function (req, file, cb) {
+        cb(null, saveImagePath);
+      },
+      filename: function (req, file, cb) {
+        cb(null, file.originalname);
+      },
+    });
+
+    const upload = multer({ storage }).single("ava");
+
+    upload(req, res, async function (err) {
+      try {
+        if (err) {
+          console.log(err);
+          throw new Error(err);
+        } else {
+          const course = req.body;
+
+          // check name
+          const isNameExists = await instructorModel.isCourseNameExists(
+            course.course_name
+          );
+
+          if (isNameExists === true) {
+            return res.status(400).json({
+              message: "Course name exists!",
+            });
+          }
+          const toDay = Date.now();
+
+          const course_tobe_add = {
+            course_name: course.course_name,
+            course_title: course.course_title,
+            course_fee: +course.course_fee,
+            course_full_description: course.course_full_description,
+            course_short_description: course.course_short_description,
+            subject_id: course.subject_id,
+            is_finished: false,
+            views: 0,
+            course_last_updated: moment(toDay).format("YYYY/MM/DD HH:mm:ss"),
+            course_avatar_url: saveImagePath,
+          };
+          // add to `courses`
+          const ret = await courseModel.add(course_tobe_add);
+
+          // add to `instructor_courses_uploaded`
+
+          const insUp_entity = {
+            user_id: course.user_id,
+            course_id: ret.insertId,
+            lesson_id: null,
+            chap_id: null,
+            uploaded_day: moment(toDay).format("YYYY/MM/DD HH:mm:ss"),
+          };
+          const ret_ins_up = await insUploadModel.add(insUp_entity);
+
+          return res.json({
+            message: "Upload course success!",
+            ret_add: ret,
+            ret_ins_up: ret_ins_up,
+          });
+        }
+      } catch (er) {
+        return res.status(500).json({
+          message: er,
+        });
+      }
+    });
+  } catch (er) {
+    return res.status(500).json({
+      message: "Something broke!",
+    });
+  }
 });
 
 router.post("/", async function (req, res) {

@@ -66,6 +66,17 @@ const instructorModel = {
   add(entity) {
     return db.add(entity, tbl_users);
   },
+  async isCourseNameExists(name) {
+    const sql = `select *
+    from ${tbl_courses} c
+    where c.course_name = '${name}'`;
+    const ret = await db.load(sql);
+
+    if (ret.length === 0) {
+      return false;
+    }
+    return true;
+  },
 };
 
 module.exports = instructorModel;

@@ -602,14 +602,25 @@ update users u
       and u.user_id = 8;
 
 
+-------------------------------------------------
+-- check course name
+----------------------------------------------------
+select *
+from `courses` c
+where c.course_name = '1';
+
+
+
 use `SPA_ONLINE_ACADEMY`;
 select * from `users`;
+select * from `instructor_courses_uploaded`;
+select * from `chapters`;
+select * from `lessons`;
 select * from `courses`;
 select * from `subjects`;
 select * from `roles`;
 select * from `categories`;
-select * from `chapters`;
-select * from `lessons`;
+
 
 select * from `sales`;
 select count(*) from `courses`;
@@ -617,7 +628,7 @@ select * from `carts`;
 select * from `orders`;
 select * from `orders_details`;
 select * from `course_reviews`;
-select * from `instructor_courses_uploaded`;
+
 select * from `student_enrolls`;
 
 

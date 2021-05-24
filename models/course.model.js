@@ -17,6 +17,10 @@ const courseModel = {
     const sql = `select * from ${tbl_courses} `;
     return db.load(sql);
   },
+
+  add(entity) {
+    return db.add(entity, tbl_courses);
+  },
   allSales() {
     const sql = `select * from ${tbl_sales}; `;
     return db.load(sql);
