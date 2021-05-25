@@ -83,13 +83,13 @@ router.post("/upload-course", async function (req, res) {
           console.log(err);
           throw new Error(err);
         } else {
-          cloudinary.uploader.upload(
-            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
-            (er, ret) => {
-              console.log(er);
-              console.log(ret);
-            }
-          );
+          // cloudinary.uploader.upload(
+          //   fs.readFileSync(`${saveImagePath}`, "base64"),
+          //   (er, ret) => {
+          //     console.log(er);
+          //     console.log(ret);
+          //   }
+          // );
           const course = req.body;
 
           // console.log(req.file);
@@ -141,59 +141,74 @@ router.post("/upload-course", async function (req, res) {
           //   fs.unlink(req.files[i].path);
           // }
 
-          console.log("req file ", req.file);
+          // console.log("req file ", req.file);
           // console.log("req files ", req.files);
 
           // console.log("Buffer from file ", Buffer.from(req.file));
           // AbortController.replace(/([^:]\/)\/+/g, "$1");
 
-          var imageAsBase64 = await fs.readFileSync(
-            `${saveImagePath}`,
-            "base64"
-          );
-          console.log("img path base 64 ", imageAsBase64);
+          const pathSaveImage = saveImagePath.replace(/([^:]\/)\/+/g, "$1");
 
-          const path = saveImagePath.replace(/([^:]\/)\/+/g, "$1");
-          const filePathCloudn = saveImagePath;
-
+          const cloudPath = path.join(pathSaveImage, req.file.originalname);
           let secure_url = "";
-          console.log(saveImagePath);
 
-          console.log(secure_url);
+          // console.log("img path base 64 ", pathSaveImage);
+          // console.log("cloudPath ", cloudPath);
 
-          const toDay = Date.now();
+          cloudinary.uploader.upload(
+            `${req.file.path}`,
+            {
+              use_filename: true,
+              unique_filename: false,
+            },
+            async (er, ret) => {
+              try {
+                console.log(er);
+                console.log(ret);
+                if (ret) {
+                  const toDay = Date.now();
 
-          const course_tobe_add = {
-            course_name: course.course_name,
-            course_title: course.course_title,
-            course_fee: +course.course_fee,
-            course_full_description: course.course_full_description,
-            course_short_description: course.course_short_description,
-            subject_id: course.subject_id,
-            is_finished: false,
-            views: 0,
-            course_last_updated: moment(toDay).format("YYYY/MM/DD HH:mm:ss"),
-            course_avatar_url: secure_url,
-          };
-          // add to `courses`
-          const ret_add_course = await courseModel.add(course_tobe_add);
+                  const course_tobe_add = {
+                    course_name: course.course_name,
+                    course_title: course.course_title,
+                    course_fee: +course.course_fee,
+                    course_full_description: course.course_full_description,
+                    course_short_description: course.course_short_description,
+                    subject_id: course.subject_id,
+                    is_finished: false,
+                    views: 0,
+                    course_last_updated: moment(toDay).format(
+                      "YYYY/MM/DD HH:mm:ss"
+                    ),
+                    course_avatar_url: ret.secure_url,
+                  };
+                  // add to `courses`
+                  const ret_add_course = await courseModel.add(course_tobe_add);
 
-          // add to `instructor_courses_uploaded`
+                  // add to `instructor_courses_uploaded`
 
-          const insUp_entity = {
-            user_id: course.user_id,
-            course_id: ret_add_course.insertId,
-            lesson_id: null,
-            chap_id: null,
-            uploaded_day: moment(toDay).format("YYYY/MM/DD HH:mm:ss"),
-          };
-          const ret_ins_up = await insUploadModel.add(insUp_entity);
+                  const insUp_entity = {
+                    user_id: course.user_id,
+                    course_id: ret_add_course.insertId,
+                    lesson_id: null,
+                    chap_id: null,
+                    uploaded_day: moment(toDay).format("YYYY/MM/DD HH:mm:ss"),
+                  };
+                  const ret_ins_up = await insUploadModel.add(insUp_entity);
 
-          return res.json({
-            message: "Upload course success!",
-            ret_add_course: ret_add_course,
-            ret_ins_up: ret_ins_up,
-          });
+                  return res.json({
+                    message: "Upload course success!",
+                    ret_add_course: ret_add_course,
+                    ret_ins_up: ret_ins_up,
+                  });
+                }
+              } catch (er) {
+                return res.status(500).json({
+                  message: er,
+                });
+              }
+            }
+          );
         }
       } catch (er) {
         return res.status(500).json({
