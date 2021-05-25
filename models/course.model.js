@@ -36,13 +36,13 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw 
     group by crw.course_id
@@ -58,17 +58,18 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw 
     group by crw.course_id
     ) rt
+    on rt.course_id = c.course_id
     where c.is_finished = true
     group by c.course_id
     limit ${limit}
@@ -81,17 +82,18 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw 
     group by crw.course_id
     ) rt
+    on rt.course_id = c.course_id
     where sj.subject_name = '${sub_cat}'
     and c.is_finished = true
     group by c.course_id;`;
@@ -102,17 +104,18 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw 
     group by crw.course_id
     ) rt
+    on rt.course_id = c.course_id
     where sj.subject_name = '${sub_cat}'
     and c.is_finished = true
     group by c.course_id
@@ -127,11 +130,11 @@ const courseModel = {
     c.course_last_updated, c.is_finished, c.subject_id,c.views ,
     sj.subject_name,  u.user_name
     from ${tbl_courses} c 
-    inner join ${tbl_subjects} sj 
+    left join ${tbl_subjects} sj 
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} i
+    left join ${tbl_instructor_courses_uploaded} i
     on i.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = i.user_id
     where c.course_id = ${course_id}
     and c.is_finished = true ;`;
@@ -159,21 +162,21 @@ const courseModel = {
     sj.subject_name, ins.user_id, u.user_name, sal.sale_percent, ste.num_stu_enroll
    
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id 
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-    inner join ${tbl_sales} sal 
+    left join ${tbl_sales} sal 
     on sal.course_id = c.course_id
-    inner join (
+    left join (
     select *,count(*) as num_stu_enroll
     from ${tbl_student_enrolls} ste
     group by ste.course_id
@@ -190,11 +193,11 @@ const courseModel = {
      c.course_avatar_url, c.course_fee, 
     sj.subject_id, sj.subject_name, c.views, u.user_id, u.user_name, c.course_last_updated
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id
     where c.is_finished = 1
     group by c.course_id
@@ -210,13 +213,13 @@ const courseModel = {
     c.course_last_updated, c.is_finished, c.views, sj.subject_name, u.user_id,
     u.user_name, rt.avg_rate
     from ${tbl_courses} c 
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins 
+    left join ${tbl_instructor_courses_uploaded} ins 
     on ins.course_id = c.course_id 
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id
-    inner join (
+    left join (
     select *, avg(cr.star) as avg_rate
     from course_reviews cr
     group by cr.course_id
@@ -233,11 +236,11 @@ const courseModel = {
     const sql = `select  count(*) as num_student_enroll,
     cat.cat_name, sj.subject_id, sj.subject_name, c.course_id 
     from ${tbl_student_enrolls} se 
-    inner join ${tbl_courses} c 
+    left join ${tbl_courses} c 
     on c.course_id = se.course_id 
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_categories} cat 
+    left join ${tbl_categories} cat 
     on cat.cat_id = sj.cat_id
     group by se.course_id
     order by num_student_enroll desc ;`;
@@ -248,9 +251,9 @@ const courseModel = {
      l.flag_reviewable, l.duration
     , ct.chap_id, ct.chap_name
     from ${tbl_courses} c
-    inner join ${tbl_chapters} ct
+    left join ${tbl_chapters} ct
     on ct.course_id = c.course_id
-    inner join ${tbl_lessons} l
+    left join ${tbl_lessons} l
     on l.chap_id = ct.chap_id 
     where c.course_id = ${course_id};
     `;
@@ -266,7 +269,7 @@ const courseModel = {
     const sql = `select l.lesson_id, l.lesson_name, l.lesson_content, l.flag_reviewable
     , l.duration, l.chap_id, c.chap_name, c.course_id
     from ${tbl_lessons} l
-    inner join ${tbl_chapters} c 
+    left join ${tbl_chapters} c 
     on c.chap_id = l.chap_id
     where c.course_id = ${course_id};
     `;
@@ -277,11 +280,11 @@ const courseModel = {
     const sql = `select ic.course_id, ic.uploaded_day, u.user_name,
      u.email, u.role_id, u.user_avatar_url, r.role_name
     from ${tbl_courses} c
-    inner join ${tbl_instructor_courses_uploaded} ic
+    left join ${tbl_instructor_courses_uploaded} ic
     on ic.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ic.user_id
-    inner join ${tbl_roles} r
+    left join ${tbl_roles} r
     on r.role_id = u.role_id
     where c.course_id = ${course_id};
     `;
@@ -294,19 +297,19 @@ const courseModel = {
     ,c.course_last_updated, c.is_finished, c.subject_id,c.views 
     ,sj.subject_name, scb.num_stu_bought, u.user_name, rt.avg_rate
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins 
+    left join ${tbl_instructor_courses_uploaded} ins 
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u 
+    left join ${tbl_users} u 
     on u.user_id = ins.user_id
-    inner join (
+    left join (
       select *, avg(star) avg_rate
       from ${tbl_course_reviews} crw
       group by crw.course_id
     ) rt
     on rt.course_id = c.course_id
-    inner join (
+    left join (
     select * , count(*) num_stu_bought
     from ${tbl_orders_details} scb 
     group by scb.course_id
@@ -328,11 +331,11 @@ const courseModel = {
     const sql = `select cr.course_id,c.course_name, cr.star, cr.review_content
     ,u.user_id, u.user_name, u.user_avatar_url, u.role_id, r.role_name
     from ${tbl_courses} c
-    inner join ${tbl_course_reviews} cr
+    left join ${tbl_course_reviews} cr
     on cr.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = cr.user_id
-    inner join ${tbl_roles} r
+    left join ${tbl_roles} r
     on u.role_id = r.role_id
     where c.course_id = ${course_id};`;
     return db.load(sql);
@@ -343,17 +346,18 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c 
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw 
     group by crw.course_id
     ) rt
+    on rt.course_id = c.course_id
     where match(c.course_name)
     against ('${name}' in natural language mode)
     and c.is_finished = true
@@ -367,17 +371,18 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c 
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw 
     group by crw.course_id
     ) rt
+    on rt.course_id = c.course_id
     where match(sj.subject_name)
     against ('${subcat}' in natural language mode)
     and c.is_finished = true
@@ -391,17 +396,18 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c 
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw 
     group by crw.course_id
     ) rt
+    on rt.course_id = c.course_id
     where match(sj.subject_name)
     against ('${text}' in natural language mode)
     or  match(sj.subject_name)
@@ -418,15 +424,16 @@ const courseModel = {
     from ${tbl_courses} c 
     left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw 
     group by crw.course_id
     ) rt
+    on rt.course_id = c.course_id
     where match(c.course_name)
     against ('${text}' in natural language mode)
     or  match(sj.subject_name)
@@ -442,13 +449,13 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id 
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw
     group by crw.course_id
@@ -464,13 +471,13 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id 
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw
     group by crw.course_id
@@ -488,13 +495,13 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id 
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw
     group by crw.course_id
@@ -510,13 +517,13 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id 
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw
     group by crw.course_id
@@ -534,13 +541,13 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id 
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw
     group by crw.course_id
@@ -556,13 +563,13 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id 
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw
     group by crw.course_id
@@ -580,13 +587,13 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id 
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw
     group by crw.course_id
@@ -602,13 +609,13 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id 
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw
     group by crw.course_id
@@ -627,27 +634,27 @@ const courseModel = {
     c.course_fee, sal.sale_percent,
     rt.avg_rate, num_stu.num_stu_rate, num_stu_en.num_stu_enrolls
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id 
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-    inner join ${tbl_sales} sal
+    left join ${tbl_sales} sal
     on sal.course_id = c.course_id
-    inner join (
+    left join (
     select *, count(*) as num_stu_rate 
     from ${tbl_course_reviews} crw
     group by crw.course_id
     ) num_stu
     on num_stu.course_id = c.course_id
-    inner join (
+    left join (
     select *, count(*) as num_stu_enrolls 
     from ${tbl_student_enrolls} ste
     group by ste.course_id
@@ -665,21 +672,21 @@ const courseModel = {
     c.views, c.course_last_updated, c.is_finished, sj.subject_id, 
     sj.subject_name, ins.user_id, u.user_name, sal.sale_percent, ste.num_stu_enroll
     from ${tbl_courses} c
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id 
-    inner join ${tbl_instructor_courses_uploaded} ins
+    left join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = ins.user_id
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-    inner join ${tbl_sales} sal 
+    left join ${tbl_sales} sal 
     on sal.course_id = c.course_id
-    inner join (
+    left join (
     select *,count(*) as num_stu_enroll
     from ${tbl_student_enrolls} ste
     group by ste.course_id
@@ -693,7 +700,7 @@ const courseModel = {
     const sql = `select cr.user_id, cr.course_id, cr.review_content, cr.star ,
     u.user_name
     from ${tbl_course_reviews} cr
-    inner join ${tbl_users} u
+    left join ${tbl_users} u
     on u.user_id = cr.user_id
     where cr.course_id = ${course_id};`;
     return db.load(sql);
@@ -709,9 +716,9 @@ const courseModel = {
     const sql = `select ins.course_id, ins.chap_id, ch.chap_name,  le.lesson_content,
     ins.lesson_id, le.lesson_name,le.lesson_video_url ,le.flag_reviewable
     from ${tbl_instructor_courses_uploaded} ins
-    inner join ${tbl_chapters} ch 
+    left join ${tbl_chapters} ch 
     on ch.chap_id = ins.chap_id 
-    inner join ${tbl_lessons} le 
+    left join ${tbl_lessons} le 
     on le.lesson_id = ins.lesson_id 
     where ins.course_id = ${course_id} ;`;
     return db.load(sql);

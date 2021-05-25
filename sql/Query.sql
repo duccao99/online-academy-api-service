@@ -40,7 +40,7 @@ and  c.is_finished = 1
 group by c.course_id
 having count(od.course_id) >= 3
 and rt.avg_rate >= 1
-limit 3;
+limit 10;
 
 
 
@@ -354,13 +354,13 @@ select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate
     from `courses` c
-    inner join `subjects` sj
+    left join `subjects` sj
     on sj.subject_id = c.subject_id
-    inner join `instructor_courses_uploaded` ins
+    left join `instructor_courses_uploaded` ins
     on ins.course_id = c.course_id
-    inner join `users` u
+    left join `users` u
     on u.user_id = ins.user_id
-    inner join (
+    left join (
     select *, avg(star) as avg_rate
     from course_reviews crw 
     group by crw.course_id
@@ -368,7 +368,32 @@ select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     on rt.course_id = c.course_id
     where c.is_finished = true
     group by c.course_id;
+
+
+----------------------------------------------------
+-- all courses  pagi
+----------------------------------------------------
     
+  select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
+    u.user_id, u.user_name, rt.avg_rate
+    from `courses` c
+    left join `subjects` sj
+    on sj.subject_id = c.subject_id
+    left join `instructor_courses_uploaded` ins
+    on ins.course_id = c.course_id
+    left join `users` u
+    on u.user_id = ins.user_id
+   left join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw 
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id
+    where c.is_finished = true
+    group by c.course_id
+    limit 9
+    offset 10;
     
 ----------------------------------------------------
 -- by price asc

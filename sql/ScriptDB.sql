@@ -552,7 +552,7 @@ values ('Modern React with Redux','Master React and Redux with React Router, Web
 </div>
 </li>
 </ul>
-</div>',curdate(),true,2,7);
+</div>',str_to_date('12-12-2020','%d-%m-%Y'),true,2,7);
 
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
 course_short_description,course_last_updated,is_finished,subject_id,views) 
@@ -631,7 +631,7 @@ values ('Javascript Projects for Complete Beginners','Learn and Deploy Four proj
 </li>
 </ul>
 </div>
-</div>',curdate(),true,3,6);
+</div>',str_to_date('12-12-2020','%d-%m-%Y'),true,3,6);
 
 
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
@@ -724,7 +724,7 @@ values (
 </ul>
 </div>
 </div>'
-,curdate(),true,7,5);
+,str_to_date('12-12-2020','%d-%m-%Y'),true,7,5);
 
 
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
