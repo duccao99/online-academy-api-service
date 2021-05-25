@@ -12,8 +12,8 @@ const courseModel = require("../models/course.model");
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
 const { Base64 } = require("js-base64");
-const chapterModel = require("../models/chapter");
-
+const chapterModel = require("../models/chapter.model");
+const lessonModel = require("./../models/lesson.model");
 cloudinary.config({
   cloud_name: "duccao",
   api_key: `${process.env.CLOUNDINARY_API_KEY}`,
@@ -82,6 +82,20 @@ router.get("/chap-exists/:id", async function (req, res) {
 
   return res.json({
     chap_exists: ret,
+  });
+});
+
+router.get("/lesson-exists/:chap_id", async function (req, res) {
+  const chap_id = +req.params.chap_id;
+
+  const ret = await insUploadModel.getLessonExists(chap_id);
+
+  if (ret.length === 0) {
+    return res.status(404).json({ message: "Chap not found!" });
+  }
+
+  return res.json({
+    lesson_exists: ret,
   });
 });
 
@@ -285,6 +299,85 @@ router.post("/upload-chapter", async function (req, res) {
   return res.json({
     ret_add_chap,
     ret_add_chap_to_insUp,
+  });
+});
+
+router.post("/upload-lesson", async function (req, res) {
+  const saveVideoPath = path.join(__dirname, "../public/videos");
+
+  const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, saveVideoPath);
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
+    },
+  });
+
+  const upload = multer({ storage }).single("lesson_video");
+
+  upload(req, res, async function (er) {
+    try {
+      if (er) {
+        return res.status(500).json({ er });
+      } else {
+        const lesson = req.body;
+
+        cloudinary.uploader.upload_large(
+          req.file.path,
+          {
+            resource_type: "video",
+            eager_async: true,
+            use_filename: true,
+            unique_filename: false,
+          },
+          async (er, ret) => {
+            try {
+              if (er) {
+                return res.status(500).json({ er });
+              }
+
+              console.log(ret);
+
+              // add lesson
+
+              const lesson_entity = {
+                lesson_name: lesson.lesson_name,
+                lesson_content: lesson.lesson_content,
+                flag_reviewable: true,
+                duration: null,
+                chap_id: +lesson.chap_id,
+                lesson_video_url: ret.secure_url,
+              };
+              const ret_add_lesson = await lessonModel.add(lesson_entity);
+
+              // add ins up
+              const insUp_entity = {
+                course_id: +lesson.course_id,
+                user_id: +lesson.user_id,
+                chap_id: +lesson.chap_id,
+                lesson_id: +ret_add_lesson.insertId,
+                uploaded_day: moment(Date.now()).format("YYYY/MM/DD HH:mm:ss"),
+              };
+              const ret_add_ins_up = await insUploadModel.add(insUp_entity);
+
+              // course_id: lesson.course_id,
+              // user_id: lesson.user_id,
+
+              return res.json({
+                message: "upload lesson success!",
+                ret_add_lesson,
+                ret_add_ins_up,
+              });
+            } catch (er) {
+              return res.status(500).json({ er });
+            }
+          }
+        );
+      }
+    } catch (er) {
+      return res.status(500).json({ er });
+    }
   });
 });
 

@@ -1644,6 +1644,7 @@ CREATE TABLE `lessons`(
     lesson_name nvarchar(1000),
 	lesson_content nvarchar(1000),
     flag_reviewable bool,
+    lesson_video_url nvarchar(5000) default null,
 	duration time,
 	chap_id int(10) ,
 

@@ -646,7 +646,15 @@ inner join `courses` cou
 on cou.course_id = ins_up.course_id
 where ins_up.course_id = 22;
 
-
+-------------------------------------------------
+-- get lesson exists
+----------------------------------------------------
+select ls.lesson_id, ls.lesson_name, chap.chap_id,
+chap.chap_name
+from `lessons` ls
+inner join `chapters` chap
+on chap.chap_id = ls.chap_id
+where ls.chap_id = 1;
 
 
 use `SPA_ONLINE_ACADEMY`;

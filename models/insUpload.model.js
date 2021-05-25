@@ -30,7 +30,19 @@ const insUploadModel = {
     on c.chap_id = ins_up.chap_id
     inner join ${tbl_courses} cou 
     on cou.course_id = ins_up.course_id
-    where ins_up.course_id = ${course_id};
+    where ins_up.course_id = ${course_id}
+    group by c.chap_name;
+    `;
+    return db.load(sql);
+  },
+  getLessonExists(chap_id) {
+    const sql = `select ls.lesson_id, ls.lesson_name, chap.chap_id,
+    chap.chap_name
+    from ${tbl_lessons} ls
+    inner join ${tbl_chapters} chap
+    on chap.chap_id = ls.chap_id
+    where ls.chap_id = ${chap_id}
+    group by ls.lesson_name;
     `;
     return db.load(sql);
   },

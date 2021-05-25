@@ -13,6 +13,9 @@ const tbl_student_enrolls = `student_enrolls`;
 const tbl_sales = `sales`;
 
 const chapterModel = {
+  add(entity) {
+    return db.add(entity, tbl_chapters);
+  },
   del(condition) {
     return db.del(condition, tbl_chapters);
   },
