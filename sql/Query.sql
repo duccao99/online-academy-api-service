@@ -657,6 +657,18 @@ on chap.chap_id = ls.chap_id
 where ls.chap_id = 1;
 
 
+-------------------------------------------------
+-- get chapter in syllabus
+----------------------------------------------------
+select ins.course_id, ins.chap_id, ch.chap_name, le.lesson_content
+ins.lesson_id, le.lesson_name, le.lesson_video_url, le.flag_reviewable
+from `instructor_courses_uploaded` ins
+inner join `chapters` ch 
+on ch.chap_id = ins.chap_id 
+inner join `lessons` le 
+on le.lesson_id = ins.lesson_id 
+where ins.course_id = 22;
+
 use `SPA_ONLINE_ACADEMY`;
 select * from `users`;
 select * from `instructor_courses_uploaded`;

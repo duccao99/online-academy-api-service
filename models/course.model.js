@@ -268,7 +268,7 @@ const courseModel = {
     from ${tbl_lessons} l
     inner join ${tbl_chapters} c 
     on c.chap_id = l.chap_id
-    where c.course_id =${course_id};
+    where c.course_id = ${course_id};
     `;
     return db.load(sql);
   },
@@ -703,6 +703,17 @@ const courseModel = {
     set c.is_finished = true
     where c.subject_id = ${subject_id};
     `;
+    return db.load(sql);
+  },
+  syllabus(course_id) {
+    const sql = `select ins.course_id, ins.chap_id, ch.chap_name,  le.lesson_content,
+    ins.lesson_id, le.lesson_name,le.lesson_video_url ,le.flag_reviewable
+    from ${tbl_instructor_courses_uploaded} ins
+    inner join ${tbl_chapters} ch 
+    on ch.chap_id = ins.chap_id 
+    inner join ${tbl_lessons} le 
+    on le.lesson_id = ins.lesson_id 
+    where ins.course_id = ${course_id} ;`;
     return db.load(sql);
   },
 };

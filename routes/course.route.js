@@ -336,21 +336,16 @@ router.get("/byPrice/desc", async function (req, res) {
 
 router.get("/detail/syllabus/:id", async function (req, res) {
   const id = +req.params.id;
+  const ret = await courseModel.syllabus(id);
 
-  const course_detail = await courseModel.detail(id);
-
-  if (course_detail === undefined) {
-    return res.status(400).json({ message: "Course not found!" });
+  if (ret.length === 0) {
+    return res.status(404).json({
+      message: "No syllabus",
+    });
   }
 
-  const all_chapters = await courseModel.allChapters(id);
-  const all_lessons = await courseModel.allLessons(id);
-
   return res.json({
-    course_syllabus: {
-      all_chapters,
-      all_lessons,
-    },
+    course_syllabus: ret,
   });
 });
 
