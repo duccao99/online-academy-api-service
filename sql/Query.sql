@@ -276,11 +276,11 @@ select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
 c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
 u.user_id, u.user_name, rt.avg_rate
 from `courses` c 
-inner join `subjects` sj
+left join `subjects` sj
 on sj.subject_id = c.subject_id
-inner join `instructor_courses_uploaded` ins
+left join `instructor_courses_uploaded` ins
 on ins.course_id = c.course_id
-inner join `users` u
+left join `users` u
 on u.user_id = ins.user_id
 inner join (
 select *, avg(star) as avg_rate
@@ -288,9 +288,9 @@ from course_reviews crw
 group by crw.course_id
 ) rt
 where match(c.course_name)
-against ('react' in natural language mode)
+against ('shiba1' in natural language mode)
 or  match(sj.subject_name)
-against ('react' in natural language mode)
+against ('shiba2' in natural language mode)
 and c.is_finished = true
 group by c.course_id
 limit 9

@@ -416,7 +416,7 @@ const courseModel = {
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate
     from ${tbl_courses} c 
-    inner join ${tbl_subjects} sj
+    left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
     inner join ${tbl_instructor_courses_uploaded} ins
     on ins.course_id = c.course_id
@@ -427,7 +427,7 @@ const courseModel = {
     from course_reviews crw 
     group by crw.course_id
     ) rt
-    where match(sj.subject_name)
+    where match(c.course_name)
     against ('${text}' in natural language mode)
     or  match(sj.subject_name)
     against ('${text}' in natural language mode)
