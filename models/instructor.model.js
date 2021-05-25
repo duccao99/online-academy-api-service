@@ -89,7 +89,8 @@ const instructorModel = {
         on c.course_id = iu.course_id
         inner join ${tbl_subjects} sj
         on sj.subject_id = c.subject_id
-        where u.email = '${email}';`;
+        where u.email = '${email}'
+        group by c.course_id;`;
     return db.load(sql);
   },
 

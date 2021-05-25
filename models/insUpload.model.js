@@ -20,12 +20,19 @@ const insUploadModel = {
     return db.del(condition, tbl_instructor_courses_uploaded);
   },
   addChapToInsUp(entity, condition1, condition2) {
-    return db.editTwoCons(
-      entity,
-      condition1,
-      condition2,
-      tbl_instructor_courses_uploaded
-    );
+    return db.add(entity, tbl_instructor_courses_uploaded);
+  },
+  getChapterExists(course_id) {
+    const sql = `select c.chap_id, c.chap_name,
+     ins_up.course_id, ins_up.user_id, cou.course_name
+    from ${tbl_instructor_courses_uploaded} ins_up
+    inner join ${tbl_chapters} c
+    on c.chap_id = ins_up.chap_id
+    inner join ${tbl_courses} cou 
+    on cou.course_id = ins_up.course_id
+    where ins_up.course_id = ${course_id};
+    `;
+    return db.load(sql);
   },
 };
 

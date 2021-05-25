@@ -71,6 +71,20 @@ router.get("/uploaded-course/:email", async function (req, res) {
   });
 });
 
+router.get("/chap-exists/:id", async function (req, res) {
+  const insUp_course_id = +req.params.id;
+
+  const ret = await insUploadModel.getChapterExists(insUp_course_id);
+
+  if (ret.length === 0) {
+    return res.status(404).json({ message: "Chap not found!" });
+  }
+
+  return res.json({
+    chap_exists: ret,
+  });
+});
+
 router.get("/:id", async function (req, res) {
   const id = +req.params.id;
 
@@ -258,20 +272,14 @@ router.post("/upload-chapter", async function (req, res) {
   const ret_add_chap = await chapterModel.add(chapter);
 
   // add chap to ins up
-  const condition_insUp_1 = {
-    course_id: body.course_id,
-  };
-  const condition_insUp_2 = {
-    user_id: body.user_id,
-  };
   const entity_insUp = {
     chap_id: ret_add_chap.insertId,
-    uploaded_day: moment(Date.now()).format("YYYY-MM-DD HH:MM:SS"),
+    user_id: body.user_id,
+    course_id: body.course_id,
+    uploaded_day: moment(Date.now()).format("YYYY/MM/DD HH:mm:ss"),
   };
   const ret_add_chap_to_insUp = await insUploadModel.addChapToInsUp(
-    entity_insUp,
-    condition_insUp_1,
-    condition_insUp_2
+    entity_insUp
   );
 
   return res.json({

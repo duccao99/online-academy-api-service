@@ -1663,13 +1663,14 @@ insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_
 -----------------------------------------------------
 DROP TABLE IF EXISTS `instructor_courses_uploaded`;
 CREATE TABLE `instructor_courses_uploaded`(
+	id int(10) primary key auto_increment ,
 	user_id int(10) not null ,
     course_id int(10)  not null ,
     lesson_id int(10) default null ,
     chap_id int(10) default null ,
 	uploaded_day datetime,
 
-    primary key (user_id,course_id),
+--     primary key (user_id,course_id,chap_id,lesson_id),
     
     
     
