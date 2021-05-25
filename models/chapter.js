@@ -11,22 +11,12 @@ const tbl_course_reviews = `course_reviews`;
 const tbl_roles = `roles`;
 const tbl_student_enrolls = `student_enrolls`;
 const tbl_sales = `sales`;
+const tbl_orders = `orders`;
 
-const insUploadModel = {
+const chapterModel = {
   add(entity) {
-    return db.add(entity, tbl_instructor_courses_uploaded);
-  },
-  del(condition) {
-    return db.del(condition, tbl_instructor_courses_uploaded);
-  },
-  addChapToInsUp(entity, condition1, condition2) {
-    return db.editTwoCons(
-      entity,
-      condition1,
-      condition2,
-      tbl_instructor_courses_uploaded
-    );
+    return db.add(entity, tbl_chapters);
   },
 };
 
-module.exports = insUploadModel;
+module.exports = chapterModel;

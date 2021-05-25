@@ -623,6 +623,16 @@ c.course_avatar_url, c.course_fee, sj.subject_id, sj.subject_name
     inner join `subjects` sj
     on sj.subject_id = c.subject_id
     where u.email = 'ch01@yopmail.com';
+    
+    
+-------------------------------------------------
+-- upload chapter
+----------------------------------------------------
+update `instructor_courses_uploaded` ins_up
+set ins_up.chap_id = 2, ins_up.uploaded_day = '2021-11-11 00:00:00'
+where ins_up.user_id = 15 , ins_up.course_id = 32;
+
+
 
 
 use `SPA_ONLINE_ACADEMY`;

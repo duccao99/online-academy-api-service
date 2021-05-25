@@ -25,6 +25,13 @@ module.exports = {
       condition,
     ]);
   },
+  editTwoCons: (entity, condition, andCondition, table_name) => {
+    return pool_query(`update ${table_name} set ? where ? and ?`, [
+      entity,
+      condition,
+      andCondition,
+    ]);
+  },
   del: (condition, table_name) => {
     return pool_query(`delete from ${table_name} where ?`, condition);
   },

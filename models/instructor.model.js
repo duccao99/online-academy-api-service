@@ -80,7 +80,8 @@ const instructorModel = {
   uploadedCourse(email) {
     const sql = `select iu.user_id, u.user_name, iu.course_id, iu.chap_id, 
     iu.lesson_id, iu.uploaded_day, c.course_name, c.course_title,
-    c.course_avatar_url, c.course_fee, sj.subject_id, sj.subject_name
+    c.course_avatar_url, c.course_fee, sj.subject_id, sj.subject_name,
+    c.is_finished
         from ${tbl_instructor_courses_uploaded} iu
         inner join ${tbl_users} u
         on u.user_id = iu.user_id 
@@ -90,6 +91,10 @@ const instructorModel = {
         on sj.subject_id = c.subject_id
         where u.email = '${email}';`;
     return db.load(sql);
+  },
+
+  toggleFinishedCourse(en, con) {
+    return db.edit(en, con, tbl_courses);
   },
 };
 

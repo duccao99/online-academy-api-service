@@ -12,6 +12,7 @@ const courseModel = require("../models/course.model");
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
 const { Base64 } = require("js-base64");
+const chapterModel = require("../models/chapter");
 
 cloudinary.config({
   cloud_name: "duccao",
@@ -30,6 +31,28 @@ router.get("/", async function (req, res) {
 
   return res.json({
     instructors: ret,
+  });
+});
+
+router.patch("/toggle-finished-course", async function (req, res) {
+  const body = req.body;
+  const en_update = {
+    is_finished: body.is_finished,
+  };
+  const con1_update = {
+    course_id: +body.course_id,
+  };
+  const con2_update = {
+    user_id: +body.user_id,
+  };
+
+  const ret = await instructorModel.toggleFinishedCourse(
+    en_update,
+    con1_update
+  );
+
+  return res.json({
+    ret_finished_course: ret,
   });
 });
 
@@ -221,6 +244,40 @@ router.post("/upload-course", async function (req, res) {
       message: "Something broke!",
     });
   }
+});
+
+router.post("/upload-chapter", async function (req, res) {
+  // course_id, chap_name, user_id
+  const body = req.body;
+
+  const chapter = {
+    chap_name: body.chap_name,
+  };
+
+  // add chap
+  const ret_add_chap = await chapterModel.add(chapter);
+
+  // add chap to ins up
+  const condition_insUp_1 = {
+    course_id: body.course_id,
+  };
+  const condition_insUp_2 = {
+    user_id: body.user_id,
+  };
+  const entity_insUp = {
+    chap_id: ret_add_chap.insertId,
+    uploaded_day: moment(Date.now()).format("YYYY-MM-DD HH:MM:SS"),
+  };
+  const ret_add_chap_to_insUp = await insUploadModel.addChapToInsUp(
+    entity_insUp,
+    condition_insUp_1,
+    condition_insUp_2
+  );
+
+  return res.json({
+    ret_add_chap,
+    ret_add_chap_to_insUp,
+  });
 });
 
 router.post("/", async function (req, res) {
