@@ -37,7 +37,7 @@ const insUploadModel = {
   },
   getLessonExists(chap_id) {
     const sql = `select ls.lesson_id, ls.lesson_name, chap.chap_id,
-    chap.chap_name
+    chap.chap_name, ls.flag_reviewable
     from ${tbl_lessons} ls
     inner join ${tbl_chapters} chap
     on chap.chap_id = ls.chap_id

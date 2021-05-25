@@ -97,6 +97,9 @@ const instructorModel = {
   toggleFinishedCourse(en, con) {
     return db.edit(en, con, tbl_courses);
   },
+  togglePreviewLesson(entity, condition) {
+    return db.edit(entity, condition, tbl_lessons);
+  },
 };
 
 module.exports = instructorModel;

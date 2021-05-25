@@ -56,6 +56,24 @@ router.patch("/toggle-finished-course", async function (req, res) {
   });
 });
 
+router.patch("/toggle-preview", async function (req, res) {
+  const update_entity = {
+    flag_reviewable: req.body.flag_reviewable,
+  };
+  const update_condition = {
+    lesson_id: req.body.lesson_id,
+  };
+
+  const ret = await instructorModel.togglePreviewLesson(
+    update_entity,
+    update_condition
+  );
+
+  return res.json({
+    ret_preview_update: ret,
+  });
+});
+
 router.get("/uploaded-course/:email", async function (req, res) {
   const email = req.params.email;
   const ret = await instructorModel.uploadedCourse(email);
