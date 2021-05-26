@@ -17,6 +17,9 @@ const chapterModel = {
   add(entity) {
     return db.add(entity, tbl_lessons);
   },
+  edit(en, con) {
+    return db.edit(en, con, tbl_lessons);
+  },
 };
 
 module.exports = chapterModel;

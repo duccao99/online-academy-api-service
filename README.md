@@ -1,3 +1,25 @@
-# Online-Academy-API-Service
+### SPA Online Academy
 
-Advanced web course final project - Online-Academy-API-Service
+#### Tech stack
+
+##### Backend
+
+`NodeJS`
+`ExpressJS`
+`cloudinary`
+`Facebook chatbot`
+
+##### Frontend
+
+`ReactJS`
+`Material-UI`
+`Redux`
+`Redux-thunk`
+`React-Facebook-Login`
+
+##### Database
+
+`MySQL`
+
+**Site:**
+**Backend source:** https://github.com/ducccao/SPA-Online-Accademy

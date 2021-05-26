@@ -500,6 +500,21 @@ router.patch("/edit-full-des", async function (req, res) {
   });
 });
 
+router.patch("/edit-lesson-content", async function (req, res) {
+  const en = {
+    lesson_content: req.body.lesson_content,
+  };
+
+  const con = {
+    lesson_id: req.body.lesson_id,
+  };
+  const ret = await lessonModel.edit(en, con);
+
+  return res.json({
+    edit_lesson_content_ret: ret,
+  });
+});
+
 router.patch("/:id", async function (req, res) {
   const ret = await instructorModel.edit(
     +req.params.id,

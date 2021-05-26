@@ -1446,11 +1446,10 @@ values (
 ,curdate(),true,2,12);
 
 
-
 insert into `courses`(course_name,course_title,course_thumbnail,course_avatar_url,course_fee,course_full_description,
 course_short_description,course_last_updated,is_finished,subject_id,views)
 values (
-'Complete React Developer in 2021 (w/ Redux, Hooks, GraphQL)'
+'Complete React Developer in 2021'
 ,'Become a Senior React Developer! Build a massive E-commerce app with Redux, Hooks, GraphQL, ContextAPI, Stripe, Firebase'
 ,''
 ,'https://js.devexpress.com/Content/ImagesNew/Overview/react-banner.jpg'
