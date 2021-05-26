@@ -708,7 +708,7 @@ where course_id = 1;
 select *
 from `instructor_courses_uploaded` ins 
 where ins.course_id = 1 
-and ins.user_id = 1
+and ins.user_id = 1;
 
 
 use `SPA_ONLINE_ACADEMY`;

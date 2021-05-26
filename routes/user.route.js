@@ -274,9 +274,34 @@ router.patch("/change-password", async function (req, res) {
     new_pass: req.body.new_pass,
   };
 
+  const user = await userModel.detail(+body.user_id);
+
+  const ret_check_old_pass = await bcryptjs.compareSync(
+    body.old_pass,
+    user.password
+  );
+
+  if (ret_check_old_pass === false) {
+    return res.status(400).json({
+      message: "Old password invalid!",
+    });
+  }
+
+  const hash_new_pass = await bcryptjs.hashSync(body.new_pass, 10);
+
   const entity = {
+    password: hash_new_pass,
+  };
+
+  const condition = {
     user_id: body.user_id,
   };
+
+  const ret = await userModel.edit(entity, condition);
+
+  return res.json({
+    ret_change_pass: ret,
+  });
 });
 
 router.get("/:id", async function (req, res) {
