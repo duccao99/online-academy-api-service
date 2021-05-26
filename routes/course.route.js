@@ -375,8 +375,8 @@ router.get("/detail/five-relative-bought-most/:id", async function (req, res) {
   }
 
   const ret = await courseModel.detailFiveRelativeCourseBoughtTheMost(
-    course_detail.course_id,
-    course_detail.subject_id
+    +course_detail.course_id,
+    +course_detail.subject_id
   );
 
   return res.json({

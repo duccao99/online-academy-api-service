@@ -694,6 +694,23 @@ inner join `lessons` le
 on le.lesson_id = ins.lesson_id 
 where ins.course_id = 22;
 
+
+-------------------------------------------------
+-- edit short des 
+----------------------------------------------------
+update `courses` as c 
+set c.course_short_description = 'dasd'
+where course_id = 1;
+
+-------------------------------------------------
+-- check ins up course 
+----------------------------------------------------
+select *
+from `instructor_courses_uploaded` ins 
+where ins.course_id = 1 
+and ins.user_id = 1
+
+
 use `SPA_ONLINE_ACADEMY`;
 select * from `users`;
 select * from `instructor_courses_uploaded`;

@@ -444,6 +444,62 @@ router.post("/", async function (req, res) {
   return res.status(500).json({ error_message: "Something broke!" });
 });
 
+router.patch("/edit-short-des", async function (req, res) {
+  const data = {
+    user_id: req.body.user_id,
+    course_short_description: req.body.course_short_description,
+    course_id: req.body.course_id,
+  };
+
+  const ret_check_ins_course = await insUploadModel.checkInsUploadCourse(
+    data.user_id,
+    data.course_id
+  );
+
+  if (ret_check_ins_course === false) {
+    return res.status(400).json({
+      message: "This course is not uploaded by this instructor!",
+    });
+  }
+
+  const ret = await instructorModel.editShortDes(
+    data.course_id,
+    data.course_short_description
+  );
+
+  return res.json({
+    edit_short_des_ret: ret,
+  });
+});
+
+router.patch("/edit-full-des", async function (req, res) {
+  const data = {
+    user_id: req.body.user_id,
+    course_full_description: req.body.course_full_description,
+    course_id: req.body.course_id,
+  };
+
+  const ret_check_ins_course = await insUploadModel.checkInsUploadCourse(
+    data.user_id,
+    data.course_id
+  );
+
+  if (ret_check_ins_course === false) {
+    return res.status(400).json({
+      message: "This course is not uploaded by this instructor!",
+    });
+  }
+
+  const ret = await instructorModel.editFullDes(
+    data.course_id,
+    data.course_full_description
+  );
+
+  return res.json({
+    edit_full_des_ret: ret,
+  });
+});
+
 router.patch("/:id", async function (req, res) {
   const ret = await instructorModel.edit(
     +req.params.id,

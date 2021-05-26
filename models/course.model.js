@@ -128,7 +128,7 @@ const courseModel = {
     c.course_thumbnail, c.course_avatar_url, c.course_fee ,
     c.course_full_description, c.course_short_description,
     c.course_last_updated, c.is_finished, c.subject_id,c.views ,
-    sj.subject_name,  u.user_name
+    sj.subject_name,  u.user_name, u.user_id
     from ${tbl_courses} c 
     left join ${tbl_subjects} sj 
     on sj.subject_id = c.subject_id

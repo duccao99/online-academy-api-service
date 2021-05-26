@@ -100,6 +100,24 @@ const instructorModel = {
   togglePreviewLesson(entity, condition) {
     return db.edit(entity, condition, tbl_lessons);
   },
+  editShortDes(course_id, new_short_des) {
+    const entity = {
+      course_short_description: new_short_des,
+    };
+    const condition = {
+      course_id: course_id,
+    };
+    return db.edit(entity, condition, tbl_courses);
+  },
+  editFullDes(course_id, new_full_des) {
+    const entity = {
+      course_full_description: new_full_des,
+    };
+    const condition = {
+      course_id: course_id,
+    };
+    return db.edit(entity, condition, tbl_courses);
+  },
 };
 
 module.exports = instructorModel;

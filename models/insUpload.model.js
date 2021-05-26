@@ -46,6 +46,18 @@ const insUploadModel = {
     `;
     return db.load(sql);
   },
+  async checkInsUploadCourse(user_id, course_id) {
+    const sql = `select *
+    from ${tbl_instructor_courses_uploaded} ins 
+    where ins.course_id = ${course_id} 
+    and ins.user_id = ${user_id}`;
+    const ret = await db.load(sql);
+
+    if (ret.length === 0) {
+      return false;
+    }
+    return true;
+  },
 };
 
 module.exports = insUploadModel;
