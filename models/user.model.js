@@ -13,7 +13,7 @@ const studentModel = {
     const sql = `select *
       from ${tbl_users} u
 
-      and u.user_id = ${user_id};`;
+    where u.user_id = ${user_id};`;
     const data = await db.load(sql);
 
     return data[0];

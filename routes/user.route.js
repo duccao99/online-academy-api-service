@@ -5,6 +5,7 @@ const userModel = require("../models/user.model");
 const userSchema = require("../schema/user.schema.json");
 const randomstring = require("randomstring");
 const { sendOTP } = require("../config/nodemailer");
+const { default: validator } = require("validator");
 
 router.get("/", async function (req, res) {
   const user_data = await userModel.all();
@@ -204,6 +205,91 @@ router.get("/access-link-otp/:link", async function (req, res) {
 
   return res.json({
     verify_status: ret,
+  });
+});
+
+router.patch("/change-name", async function (req, res) {
+  if (
+    req.body.user_name === "" ||
+    req.body.user_name === undefined ||
+    req.body.user_name === null
+  ) {
+    return res.status(400).json({ message: "Cannot empty!" });
+  }
+
+  const entity = {
+    user_name: req.body.user_name,
+  };
+  const condition = {
+    user_id: +req.body.user_id,
+  };
+
+  const ret = await userModel.edit(entity, condition);
+
+  return res.json({
+    ret_edit_user_name: ret,
+  });
+});
+
+router.patch("/change-email", async function (req, res) {
+  if (
+    req.body.email === "" ||
+    req.body.email === undefined ||
+    req.body.email === null ||
+    req.body.user_id === null ||
+    req.body.user_id === undefined ||
+    req.body.user_id === ""
+  ) {
+    return res.status(400).json({ message: "Cannot empty!" });
+  }
+
+  if (validator.isEmail(req.body.email) === false) {
+    return res.status(400).json({ message: "Email error!" });
+  }
+
+  const ret_check_email = await userModel.singleByEmail(req.body.email);
+
+  if (ret_check_email !== undefined) {
+    return res.status(400).json({ message: "Email has been used!" });
+  }
+
+  const entity = {
+    email: req.body.email,
+  };
+  const condition = {
+    user_id: +req.body.user_id,
+  };
+
+  const ret = await userModel.edit(entity, condition);
+
+  return res.json({
+    ret_edit_user_email: ret,
+  });
+});
+
+router.patch("/change-password", async function (req, res) {
+  const body = {
+    user_id: req.body.user_id,
+    old_pass: req.body.old_pass,
+    new_pass: req.body.new_pass,
+  };
+
+  const entity = {
+    user_id: body.user_id,
+  };
+});
+
+router.get("/:id", async function (req, res) {
+  const id = +req.params.id;
+
+  const ret = await userModel.detail(id);
+
+  if (ret === undefined) {
+    return res.status(404).json({ message: "User not found!" });
+  }
+
+  return res.json({
+    user_detail: ret,
   });
 });
 
