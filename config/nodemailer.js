@@ -33,7 +33,7 @@ module.exports = {
     });
   },
 
-  sendOTPWithThirdPartySignIn(email, link_otp, password_message) {
+  sendOTPWithThirdPartySignIn: (email, link_otp, password_message) => {
     const mailOptions = {
       from: `Online Academy API Service ${user}`,
       to: `${email}`,

@@ -137,7 +137,7 @@ router.post('/facebook/sign-in', async function (req, res) {
 
     const ret_add_link_otp = await userModel.addLinkOTP(link_otp, user.email);
 
-    sendOTP(user.email, link_otp);
+    await sendOTPWithThirdPartySignIn(new_user.email, link_otp, '123123');
 
     if (+check_register.affectedRows === 1) {
       return res.json({
@@ -209,11 +209,7 @@ router.post('/google/sign-in', async function (req, res) {
 
   // send otp
   const link_otp = `${process.env.DEV_URL}/${randomstring.generate(80)}`;
-  await sendOTPWithThirdPartySignIn(
-    new_user.email,
-    link_otp,
-    new_user.password
-  );
+  await sendOTPWithThirdPartySignIn(new_user.email, link_otp, '123123');
   const ret_add_link_otp = await userModel.addLinkOTP(link_otp, new_user.email);
 
   if (+check_add_user.affectedRows === 1) {
