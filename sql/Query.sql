@@ -710,12 +710,61 @@ from `instructor_courses_uploaded` ins
 where ins.course_id = 1 
 and ins.user_id = 1;
 
+-------------------------------------------------
+--  get favorite coruse
+----------------------------------------------------
+select sf.fav_id, sf.user_id as stu_id, sf.course_id, sf.is_favorite,
+u.user_name as stu_name, c.course_name, c.course_fee, ins.user_name as ins_name
+ from  `student_favorites` sf
+ left join `users` u
+ on u.user_id = sf.user_id
+ left join `courses` c
+ on c.course_id = sf.course_id 
+ left join (
+ select u.user_name, ins.user_id, c.course_id
+ from `instructor_courses_uploaded` ins
+ inner join `courses` c
+ on ins.course_id = c.course_id 
+ inner join `users` u
+ on u.user_id = ins.user_id
+ ) ins
+ on ins.course_id = c.course_id
+ where sf.is_favorite = true
+ and sf.user_id = 15;
+ 
+-------------------------------------------------
+--  is favorite
+----------------------------------------------------
+select sf.is_favorite
+from `student_favorites` sf 
+where  sf.user_id =3
+and sf.course_id =3;
+
+-------------------------------------------------
+--  toggle favorite
+----------------------------------------------------
+update `student_favorites` sf
+set sf.is_favorite = false
+where sf.user_id =3
+and sf.course_id = 3;
+
+
+-------------------------------------------------
+--  add to favorite
+----------------------------------------------------
+insert 
+into `student_favorites` 
+(user_id,course_id,is_favorite) 
+values (3,2,true);
+
+
 
 use `SPA_ONLINE_ACADEMY`;
 select * from `users`;
 select * from `instructor_courses_uploaded`;
 select * from `chapters`;
 select * from `lessons`;
+select * from `student_favorites`;
 select * from `courses`;
 select * from `subjects`;
 select * from `roles`;

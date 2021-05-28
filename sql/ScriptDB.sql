@@ -1688,10 +1688,10 @@ CREATE TABLE `instructor_courses_uploaded`(
 -------------------------------------------------------------
 -- Records  for `instructor_courses_uploaded`
 -------------------------------------------------------------
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,1,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,2,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,3,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (7,4,1,2,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,1,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,2,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,3,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,4,1,2,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (8,5,2,2,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (8,6,3,3,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,7,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
@@ -1864,7 +1864,7 @@ CREATE TABLE `student_enrolls`(
 );
 
 -------------------------------------------------------------
--- Records  for `orders`
+-- Records  for `student_enrolls`
 -------------------------------------------------------------
 insert into `student_enrolls` (user_id,course_id) values (2,1);
 insert into `student_enrolls` (user_id,course_id) values (2,2);
@@ -1882,6 +1882,32 @@ insert into `student_enrolls` (user_id,course_id) values (1,7);
 insert into `student_enrolls` (user_id,course_id) values (1,6);
 insert into `student_enrolls` (user_id,course_id) values (1,1);
 
+-----------------------------------------------------
+-- Table structure for `student_favorites`
+-----------------------------------------------------
+DROP TABLE IF EXISTS `student_favorites`;
+CREATE TABLE `student_favorites`(
+	fav_id int(10) not null auto_increment,
+    user_id int(10)  not null ,
+    course_id int(10)  not null ,
+	is_favorite bool not null ,
+
+    primary key (fav_id),
+    foreign key (user_id) references `users` (user_id),
+	foreign key (course_id) references `courses` (course_id) 
+);
+
+-------------------------------------------------------------
+-- Records  for `student_favorites`
+-------------------------------------------------------------
+insert into `student_favorites` (user_id,course_id,is_favorite) values (3,1,true);
+insert into `student_favorites` (user_id,course_id,is_favorite) values (3,2,true);
+insert into `student_favorites` (user_id,course_id,is_favorite) values (3,3,true);
+insert into `student_favorites` (user_id,course_id,is_favorite) values (3,4,true);
+insert into `student_favorites` (user_id,course_id,is_favorite) values (3,5,true);
+insert into `student_favorites` (user_id,course_id,is_favorite) values (2,1,true);
+insert into `student_favorites` (user_id,course_id,is_favorite) values (2,2,true);
+insert into `student_favorites` (user_id,course_id,is_favorite) values (2,3,true);
 
 
 
