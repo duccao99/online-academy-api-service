@@ -2,6 +2,7 @@ const router = require('express').Router();
 const db = require('../config/db');
 const studentModel = require('../models/student.model');
 const feedbackModel = require('../models/feedback.model');
+const historyModel = require('../models/history.model');
 
 router.get('/', async function (req, res) {
   const student_data = await studentModel.all();
@@ -151,6 +152,84 @@ router.get('/your-feedback', async function (req, res) {
 
   return res.json({
     your_feedback: ret
+  });
+});
+
+router.post('/history-watching', async function (req, res) {
+  if (!req.body.user_id || !req.body.start_time) {
+    return res.status(400).json({
+      message: 'Cannot empty!'
+    });
+  }
+
+  const ret_check_exist_history = await historyModel.isExists(
+    +req.body.user_id,
+    +req.body.lesson_id
+  );
+
+  if (ret_check_exist_history === true) {
+    // if exists then update it
+    const entity_update = {
+      start_time: +req.body.start_time
+    };
+
+    const condition_1 = {
+      user_id: +req.body.user_id
+    };
+
+    const condition_2 = {
+      lesson_id: +req.body.lesson_id
+    };
+
+    const ret_update = await historyModel.edit(
+      entity_update,
+      condition_1,
+      condition_2
+    );
+
+    return res.json({
+      ret_update: ret_update
+    });
+  }
+  // if not then add it
+  const entity = {
+    user_id: +req.body.user_id,
+    lesson_id: +req.body.lesson_id,
+    start_time: +req.body.start_time
+  };
+
+  const ret_add = await historyModel.add(entity);
+
+  return res.json({
+    ret_add_history: ret_add
+  });
+});
+
+router.get('/history', async function (req, res) {
+  if (!req.query.user_id || !req.query.lesson_id) {
+    return res.status(400).json({
+      message: 'Cannot empty!'
+    });
+  }
+
+  const entity = {
+    user_id: +req.query.user_id,
+    lesson_id: +req.query.lesson_id
+  };
+
+  const history_time = await historyModel.getHistoryTime(
+    entity.user_id,
+    entity.lesson_id
+  );
+
+  if (history_time === undefined) {
+    return res.status(404).json({
+      message: 'History not found!'
+    });
+  }
+
+  return res.json({
+    history_time: +history_time
   });
 });
 

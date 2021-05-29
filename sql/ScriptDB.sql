@@ -1912,6 +1912,28 @@ insert into `student_favorites` (user_id,course_id,is_favorite) values (2,3,true
 
 
 
+-----------------------------------------------------
+-- Table structure for `student_watching`
+-----------------------------------------------------
+DROP TABLE IF EXISTS `student_watching`;
+CREATE TABLE `student_watching`(
+	watch_id int(10) not null  auto_increment,
+    user_id int(10)  not null ,
+	lesson_id int(10)  not null ,
+    start_time int(10)  not null ,
+
+
+    primary key (watch_id),
+    foreign key (user_id) references `users` (user_id),
+	foreign key (lesson_id) references `lessons` (lesson_id)
+);
+
+-------------------------------------------------------------
+-- Records  for `student_watching`
+-------------------------------------------------------------
+insert into `student_watching` (user_id,lesson_id,start_time) values (2,1,4);
+insert into `student_watching` (user_id,lesson_id,start_time) values (2,1,3);
+
 
 
 

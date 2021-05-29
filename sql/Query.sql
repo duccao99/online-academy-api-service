@@ -757,6 +757,13 @@ into `student_favorites`
 (user_id,course_id,is_favorite) 
 values (3,2,true);
 
+-------------------------------------------------
+--  get history
+----------------------------------------------------
+select h.start_time
+from `student_watching` h
+where h.user_id = 19
+and h.lesson_id = 5;
 
 
 use `SPA_ONLINE_ACADEMY`;
@@ -769,7 +776,7 @@ select * from `courses`;
 select * from `subjects`;
 select * from `roles`;
 select * from `categories`;
-
+select * from `student_watching`;
 
 select * from `sales`;
 select count(*) from `courses`;
