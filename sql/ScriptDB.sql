@@ -1734,6 +1734,7 @@ CREATE TABLE `course_reviews`(
 -------------------------------------------------------------
 insert into `course_reviews` (user_id,course_id,review_content,star) values (4,1,'Khóa này hay nè!',5);
 
+
 insert into `course_reviews` (user_id,course_id,review_content,star) values (2,1,'Khóa này hay!',5);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (2,2,'Khóa này hay!',5);
 insert into `course_reviews` (user_id,course_id,review_content,star) values (2,3,'Khóa này tạm được!',4);

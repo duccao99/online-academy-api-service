@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const db = require('../config/db');
 const studentModel = require('../models/student.model');
+const feedbackModel = require('../models/feedback.model');
 
 router.get('/', async function (req, res) {
   const student_data = await studentModel.all();
@@ -85,6 +86,71 @@ router.get('/purchased-courses/:email', async function (req, res) {
 
   return res.json({
     purchased_courses: ret
+  });
+});
+
+router.post('/upload-feedback', async function (req, res) {
+  if (
+    !req.body.user_id ||
+    !req.body.course_id ||
+    !req.body.review_content ||
+    !req.body.star
+  ) {
+    return res.status(400).json({
+      message: 'Cannot empty!'
+    });
+  }
+
+  const isExists = await feedbackModel.isExists(
+    +req.body.course_id,
+    +req.body.user_id
+  );
+
+  if (isExists === true) {
+    return res.status(400).json({
+      message: 'Feedback already exists!'
+    });
+  }
+
+  const feedback = {
+    user_id: +req.body.user_id,
+    course_id: +req.body.course_id,
+    review_content: req.body.review_content,
+    star: +req.body.star
+  };
+
+  const ret = await feedbackModel.add(feedback);
+
+  if (+ret.affectedRows) {
+    return res.json({
+      message: 'Added new feedback!',
+      ret_add_feedback: ret
+    });
+  }
+});
+
+router.get('/your-feedback', async function (req, res) {
+  if (!req.query.user_id || !req.query.course_id) {
+    return res.status(400).json({
+      message: 'Cannot empty!'
+    });
+  }
+
+  const data = {
+    user_id: +req.query.user_id,
+    course_id: +req.query.course_id
+  };
+
+  const ret = await feedbackModel.yourFeedback(data.user_id, data.course_id);
+
+  if (ret === undefined) {
+    return res.status(404).json({
+      message: 'Do not have feedback!'
+    });
+  }
+
+  return res.json({
+    your_feedback: ret
   });
 });
 
