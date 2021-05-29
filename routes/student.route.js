@@ -3,6 +3,7 @@ const db = require('../config/db');
 const studentModel = require('../models/student.model');
 const feedbackModel = require('../models/feedback.model');
 const historyModel = require('../models/history.model');
+const enrollModel = require('../models/enroll.model');
 
 router.get('/', async function (req, res) {
   const student_data = await studentModel.all();
@@ -15,6 +16,36 @@ router.get('/', async function (req, res) {
 
   return res.json({
     all_students: student_data
+  });
+});
+
+router.post('/enroll', async function (req, res) {
+  if (!req.body.user_id || !req.body.course_id) {
+    return res.status(400).json({
+      message: 'Cannot empty!'
+    });
+  }
+  // check if exists then not add
+  const isExists = await enrollModel.isExists(
+    +req.body.user_id,
+    +req.body.course_id
+  );
+
+  if (isExists) {
+    return res.status(400).json({
+      message: 'Student enrolled this course!'
+    });
+  }
+  // if not exists then add
+  const entity = {
+    user_id: +req.body.user_id,
+    course_id: +req.body.course_id
+  };
+  const ret = await enrollModel.add(entity);
+
+  return res.json({
+    ret_add_enroll: ret,
+    entity_added: entity
   });
 });
 
