@@ -21,6 +21,12 @@
 
 `MySQL`
 
-**Site:**
+##### Admin account <br/>
+
+email: admin@gmail.com <br/>
+password: 123123 <br/>
+
+**Site: https://spa-online-academy.netlify.app/**
+
 <br/>
 **Frontend source:** https://github.com/ducccao/SPA-Online-Accademy
