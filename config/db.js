@@ -20,10 +20,10 @@ const herokuClearDB = mysql.createPool({
 });
 
 // local
-// const pool_query = util.promisify(pool.query).bind(pool);
+const pool_query = util.promisify(pool.query).bind(pool);
 
 // development
-const pool_query = util.promisify(herokuClearDB.query).bind(herokuClearDB);
+// const pool_query = util.promisify(herokuClearDB.query).bind(herokuClearDB);
 
 module.exports = {
   load: (sql) => {
