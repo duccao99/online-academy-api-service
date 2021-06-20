@@ -1,0 +1,3 @@
+1. get url 
+heroku config | findstr CLEARDB_DATABASE_URL
+CLEARDB_DATABASE_URL=mysql://b59acab6b18e7d:463681de@us-cdbr-east-04.cleardb.com/heroku_1e888e8a7ef0009?reconnect=true
