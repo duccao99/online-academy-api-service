@@ -6,3 +6,4 @@
 6. Viết hàm getMessage, postMessage cho đúng yêu cầu
 7. Callback URL - Verify Token + Link webhook đã deploy (glitch | heroku | máy nhà)
 8. Kiểm tra  FB signature 
+9. ngrok http 1212 - lấy callback URL, verify token = 12345

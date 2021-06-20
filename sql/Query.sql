@@ -765,6 +765,34 @@ from `student_watching` h
 where h.user_id = 19
 and h.lesson_id = 5;
 
+select * from `users` inner join instructor_courses_uploaded c
+on c.user_id = users.user_id;
+
+select c.course_name , c.course_id
+from `courses` c
+where c.course_id in 
+(
+select d.course_id
+from `orders_details` d
+group by d.course_id
+order by count(*) desc
+)
+limit 3;
+
+
+select substr("123456",1,1);
+select substr("123456",length("123456"),3);
+
+select u.user_name
+from `users` u
+where substr(u.user_name,1,1)  in ('a','e','o','u','i')
+and substr(u.user_name,length(u.user_name),1)  in ('a','e','o','u','i');
+
+select u.user_name
+from `users` u
+where u.user_name not  regexp'^[aeoui]'
+or  ;
+
 
 use `SPA_ONLINE_ACADEMY`;
 select * from `users`;

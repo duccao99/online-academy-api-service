@@ -1,33 +1,33 @@
-const catModel = require("../models/category.model");
-const courseModel = require("../models/course.model");
-const subCatModel = require("../models/subCategory.model");
-const { getMessage, sendMessage } = require("../utils/chatbot.utils");
+const catModel = require('../models/category.model');
+const courseModel = require('../models/course.model');
+const subCatModel = require('../models/subCategory.model');
+const { getMessage, sendMessage } = require('../utils/chatbot.utils');
 
-const router = require("express").Router();
+const router = require('express').Router();
 
-router.get("/", function (req, res) {
+router.get('/', function (req, res) {
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-  console.log("Webhook verification step");
+  console.log('Webhook verification step');
 
   if (
-    req.query["hub.mode"] === "subscribe" &&
-    req.query["hub.verify_token"] === VERIFY_TOKEN
+    req.query['hub.mode'] === 'subscribe' &&
+    req.query['hub.verify_token'] === VERIFY_TOKEN
   ) {
-    res.status(200).send(req.query["hub.challenge"]);
+    res.status(200).send(req.query['hub.challenge']);
   } else {
-    console.log("Authentication failed!");
+    console.log('Authentication failed!');
     res.sendStatus(403);
   }
 });
 
-router.post("/", function (req, res) {
-  console.log("Webhook messaging step");
+router.post('/', function (req, res) {
+  console.log('Webhook messaging step');
   var chat_data = req.body;
 
   console.log(chat_data);
-  console.log("Chat data object: ", chat_data.object);
+  console.log('Chat data object: ', chat_data.object);
 
-  if (chat_data.object == "page") {
+  if (chat_data.object == 'page') {
     chat_data.entry.forEach((page_body) => {
       page_body.messaging.forEach(async function (mess_obj) {
         console.log(mess_obj);
@@ -76,8 +76,9 @@ async function detailCourse(id) {
   if (course_detail === undefined) {
     return undefined;
   }
-  const ret = `Result
-  course_id:${course_detail.course_id}
+  const ret = `
+  Result
+  \ncourse_id:${course_detail.course_id}
   \ncourse_name:${course_detail.course_name}
   \ncourse_title:${course_detail.course_title}
   \ncourse_avatar_url:${course_detail.course_avatar_url}
@@ -101,17 +102,17 @@ async function handleThreeFeature(sender_id, text) {
     switch (+text) {
       case 1:
         //  Search course by keyword\n
-        const message = "Enter keyword";
+        const message = 'Enter keyword';
         await sendMessage(sender_id, message);
         break;
       case 2:
         //  Accept course by category\n
-        const message2 = "There are categories list";
+        const message2 = 'There are categories list';
         await sendMessage(sender_id, message2);
 
         const allCat = await subCatModel.all();
 
-        let mess_cat = "";
+        let mess_cat = '';
         for (let i = 0; i < allCat.length; ++i) {
           mess_cat += `Cat ${i + 1}: ${allCat[i].subject_name}\n`;
         }
@@ -134,16 +135,16 @@ async function handleThreeFeature(sender_id, text) {
       default:
         await sendMessage(
           sender_id,
-          "This message was sent from Online Academy API Service server!"
+          'This message was sent from Online Academy API Service server!'
         );
         await SayHi(sender_id);
         break;
     }
-  } else if (text.includes("cat")) {
+  } else if (text.includes('cat')) {
     const curr_text = text;
-    let id = "";
+    let id = '';
 
-    for (let i = curr_text.indexOf(":") + 1; i < curr_text.length; ++i) {
+    for (let i = curr_text.indexOf(':') + 1; i < curr_text.length; ++i) {
       id += curr_text[i];
     }
 
@@ -154,18 +155,18 @@ async function handleThreeFeature(sender_id, text) {
 
       await sendMessage(
         sender_id,
-        `There are ${+ret_handle_accept_courses} in category ${
+        `There are ${+ret_handle_accept_courses} courses in category ${
           ret.subject_name
         } were accepted\n`
       );
     } else {
       await sendMessage(sender_id, `Category not found!`);
     }
-  } else if (text.includes("course_id")) {
+  } else if (text.includes('course_id')) {
     const curr_text = text;
-    let id = "";
+    let id = '';
 
-    for (let i = curr_text.indexOf(":") + 1; i < curr_text.length; ++i) {
+    for (let i = curr_text.indexOf(':') + 1; i < curr_text.length; ++i) {
       id += curr_text[i];
     }
     const ret = await detailCourse(id);
