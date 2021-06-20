@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('./config/cleardb');
 const express = require('express');
 require('express-async-errors');
 
