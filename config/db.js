@@ -2,22 +2,22 @@ const mysql = require('mysql');
 const util = require('util');
 
 const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || '3306',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'root',
-  database: process.env.DB_NAME || 'SPA_ONLINE_ACADEMY',
+  host: 'localhost',
+  port: '3306',
+  user: 'root',
+  password: 'root',
+  database: 'SPA_ONLINE_ACADEMY',
   connectionLimit: 50
 });
 
-const herokuClearDB = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  // port: process.env.DB_PORT || '3306',
-  user: process.env.DB_USERNAME || 'root',
-  password: process.env.DB_PASSWORD || 'root',
-  database: process.env.DB_DATABASE_NAME || 'SPA_ONLINE_ACADEMY',
-  connectionLimit: 50
-});
+// const herokuClearDB = mysql.createPool({
+//   host: process.env.DB_HOST || 'localhost',
+//   // port: process.env.DB_PORT || '3306',
+//   user: process.env.DB_USERNAME || 'root',
+//   password: process.env.DB_PASSWORD || 'root',
+//   database: process.env.DB_DATABASE_NAME || 'SPA_ONLINE_ACADEMY',
+//   connectionLimit: 50
+// });
 
 // local
 const pool_query = util.promisify(pool.query).bind(pool);

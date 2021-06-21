@@ -1578,6 +1578,8 @@ values (
 
 
 
+
+
 -------------------------------------
 -- Table structure for `sales`
 -------------------------------------
@@ -1609,30 +1611,39 @@ CREATE TABLE `chapters`(
 -------------------------------------
 -- Records  for `chapters`
 -------------------------------------
-insert into `chapters` (chap_name) values ('Introduction');
-insert into `chapters` (chap_name) values ('Getting started with React');
-insert into `chapters` (chap_name) values ('Learn and Understand NodeJS');
-insert into `chapters` (chap_name) values ('Big words and nodejs');
+-- react
+insert into `chapters` (chap_name) values ('React Complete Guide - Chapter 1');
+insert into `chapters` (chap_name) values ('React Complete Guide - Chapter 2');
+insert into `chapters` (chap_name) values ('React Complete Guide - Chapter 3');
 
-insert into `chapters` (chap_name) values ('Introduction');
-insert into `chapters` (chap_name) values ('Getting started with React');
-insert into `chapters` (chap_name) values ('Learn and Understand NodeJS');
-insert into `chapters` (chap_name) values ('Big words and nodejs');
+-- node
+insert into `chapters` (chap_name) values ('Learn and Understand NodeJS - Chapter 1');
+insert into `chapters` (chap_name) values ('Learn and Understand NodeJS - Chapter 2');
 
-insert into `chapters` (chap_name) values ('Introduction');
-insert into `chapters` (chap_name) values ('Getting started with React');
-insert into `chapters` (chap_name) values ('Learn and Understand NodeJS');
-insert into `chapters` (chap_name) values ('Big words and nodejs');
+-- pure js  i=6
+insert into `chapters` (chap_name) values ('Pure Javascript');
 
-insert into `chapters` (chap_name) values ('Introduction');
-insert into `chapters` (chap_name) values ('Getting started with React');
-insert into `chapters` (chap_name) values ('Learn and Understand NodeJS');
-insert into `chapters` (chap_name) values ('Big words and nodejs');
+-- pure php  i=7
+insert into `chapters` (chap_name) values ('Pure PHP');
 
-insert into `chapters` (chap_name) values ('Introduction');
-insert into `chapters` (chap_name) values ('Getting started with React');
-insert into `chapters` (chap_name) values ('Learn and Understand NodeJS');
-insert into `chapters` (chap_name) values ('Big words and nodejs');
+-- react native i=8
+insert into `chapters` (chap_name) values ('React Native Complete Guide');
+
+-- fast tracking react  i=9
+insert into `chapters` (chap_name) values ('Fast Tracking React');
+
+-- morden react with redux  i=10
+insert into `chapters` (chap_name) values ('Modern React with Redux');
+
+-- The Complete React Native  Hooks Course 2020 i = 11
+insert into `chapters` (chap_name) values ('The Complete React Native  Hooks Course 2020');
+
+-- React Native  The Practical Guide 2020 i = 12
+insert into `chapters` (chap_name) values ('React Native  The Practical Guide 2020');
+
+-- iOS & Swift - The Complete iOS App Development i = 13
+insert into `chapters` (chap_name) values ('iOS 12 & Swift The Complete iOS App Development Bootcamp ✔✔✔');
+
 
 -------------------------------------
 -- Table structure for `lessons`
@@ -1653,10 +1664,40 @@ CREATE TABLE `lessons`(
 -------------------------------------
 -- Records  for `lessons`
 -------------------------------------
-insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id) values ('lesson 1 introduction react','',1,SEC_TO_TIME(3600),1);
-insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id) values ('lesson 2 introduction node','',1,SEC_TO_TIME(7600),2);
-insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id) values ('lesson 2  JSX','',1,SEC_TO_TIME(7600),1);
-insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id) values ('lesson 3  Todo list','',1,SEC_TO_TIME(7600),1);
+-- React
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('React Complete Guide_ 1- Introduction','',1,SEC_TO_TIME(3600),1,'https://res.cloudinary.com/duccao/video/upload/v1624252220/React_Complete_Guide__1-_Introduction_ycr0so.mp4');
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('React Complete Guide 2 Install Tools','',1,SEC_TO_TIME(7600),1,'https://res.cloudinary.com/duccao/video/upload/v1624252237/React_Complete_Guide_2_Install_Tools_360p_emlo3h.mp4');
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('React Complete Guide 3 Hello World React App','',1,SEC_TO_TIME(7600),2,'https://res.cloudinary.com/duccao/video/upload/v1624252239/React_Complete_Guide_4_Rendering_Elements_360p_cqoodz.mp4');
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('React Complete Guide 4 Rendering Elements','',1,SEC_TO_TIME(7600),3,'https://res.cloudinary.com/duccao/video/upload/v1624252241/React_Complete_Guide_3_Hello_World_React_App_360p_p2fh7j.mp4');
+
+-- Node
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('NodeJS - 01  Introduction and Goal of this Course','',1,SEC_TO_TIME(7600),4,'https://res.cloudinary.com/duccao/video/upload/v1624252619/NodeJS_-_01_Introduction_and_Goal_of_this_Course_360p_bbkkvc.mp4');
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('NodeJS - 02 Big Words and NodeJS','',1,SEC_TO_TIME(7600),5,'https://res.cloudinary.com/duccao/video/upload/v1624252622/NodeJS_-_02_Big_Words_and_NodeJS_360p_s5dajd.mp4');
+
+-- pure js
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('Pure JavaScript Scratch Effect | Html CSS','',1,SEC_TO_TIME(7600),6,'https://res.cloudinary.com/duccao/video/upload/v1624252937/Pure_JavaScript_Scratch_Effect_Html_CSS_vhwyz5.mp4');
+
+-- pure php
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('Pure PHP vs PHP  Extension','',1,SEC_TO_TIME(7600),7,'https://res.cloudinary.com/duccao/video/upload/v1624253056/Pure_PHP_vs_PHP_Extension_xz5adr.mp4');
+
+-- react native
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('THE COMPLETE REACT NATIVE AND REDUX COURSE','',1,SEC_TO_TIME(7600),8,'https://res.cloudinary.com/duccao/video/upload/v1624253405/THE_COMPLETE_REACT_NATIVE_AND_REDUX_COURSE_dldv0y.mp4');
+
+-- fast tracking react
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('React and the Virtual DOM','',1,SEC_TO_TIME(7600),9,'https://res.cloudinary.com/duccao/video/upload/v1624253720/React_and_the_Virtual_DOM_mi5ujs.mp4');
+
+-- modern react with redux
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('Modern React with Redux','',1,SEC_TO_TIME(7600),10,'https://res.cloudinary.com/duccao/video/upload/v1624254054/modern_react_with_redux_hwd6gh.mp4');
+
+-- The Complete React Native  Hooks Course 2020 i = 11
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('The Complete React Native  Hooks Course 2020','',1,SEC_TO_TIME(7600),11,'https://res.cloudinary.com/duccao/video/upload/v1624254320/The_Complete_React_Native_Hooks_Course_2020_o3rrqa.mp4');
+
+-- React Native  The Practical Guide 2020 i = 12
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('React Native  The Practical Guide 2020','',1,SEC_TO_TIME(7600),12,'https://res.cloudinary.com/duccao/video/upload/v1624254489/React_Native_The_Practical_Guide_2020_e0k0ny.mp4');
+
+-- iOS & Swift - The Complete iOS App Development i = 13
+insert into `lessons` (lesson_name,lesson_content,flag_reviewable,duration,chap_id,lesson_video_url) values ('iOS 12 & Swift The Complete iOS App Development Bootcamp ✔✔✔','',1,SEC_TO_TIME(7600),13,'https://res.cloudinary.com/duccao/video/upload/v1624254646/iOS_12_Swift_The_Complete_iOS_App_Development_Bootcamp_xkhwjy.mp4');
+
 
 -----------------------------------------------------
 -- Table structure for `instructor_courses_uploaded`
@@ -1689,27 +1730,24 @@ CREATE TABLE `instructor_courses_uploaded`(
 -- Records  for `instructor_courses_uploaded`
 -------------------------------------------------------------
 insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,1,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,2,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,3,1,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,4,1,2,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (8,5,2,2,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (8,6,3,3,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,7,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,8,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,9,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,10,4,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,11,1,5,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,12,1,6,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,13,1,7,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,14,1,8,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,15,1,9,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,16,1,10,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,17,1,11,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,18,1,12,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
-insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,19,1,13,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
--- insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (15,22,null,null,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,1,2,1,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,1,3,2,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,1,4,3,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,3,5,4,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,3,6,5,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,5,7,6,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,10,8,7,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,6,9,8,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,2,10,9,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,4,11,10,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,11,12,11,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (10,7,13,12,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
+insert into `instructor_courses_uploaded` (user_id,course_id,lesson_id,chap_id,uploaded_day) values (9,9,14,13,STR_TO_DATE('21-05-2021','%d-%m-%Y'));
 
 
 

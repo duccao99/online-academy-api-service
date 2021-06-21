@@ -121,14 +121,18 @@ order by num_student_enroll desc ;
 ----------------------------
 --  course syllabus
 ----------------------------
-select l.lesson_id, l.lesson_name, l.lesson_content, l.flag_reviewable, l.duration
-, ct.chap_id, ct.chap_name
-from `courses` c
-inner join `chapters` ct
-on ct.course_id = c.course_id
-inner join `lessons` l
-on l.chap_id = ct.chap_id 
-where c.course_id =1;
+select ins.course_id, ins.chap_id, ch.chap_name,  le.lesson_content,
+    ins.lesson_id, le.lesson_name,le.lesson_video_url ,le.flag_reviewable
+    from instructor_courses_uploaded ins
+    left join `chapters` ch 
+    on ch.chap_id = ins.chap_id 
+    left join `lessons` le 
+    on le.lesson_id = ins.lesson_id 
+    where ins.course_id = 1 
+    group by le.lesson_id;
+    
+    select * from `instructor_courses_uploaded`;
+    
 
 ----------------------------
 --  detail course instructor
@@ -790,17 +794,20 @@ and substr(u.user_name,length(u.user_name),1)  in ('a','e','o','u','i');
 
 select u.user_name
 from `users` u
-where u.user_name not  regexp'^[aeoui]'
-or  ;
+where u.user_name not  regexp'^[aeoui]';
+
+
+
 
 
 use `SPA_ONLINE_ACADEMY`;
 select * from `users`;
+select * from `courses`;
 select * from `instructor_courses_uploaded`;
 select * from `chapters`;
 select * from `lessons`;
 select * from `student_favorites`;
-select * from `courses`;
+
 select * from `subjects`;
 select * from `roles`;
 select * from `categories`;

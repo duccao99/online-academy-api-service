@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const db = require('../config/db');
 const tbl_courses = `courses`;
 const tbl_subjects = `subjects`;
 const tbl_categories = `categories`;
@@ -722,7 +722,7 @@ const courseModel = {
     on le.lesson_id = ins.lesson_id 
     where ins.course_id = ${course_id} ;`;
     return db.load(sql);
-  },
+  }
 };
 
 module.exports = courseModel;
