@@ -57,6 +57,13 @@ const subCatModel = {
     return data[0];
   },
 
+  async subjectNameById(subject_id) {
+    const sql = `select subject_name from ${tbl_subjects} where subject_id = ${subject_id}`;
+    const ret = await db.load(sql);
+
+    return ret[0];
+  },
+
   getCountCourseInSubCat() {
     const sql = `select sj.subject_id, sj.subject_name, cat.cat_name , 
     count(*) as count_course

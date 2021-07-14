@@ -1,4 +1,4 @@
-const db = require('../config/db');
+const db = require("../config/db");
 const tbl_courses = `courses`;
 const tbl_subjects = `subjects`;
 const tbl_categories = `categories`;
@@ -136,6 +136,12 @@ const courseModel = {
     on i.course_id = c.course_id
     left join ${tbl_users} u
     on u.user_id = i.user_id
+    left join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw 
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id
     where c.course_id = ${course_id}
     and c.is_finished = true ;`;
     const ret = await db.load(sql);
@@ -604,6 +610,25 @@ const courseModel = {
     order by c.course_fee desc;`;
     return db.load(sql);
   },
+
+  bySubjectId(subject_id) {
+    // const sql = `select course_name
+    // from ${tbl_courses} c
+    // where c.subject_id = ${subject_id}`;
+    const sql = `select c.course_id, c.course_name, c.course_fee, c.is_finished, sj.subject_name, rt.avg_rate
+    from ${tbl_courses} c 
+    left join ${tbl_subjects} sj
+    on sj.subject_id = c.subject_id
+    left join (
+    select *, avg(star) as avg_rate
+    from course_reviews crw 
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id
+    where c.subject_id = ${subject_id}`;
+    return db.load(sql);
+  },
+
   byPriceDESCPagi(limit, offset) {
     const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
@@ -722,7 +747,7 @@ const courseModel = {
     on le.lesson_id = ins.lesson_id 
     where ins.course_id = ${course_id} ;`;
     return db.load(sql);
-  }
+  },
 };
 
 module.exports = courseModel;

@@ -16,7 +16,7 @@ from `users` u
 where u.role_id=2;
 
 ----------------------------------------------------------
---  outstanding courses (most bought)
+--  top 10 outstanding courses (most bought)
 ----------------------------------------------------------
 select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.course_fee,
 sj.subject_id, sj.subject_name, c.views, u.user_name, rt.avg_rate, c.course_last_updated
@@ -41,11 +41,6 @@ group by c.course_id
 having count(od.course_id) >= 3
 and rt.avg_rate >= 1
 limit 10;
-
-
-
-
-
 
 ----------------------------
 -- Get 10 newsest courses
@@ -227,6 +222,7 @@ select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     ) rt
     where c.is_finished = true
     group by c.course_id;
+
 ----------------------------------------------------
 --  all card course with pagi
 ----------------------------------------------------
@@ -249,6 +245,7 @@ select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     group by c.course_id
     limit 9
     offset 17;
+
 ----------------------------------------------------
 --  all course by sub cat 
 ----------------------------------------------------
@@ -299,8 +296,6 @@ and c.is_finished = true
 group by c.course_id
 limit 9
 offset 0; 
-
-
 
 ----------------------------------------------------
 --  course Fulltext search by subcat
@@ -353,7 +348,6 @@ order by rt.avg_rate asc;
 ----------------------------------------------------
 -- all courses not pagi
 ----------------------------------------------------
-
 select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate
@@ -377,7 +371,6 @@ select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
 ----------------------------------------------------
 -- all courses  pagi
 ----------------------------------------------------
-    
   select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate
@@ -401,8 +394,7 @@ select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     
 ----------------------------------------------------
 -- by price asc
-----------------------------------------------------
-    
+----------------------------------------------------  
 select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
 c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
 ins.user_id, u.user_name, rt.avg_rate
