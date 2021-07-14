@@ -90,23 +90,23 @@ async function detailCat(id) {
 
 async function detailCourse(id) {
   const course_detail = await courseModel.detail(id);
-  console.log(course_detail);
+  // console.log(course_detail);
   if (course_detail === undefined) {
     return undefined;
   }
   const ret = `
-  These are the detail of the course:
-  \n- Name: ${course_detail.course_name}
-  \n- Id: ${course_detail.course_id}
-  \n- Title: ${course_detail.course_title}
-  \n- Avatar: ${course_detail.course_avatar_url}
-  \n- Fee: ${course_detail.course_fee}
-  \n- Last update: ${course_detail.course_last_updated}
-  \n- View: ${course_detail.views}
-  \n- Category: ${course_detail.subject_name}
-  \n- Instructor:${course_detail.user_name}
-  \n- Status: ${course_detail.is_finished ? "Completed" : "Not completed"}
-  \n- Rate: ${course_detail.avg_rate ? course_detail.avg_rate : "No rate"}`;
+These are the detail of the course:
+- Name: ${course_detail.course_name}
+- Id: ${course_detail.course_id}
+- Title: ${course_detail.course_title}
+- Fee: ${course_detail.course_fee}
+- Last update: ${course_detail.course_last_updated}
+- View: ${course_detail.views}
+- Students: ${course_detail.num_stu_enroll ? course_detail.num_stu_enroll : 0}
+- Category: ${course_detail.subject_name}
+- Instructor: ${course_detail.user_name}
+- Status: ${course_detail.is_finished ? "Completed" : "Not completed"}
+- Rate: ${course_detail.avg_rate ? course_detail.avg_rate : "No rate"}`;
 
   return ret;
 }
@@ -176,6 +176,8 @@ async function handleThreeFeature(sender_id, text) {
 
       const allCourseInCat = await bySubjectId(id);
 
+      console.log(allCourseInCat);
+
       if (allCourseInCat.length !== 0) {
         await sendMessage(
           sender_id,
@@ -186,11 +188,17 @@ async function handleThreeFeature(sender_id, text) {
             await sendMessage(
               sender_id,
               // Result ${i + 1}:\n
-              `- Name: ${allCourseInCat[i].course_name}\n- Price: ${
+              `- Name: ${allCourseInCat[i].course_name}\n- Id: ${
+                allCourseInCat[i].course_id
+              }\n- Category:  ${allCourseInCat[i].subject_name}\n- Price: ${
                 allCourseInCat[i].course_fee
               }\n- Status: ${
                 allCourseInCat[i].is_finished ? "Completed" : "Not completed"
-              }\n- Category:  ${allCourseInCat[i].subject_name}\n- Rate: ${
+              }\n- Students: ${
+                allCourseInCat[i].num_stu_enroll
+                  ? allCourseInCat[i].num_stu_enroll
+                  : 0
+              }\n- Rate: ${
                 allCourseInCat[i].avg_rate
                   ? allCourseInCat[i].avg_rate
                   : "No rate"
@@ -239,6 +247,10 @@ async function handleThreeFeature(sender_id, text) {
           // Result ${i + 1}:\n
           `- Name: ${courses_by_keyword[i].course_name}\n- Price: ${
             courses_by_keyword[i].course_fee
+          }\n- Students: ${
+            courses_by_keyword[i].num_stu_enroll
+              ? courses_by_keyword[i].num_stu_enroll
+              : 0
           }\n- Status: ${
             courses_by_keyword[i].is_finished ? "Completed" : "Not completed"
           }\n- Category:  ${courses_by_keyword[i].subject_name}\n- Rate: ${

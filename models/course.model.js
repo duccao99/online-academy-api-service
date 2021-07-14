@@ -128,7 +128,7 @@ const courseModel = {
     c.course_thumbnail, c.course_avatar_url, c.course_fee ,
     c.course_full_description, c.course_short_description,
     c.course_last_updated, c.is_finished, c.subject_id,c.views ,
-    sj.subject_name,  u.user_name, u.user_id
+    sj.subject_name,  u.user_name, u.user_id, ste.num_stu_enroll
     from ${tbl_courses} c 
     left join ${tbl_subjects} sj 
     on sj.subject_id = c.subject_id
@@ -142,6 +142,12 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id
+    left join (
+      select *,count(*) as num_stu_enroll
+      from ${tbl_student_enrolls} ste
+      group by ste.course_id
+      ) ste
+      on ste.course_id = c.course_id
     where c.course_id = ${course_id}
     and c.is_finished = true ;`;
     const ret = await db.load(sql);
@@ -426,7 +432,7 @@ const courseModel = {
   fullTextSearchPagi(text, limit, offset) {
     const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
-    u.user_id, u.user_name, rt.avg_rate
+    u.user_id, u.user_name, rt.avg_rate, ste.num_stu_enroll
     from ${tbl_courses} c 
     left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
@@ -440,6 +446,12 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id
+    left join (
+    select *,count(*) as num_stu_enroll
+    from ${tbl_student_enrolls} ste
+    group by ste.course_id
+    ) ste
+    on ste.course_id = c.course_id
     where match(c.course_name)
     against ('${text}' in natural language mode)
     or  match(sj.subject_name)
@@ -612,10 +624,7 @@ const courseModel = {
   },
 
   bySubjectId(subject_id) {
-    // const sql = `select course_name
-    // from ${tbl_courses} c
-    // where c.subject_id = ${subject_id}`;
-    const sql = `select c.course_id, c.course_name, c.course_fee, c.is_finished, sj.subject_name, rt.avg_rate
+    const sql = `select c.course_id, c.course_name, c.course_fee, c.is_finished, sj.subject_name, rt.avg_rate, ste.num_stu_enroll
     from ${tbl_courses} c 
     left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
@@ -625,6 +634,12 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id
+    left join (
+    select *,count(*) as num_stu_enroll
+    from ${tbl_student_enrolls} ste
+    group by ste.course_id
+    ) ste
+    on ste.course_id = c.course_id
     where c.subject_id = ${subject_id}`;
     return db.load(sql);
   },
