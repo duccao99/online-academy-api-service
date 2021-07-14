@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const db = require('../config/db');
 const tbl_users = `users`;
 
 const studentModel = {
@@ -36,10 +36,10 @@ const studentModel = {
   },
   patchRFToken(id, rfToken) {
     const entity = {
-      rfToken: rfToken,
+      rfToken: rfToken
     };
     const condition = {
-      user_id: id,
+      user_id: id
     };
     return db.edit(entity, condition, tbl_users);
   },
@@ -91,7 +91,7 @@ const studentModel = {
   verifyAccount(link) {
     const sql = `update ${tbl_users} u
     set u.is_verified=true 
-    where u.otp_verify_url='https://localhost:3000/${link}';`;
+    where u.otp_verify_url='http://localhost:3000/${link}';`;
     return db.load(sql);
   },
   async checkPass(email, password) {
@@ -106,7 +106,7 @@ const studentModel = {
       return true;
     }
     return false;
-  },
+  }
 };
 
 module.exports = studentModel;
