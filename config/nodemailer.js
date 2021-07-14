@@ -1,19 +1,19 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 // let testAccount = await nodemailer.createTestAccount();
 const user = process.env.NODE_MAILER_EMAIL;
 const pass = process.env.NODE_MAILER_PASSWORD;
 let transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+  host: "smtp.gmail.com",
   port: 587,
   secure: false,
   auth: {
     user: user,
-    pass: pass
+    pass: pass,
   },
   tls: {
-    rejectUnauthorized: false
-  }
+    rejectUnauthorized: false,
+  },
 });
 
 module.exports = {
@@ -21,8 +21,8 @@ module.exports = {
     const mailOptions = {
       from: `Online Academy API Service ${user}`,
       to: `${email}`,
-      subject: 'Verify your email!',
-      text: `Please Click the link to verify you email: ${link_otp}`
+      subject: "Verify your email!",
+      text: `Please click the link to verify you email: ${link_otp}`,
     };
     transporter.sendMail(mailOptions, (er, info) => {
       if (er) {
@@ -37,8 +37,8 @@ module.exports = {
     const mailOptions = {
       from: `Online Academy API Service ${user}`,
       to: `${email}`,
-      subject: 'Verify your email!',
-      text: `Your current password is: ${password_message}\nPlease Click the link to verify you email: ${link_otp}`
+      subject: "Verify your email!",
+      text: `Your current password is: ${password_message}\nPlease Click the link to verify you email: ${link_otp}`,
     };
 
     transporter.sendMail(mailOptions, (er, info) => {
@@ -48,5 +48,5 @@ module.exports = {
         console.log(info);
       }
     });
-  }
+  },
 };
