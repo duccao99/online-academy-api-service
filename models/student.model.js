@@ -1,4 +1,4 @@
-const db = require('../config/db');
+const db = require("../config/db");
 const tbl_courses = `courses`;
 const tbl_subjects = `subjects`;
 const tbl_categories = `categories`;
@@ -62,7 +62,7 @@ const studentModel = {
 
   getPurchasedCourses(email) {
     const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
-    c.course_fee, c.views, u.user_name as ins_name , u.user_id, sj.subject_name, sj.subject_id
+    c.course_fee, c.views, u.user_name as ins_name , u.user_id, ste.num_stu_enroll, rt.avg_rate, rt.total_review
     from ${tbl_orders} od
     inner join ${tbl_orders_details} odd
     on od.order_id = odd.order_id
@@ -72,6 +72,18 @@ const studentModel = {
     on u.user_id = od.user_id 
     inner join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
+    left join (
+    select *, count(*) as total_review, avg(star) as avg_rate
+    from course_reviews crw 
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id
+    left join (
+    select *,count(*) as num_stu_enroll
+    from ${tbl_student_enrolls} ste
+    group by ste.course_id
+    ) ste
+    on ste.course_id = c.course_id
     where u.email = '${email}'
     group by c.course_id ;`;
 
@@ -90,7 +102,18 @@ const studentModel = {
    inner join ${tbl_courses} c
    on c.course_id = odd.course_id
    inner join ${tbl_subjects} sj 
-    on sj.subject_id = c.subject_id
+   on sj.subject_id = c.subject_id
+   select *, avg(star) as avg_rate
+  from course_reviews crw 
+  group by crw.course_id
+  ) rt
+  on rt.course_id = c.course_id
+  left join (
+  select *,count(*) as num_stu_enroll
+  from ${tbl_student_enrolls} ste
+  group by ste.course_id
+  ) ste
+  on ste.course_id = c.course_id
    where u.email = '${email}' ;`;
     return db.load(sql);
   },
@@ -161,7 +184,7 @@ const studentModel = {
     (user_id,course_id,is_favorite) 
     values (${user_id},${course_id},true);`;
     return db.load(sql);
-  }
+  },
 };
 
 module.exports = studentModel;
