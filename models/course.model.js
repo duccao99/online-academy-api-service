@@ -245,17 +245,33 @@ const courseModel = {
     return db.load(sql);
   },
   topSubCat() {
-    const sql = `select  count(*) as num_student_enroll,
-    cat.cat_name, sj.subject_id, sj.subject_name, c.course_id 
-    from ${tbl_student_enrolls} se 
-    left join ${tbl_courses} c 
-    on c.course_id = se.course_id 
-    left join ${tbl_subjects} sj
-    on sj.subject_id = c.subject_id
+    // const sql = `select  count(*) as num_student_enroll,
+    // cat.cat_name, sj.subject_id, sj.subject_name, c.course_id
+    // from ${tbl_student_enrolls} se
+    // left join ${tbl_courses} c
+    // on c.course_id = se.course_id
+    // left join ${tbl_subjects} sj
+    // on sj.subject_id = c.subject_id
+    // left join ${tbl_categories} cat
+    // on cat.cat_id = sj.cat_id
+    // group by se.course_id
+    // order by num_student_enroll desc ;
+    // limit 10;`;
+    const sql = `
+    select sj.subject_id, sj.subject_name, cat.cat_name, sum(res.students) as num_student_enroll
+    from ${tbl_subjects} sj
     left join ${tbl_categories} cat 
     on cat.cat_id = sj.cat_id
-    group by se.course_id
-    order by num_student_enroll desc ;`;
+    join (
+      select c.subject_id, count(se.course_id) as students
+        from ${tbl_student_enrolls} se, ${tbl_courses} c, ${tbl_subjects} s
+        where se.course_id = c.course_id and c.subject_id = s.subject_id
+        group by se.course_id
+    ) res
+    on sj.subject_id = res.subject_id
+    group by res.subject_id
+    order by num_student_enroll desc
+    limit 5`;
     return db.load(sql);
   },
   detailCourseSyllabus(course_id) {
