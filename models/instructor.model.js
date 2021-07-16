@@ -93,7 +93,12 @@ const instructorModel = {
         group by c.course_id;`;
     return db.load(sql);
   },
-
+  getOwnCourseQuantity(instructor_id) {
+    const sql = `select count(distinct iu.course_id) as course_quantity
+    from ${tbl_instructor_courses_uploaded} iu
+    where iu.user_id = ${instructor_id}`;
+    return db.load(sql);
+  },
   toggleFinishedCourse(en, con) {
     return db.edit(en, con, tbl_courses);
   },

@@ -34,6 +34,26 @@ router.get("/", async function (req, res) {
   });
 });
 
+router.post("/ownCourseQuantity", async function (req, res) {
+  console.log(123, "alo");
+
+  const { instructor_id } = req.body;
+
+  const ret = instructorModel.getOwnCourseQuantity(instructor_id);
+
+  console.log(ret);
+
+  if (!ret) {
+    return res.status(404).json({
+      message: "Instructor not found!",
+    });
+  }
+
+  return res.json({
+    own_course_quantity: ret,
+  });
+});
+
 router.patch("/toggle-finished-course", async function (req, res) {
   const body = req.body;
   const en_update = {

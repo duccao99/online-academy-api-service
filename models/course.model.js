@@ -306,7 +306,7 @@ const courseModel = {
 
   detailCourseInstructor(course_id) {
     const sql = `select ic.course_id, ic.uploaded_day, u.user_name,
-     u.email, u.role_id, u.user_avatar_url, r.role_name
+     u.email, u.role_id, u.user_avatar_url, r.role_name, ic.user_id
     from ${tbl_courses} c
     left join ${tbl_instructor_courses_uploaded} ic
     on ic.course_id = c.course_id
