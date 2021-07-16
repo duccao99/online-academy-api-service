@@ -60,8 +60,17 @@ const studentModel = {
     }
   },
 
+  getPurchasedCoursesId(user_id) {
+    const sql = `select course_id
+    from spa_online_academy.orders_details odd
+    inner join spa_online_academy.orders od
+    on od.order_id = odd.order_id and od.user_id = ${user_id}`;
+
+    return db.load(sql);
+  },
+
   getPurchasedCourses(email) {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, sj.subject_name,
     c.course_fee, c.views, u.user_name as ins_name , u.user_id, ste.num_stu_enroll, rt.avg_rate, rt.total_review
     from ${tbl_orders} od
     inner join ${tbl_orders_details} odd
