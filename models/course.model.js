@@ -34,7 +34,7 @@ const courseModel = {
   allWithNoPagi() {
     const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
-    u.user_id, u.user_name, rt.avg_rate
+    u.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
     left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
@@ -43,7 +43,7 @@ const courseModel = {
     left join ${tbl_users} u
     on u.user_id = ins.user_id
     left join (
-    select *, avg(star) as avg_rate
+    select *,  count(*) as total_review, avg(star) as avg_rate
     from course_reviews crw 
     group by crw.course_id
     ) rt
@@ -56,7 +56,7 @@ const courseModel = {
   allWithPagi(limit, offset) {
     const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
-    u.user_id, u.user_name, rt.avg_rate
+    u.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
     left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
@@ -65,7 +65,7 @@ const courseModel = {
     left join ${tbl_users} u
     on u.user_id = ins.user_id
     left join (
-    select *, avg(star) as avg_rate
+    select *, count(*) as total_review, avg(star) as avg_rate
     from course_reviews crw 
     group by crw.course_id
     ) rt
@@ -80,7 +80,7 @@ const courseModel = {
   allCourseBySubCatNoPagi(sub_cat) {
     const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
-    u.user_id, u.user_name, rt.avg_rate
+    u.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
     left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
@@ -89,7 +89,7 @@ const courseModel = {
     left join ${tbl_users} u
     on u.user_id = ins.user_id
     left join (
-    select *, avg(star) as avg_rate
+    select *,  count(*) as total_review, avg(star) as avg_rate
     from course_reviews crw 
     group by crw.course_id
     ) rt
@@ -102,7 +102,7 @@ const courseModel = {
   allCourseBySubCatPagi(sub_cat, limit, offset) {
     const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
-    u.user_id, u.user_name, rt.avg_rate
+    u.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
     left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
@@ -111,7 +111,7 @@ const courseModel = {
     left join ${tbl_users} u
     on u.user_id = ins.user_id
     left join (
-    select *, avg(star) as avg_rate
+    select *,  count(*) as total_review, avg(star) as avg_rate
     from course_reviews crw 
     group by crw.course_id
     ) rt
@@ -223,7 +223,7 @@ const courseModel = {
     const sql = `select c.course_id, c.course_name, c.course_title, 
     c.course_avatar_url, c.course_fee,
     c.course_last_updated, c.is_finished, c.views, sj.subject_name, u.user_id,
-    u.user_name, rt.avg_rate
+    u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c 
     left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
@@ -232,7 +232,7 @@ const courseModel = {
     left join ${tbl_users} u
     on u.user_id = ins.user_id
     left join (
-    select *, avg(cr.star) as avg_rate
+    select *, count(*) as total_review, avg(star) as avg_rate
     from course_reviews cr
     group by cr.course_id
     ) rt
@@ -323,7 +323,7 @@ const courseModel = {
     , c.course_thumbnail, c.course_avatar_url, c.course_fee ,
     c.course_full_description, c.course_short_description
     ,c.course_last_updated, c.is_finished, c.subject_id,c.views 
-    ,sj.subject_name, scb.num_stu_bought, u.user_name, rt.avg_rate
+    ,sj.subject_name, scb.num_stu_bought, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
     left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
@@ -332,7 +332,7 @@ const courseModel = {
     left join ${tbl_users} u 
     on u.user_id = ins.user_id
     left join (
-      select *, avg(star) avg_rate
+      select *, count(*) as total_review, avg(star) as avg_rate
       from ${tbl_course_reviews} crw
       group by crw.course_id
     ) rt
