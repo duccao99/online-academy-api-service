@@ -397,6 +397,23 @@ router.get("/detail/course-review/:id", async function (req, res) {
     course_reviews: ret,
   });
 });
+
+router.post("/course-review", async function (req, res) {
+  console.log(req.body);
+
+  // const course_detail = await courseModel.addReview(data);
+
+  // if (course_detail === undefined) {
+  //   return res.status(400).json({ message: "Course not found!" });
+  // }
+
+  // const ret = await courseModel.detailCourseReviews(course_detail.course_id);
+
+  return res.json({
+    course_reviews: 123,
+  });
+});
+
 router.get("/detail/cat-price-num/:id", async function (req, res) {
   const id = +req.params.id;
   const ret = await courseModel.detailCatPriceNum(id);

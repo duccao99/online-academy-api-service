@@ -21,6 +21,11 @@ const courseModel = {
   add(entity) {
     return db.add(entity, tbl_courses);
   },
+
+  addReview(entity) {
+    return db.add(entity, tbl_course_reviews);
+  },
+
   allSales() {
     const sql = `select * from ${tbl_sales}; `;
     return db.load(sql);
