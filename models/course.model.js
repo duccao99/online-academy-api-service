@@ -305,13 +305,11 @@ const courseModel = {
   },
 
   detailCourseInstructor(course_id) {
-    const sql = `select ic.course_id, ic.uploaded_day, u.user_name,
-     u.email, u.role_id, u.user_avatar_url, r.role_name
+    const sql = `select c.course_id, u.user_name,
+    u.email, u.role_id, u.user_avatar_url, r.role_name, u.user_id
     from ${tbl_courses} c
-    left join ${tbl_instructor_courses_uploaded} ic
-    on ic.course_id = c.course_id
     left join ${tbl_users} u
-    on u.user_id = ic.user_id
+    on u.user_id = c.instructor_id
     left join ${tbl_roles} r
     on r.role_id = u.role_id
     where c.course_id = ${course_id};

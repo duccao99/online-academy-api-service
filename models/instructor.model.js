@@ -29,6 +29,7 @@ const instructorModel = {
 
     return db.load(sql);
   },
+
   edit(user_id, name, email) {
     const sql = `update ${tbl_users} u
       set u.user_name='${name}', u.email = '${email}' 
@@ -93,7 +94,12 @@ const instructorModel = {
         group by c.course_id;`;
     return db.load(sql);
   },
-
+  getOwnCourseQuantity(instructor_id) {
+    const sql = `select count(c.course_id) as course_quantity
+    from ${tbl_courses} c
+    where c.instructor_id = ${instructor_id}`;
+    return db.load(sql);
+  },
   toggleFinishedCourse(en, con) {
     return db.edit(en, con, tbl_courses);
   },

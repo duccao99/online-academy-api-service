@@ -34,6 +34,22 @@ router.get("/", async function (req, res) {
   });
 });
 
+router.post("/ownCourseQuantity", async function (req, res) {
+  const { instructor_id } = req.body;
+
+  const ret = await instructorModel.getOwnCourseQuantity(instructor_id);
+
+  if (!ret) {
+    return res.status(404).json({
+      message: "Instructor not found!",
+    });
+  }
+
+  return res.json({
+    own_course_quantity: ret[0].course_quantity,
+  });
+});
+
 router.patch("/toggle-finished-course", async function (req, res) {
   const body = req.body;
   const en_update = {
@@ -114,19 +130,6 @@ router.get("/lesson-exists/:chap_id", async function (req, res) {
 
   return res.json({
     lesson_exists: ret,
-  });
-});
-
-router.get("/:id", async function (req, res) {
-  const id = +req.params.id;
-
-  const ret = await instructorModel.detail(id);
-
-  if (ret.length === 0) {
-    return res.status(404).json({ message: "Instructor not found!" });
-  }
-  return res.json({
-    instructor_detail: ret[0],
   });
 });
 
@@ -547,6 +550,19 @@ router.delete("/:id", async function (req, res) {
   return res.json({
     del_ins_detail: ret,
     ret_del_insUpload,
+  });
+});
+
+router.get("/:id", async function (req, res) {
+  const id = +req.params.id;
+
+  const ret = await instructorModel.detail(id);
+
+  if (ret.length === 0) {
+    return res.status(404).json({ message: "Instructor not found!" });
+  }
+  return res.json({
+    instructor_detail: ret[0],
   });
 });
 
