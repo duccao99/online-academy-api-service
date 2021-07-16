@@ -352,17 +352,7 @@ router.get("/detail/syllabus/:id", async function (req, res) {
 router.get("/detail/instructor/:id", async function (req, res) {
   const id = +req.params.id;
 
-  // const course_detail = await courseModel.detail(id);
-
-  // if (course_detail === undefined) {
-  //   return res.status(400).json({ message: "Course not found!" });
-  // }
-
-  // console.log(course_detail);
-
   const ret = await courseModel.detailCourseInstructor(id);
-
-  console.log(id, "and ", ret);
 
   if (!ret) {
     return res.status(400).json({ message: "Course not found!" });
