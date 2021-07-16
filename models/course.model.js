@@ -332,7 +332,7 @@ const courseModel = {
     left join ${tbl_users} u 
     on u.user_id = ins.user_id
     left join (
-      count(*) as total_review, avg(star) as avg_rate
+      select *, count(*) as total_review, avg(star) as avg_rate
       from ${tbl_course_reviews} crw
       group by crw.course_id
     ) rt
