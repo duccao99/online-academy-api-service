@@ -397,6 +397,34 @@ router.get("/detail/course-review/:id", async function (req, res) {
     course_reviews: ret,
   });
 });
+
+router.post("/course-review", async function (req, res) {
+  const { user_id, course_id, star, review_content } = req.body;
+
+  const course_detail = await courseModel.addReview({
+    user_id,
+    course_id,
+    star,
+    review_content,
+  });
+
+  if (course_detail === undefined) {
+    return res.status(400).json({ message: "Cannot add this review!" });
+  }
+
+  const ret = await courseModel.feedback(course_id);
+
+  if (ret === undefined) {
+    return res.status(400).json({
+      message: "Course not found!",
+    });
+  }
+
+  return res.json({
+    feedback: ret,
+  });
+});
+
 router.get("/detail/cat-price-num/:id", async function (req, res) {
   const id = +req.params.id;
   const ret = await courseModel.detailCatPriceNum(id);
