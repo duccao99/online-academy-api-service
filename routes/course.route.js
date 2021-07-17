@@ -399,18 +399,29 @@ router.get("/detail/course-review/:id", async function (req, res) {
 });
 
 router.post("/course-review", async function (req, res) {
-  console.log(req.body);
+  const { user_id, course_id, star, review_content } = req.body;
 
-  // const course_detail = await courseModel.addReview(data);
+  const course_detail = await courseModel.addReview({
+    user_id,
+    course_id,
+    star,
+    review_content,
+  });
 
-  // if (course_detail === undefined) {
-  //   return res.status(400).json({ message: "Course not found!" });
-  // }
+  if (course_detail === undefined) {
+    return res.status(400).json({ message: "Cannot add this review!" });
+  }
 
-  // const ret = await courseModel.detailCourseReviews(course_detail.course_id);
+  const ret = await courseModel.feedback(course_id);
+
+  if (ret === undefined) {
+    return res.status(400).json({
+      message: "Course not found!",
+    });
+  }
 
   return res.json({
-    course_reviews: 123,
+    feedback: ret,
   });
 });
 
