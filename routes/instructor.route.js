@@ -163,6 +163,7 @@ router.post("/upload-course", async function (req, res) {
           //   }
           // );
           const course = req.body;
+          console.log("check", req.body);
 
           // console.log(req.file);
           // console.log(req.file);
@@ -253,6 +254,7 @@ router.post("/upload-course", async function (req, res) {
                       "YYYY/MM/DD HH:mm:ss"
                     ),
                     course_avatar_url: ret.secure_url,
+                    instructor_id: +course.user_id,
                   };
                   // add to `courses`
                   const ret_add_course = await courseModel.add(course_tobe_add);
