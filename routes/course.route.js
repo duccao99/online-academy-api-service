@@ -474,6 +474,8 @@ router.get("/:id", async function (req, res) {
 
   const course_detail = await courseModel.detail(id);
 
+  console.log("alo", course_detail);
+
   if (course_detail === undefined) {
     return res.status(400).json({ message: "Course not found!" });
   }

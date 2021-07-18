@@ -154,7 +154,7 @@ const courseModel = {
     ) rt
     on rt.course_id = c.course_id 
     left join ${tbl_sales} sal
-    on rt.course_id = c.course_id
+    on sal.course_id = c.course_id
     left join (
     select *,count(*) as num_stu_enroll
     from ${tbl_student_enrolls} ste
