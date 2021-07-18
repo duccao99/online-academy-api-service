@@ -14,7 +14,10 @@ const tbl_sales = `sales`;
 
 const courseModel = {
   all() {
-    const sql = `select * from ${tbl_courses} `;
+    const sql = `select C.*, s.sale_percent
+    from ${tbl_courses} c
+    left join ${tbl_sales} s
+    on s.course_id = c.course_id`;
     return db.load(sql);
   },
 

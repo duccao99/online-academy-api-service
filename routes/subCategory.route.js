@@ -87,6 +87,7 @@ router.delete("/:id", async function (req, res) {
 router.patch("/:id", async function (req, res) {
   const id = +req.params.id;
   const sub_cat = req.body;
+  // const cat_id = req.body.cat_id;
   const check_sub_cat = await subCatModel.detail(id);
 
   if (check_sub_cat === undefined) {
