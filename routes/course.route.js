@@ -3,6 +3,7 @@ const chapterModel = require("../models/chapter.model");
 const courseModel = require("../models/course.model");
 const subCatModel = require("../models/subCategory.model");
 const insUploadModel = require("../models/insUpload.model");
+const salesModel = require("../models/sales.model");
 
 router.get("/", async function (req, res) {
   const courses = await courseModel.all();
@@ -105,7 +106,7 @@ router.get("/top-sub-cat", async function (req, res) {
 });
 
 router.get("/all-sales", async function (req, res) {
-  const ret = await courseModel.allSales();
+  const ret = await salesModel.all();
 
   if (ret.length === 0) {
     return res.status(204).json({ message: "No content!" });
@@ -398,6 +399,19 @@ router.get("/detail/course-review/:id", async function (req, res) {
   });
 });
 
+router.patch("/", async function (req, res) {
+  const { course_fee, course_id } = req.body;
+
+  const ret = await courseModel.edit({ course_fee, course_id }, { course_id });
+
+  if (+ret.affectedRows === 1) {
+    return res.json({
+      message: "Course was updated!",
+    });
+  }
+  return res.status(500).json({ error_message: "Something broke!" });
+});
+
 router.post("/course-review", async function (req, res) {
   const { user_id, course_id, star, review_content } = req.body;
 
@@ -459,6 +473,8 @@ router.get("/:id", async function (req, res) {
   const id = +req.params.id;
 
   const course_detail = await courseModel.detail(id);
+
+  console.log("alo", course_detail);
 
   if (course_detail === undefined) {
     return res.status(400).json({ message: "Course not found!" });

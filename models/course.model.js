@@ -14,7 +14,10 @@ const tbl_sales = `sales`;
 
 const courseModel = {
   all() {
-    const sql = `select * from ${tbl_courses} `;
+    const sql = `select C.*, s.sale_percent
+    from ${tbl_courses} c
+    left join ${tbl_sales} s
+    on s.course_id = c.course_id`;
     return db.load(sql);
   },
 
@@ -22,13 +25,16 @@ const courseModel = {
     return db.add(entity, tbl_courses);
   },
 
-  addReview(entity) {
-    return db.add(entity, tbl_course_reviews);
+  del(condition) {
+    return db.del(condition, tbl_courses);
   },
 
-  allSales() {
-    const sql = `select * from ${tbl_sales}; `;
-    return db.load(sql);
+  edit(entity, condition) {
+    return db.edit(entity, condition, tbl_courses);
+  },
+
+  addReview(entity) {
+    return db.add(entity, tbl_course_reviews);
   },
 
   allWithFinished() {
@@ -132,7 +138,7 @@ const courseModel = {
     const sql = `select c.course_id, c.course_name, c.course_title, 
     c.course_thumbnail, c.course_avatar_url, c.course_fee ,
     c.course_full_description, c.course_short_description,
-    c.course_last_updated, c.is_finished, c.subject_id,c.views ,
+    c.course_last_updated, c.is_finished, c.subject_id,c.views , sal.sale_percent,
     sj.subject_name,  u.user_name, u.user_id, ste.num_stu_enroll, rt.avg_rate, rt.total_review
     from ${tbl_courses} c 
     left join ${tbl_subjects} sj 
@@ -146,7 +152,9 @@ const courseModel = {
     from course_reviews crw 
     group by crw.course_id
     ) rt
-    on rt.course_id = c.course_id
+    on rt.course_id = c.course_id 
+    left join ${tbl_sales} sal
+    on sal.course_id = c.course_id
     left join (
     select *,count(*) as num_stu_enroll
     from ${tbl_student_enrolls} ste
@@ -164,13 +172,6 @@ const courseModel = {
     where c.course_name = '${course_name}'`;
     const ret = await db.load(sql);
     return ret[0];
-  },
-
-  del(condition) {
-    return db.del(condition, tbl_courses);
-  },
-  edit(entity, condition) {
-    return db.edit(entity, condition, tbl_courses);
   },
 
   getOutstandingCourse() {
