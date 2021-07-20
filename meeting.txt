@@ -1,0 +1,14 @@
+1. Rollback Chatbot feature 
+2. Before defense add link to gg & fb authentication
+
++ google 
+https://console.cloud.google.com/apis/credentials/oauthclient/156641585094-f4amukbgq4r53ccfsbc9lpeb6qjm9kiu.apps.googleusercontent.com?project=sturdy-chimera-291107
++ facebook 
+
+3. update email session when user change info 
++ bug at purchase course
+
+
+4. account admin 
+admin@gmail.com
+123123
