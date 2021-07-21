@@ -4,9 +4,9 @@
 
 **Project description:** A website where people can buy courses and learn online, the instructor can teach online by their video upload and course content. The administrator can manage the database and find course information by Facebook Chatbot
 
-#### Technical stack
+## Technical stack
 
-##### Backend
+### Backend
 
 `nodejs`
 `express`
@@ -15,18 +15,18 @@
 `facebook-for-developer`
 `google-for-developer`
 
-##### Frontend
+### Frontend
 
 `reactjs`
 `material-ui`
 `redux`
 `redux-thunk`
 
-##### Database
+### Database
 
 `mysql`
 
-##### Admin account <br/>
+### Admin account <br/>
 
 email: admin@gmail.com <br/>
 password: 123123 <br/>
