@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const db = require('../config/db');
 
 const tbl_courses = `courses`;
 const tbl_subjects = `subjects`;
@@ -76,5 +76,14 @@ const subCatModel = {
     order by count_course desc;`;
     return db.load(sql);
   },
+
+  async getSubCatNameById(subCatId) {
+    const sql = `
+    select subject_name 
+    from ${tbl_subjects} sj
+    where sj.subject_id = ${subCatId}  `;
+    const ret = await db.load(sql);
+    return ret[0].subject_name;
+  }
 };
 module.exports = subCatModel;

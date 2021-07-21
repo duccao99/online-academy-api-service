@@ -1,35 +1,34 @@
-const { subjectNameById } = require("../models/subCategory.model");
-const catModel = require("../models/category.model");
-const { bySubjectId } = require("../models/course.model");
-const courseModel = require("../models/course.model");
-const subCatModel = require("../models/subCategory.model");
-const { getMessage, sendMessage } = require("../utils/chatbot.utils");
+const { subjectNameById } = require('../models/subCategory.model');
+const catModel = require('../models/category.model');
+const { bySubjectId } = require('../models/course.model');
+const courseModel = require('../models/course.model');
+const subCatModel = require('../models/subCategory.model');
+const { getMessage, sendMessage } = require('../utils/chatbot.utils');
+const router = require('express').Router();
 
-const router = require("express").Router();
-
-router.get("/", function (req, res) {
+router.get('/', function (req, res) {
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-  console.log("Webhook verification step");
+  console.log('Webhook verification step');
 
   if (
-    req.query["hub.mode"] === "subscribe" &&
-    req.query["hub.verify_token"] === VERIFY_TOKEN
+    req.query['hub.mode'] === 'subscribe' &&
+    req.query['hub.verify_token'] === VERIFY_TOKEN
   ) {
-    res.status(200).send(req.query["hub.challenge"]);
+    res.status(200).send(req.query['hub.challenge']);
   } else {
-    console.log("Authentication failed!");
+    console.log('Authentication failed!');
     res.sendStatus(403);
   }
 });
 
-router.post("/", function (req, res) {
-  console.log("Webhook messaging step");
+router.post('/', function (req, res) {
+  console.log('Webhook messaging step');
   var chat_data = req.body;
 
   console.log(chat_data);
-  console.log("Chat data object: ", chat_data.object);
+  console.log('Chat data object: ', chat_data.object);
 
-  if (chat_data.object == "page") {
+  if (chat_data.object == 'page') {
     chat_data.entry.forEach((page_body) => {
       page_body.messaging.forEach(async function (mess_obj) {
         console.log(mess_obj);
@@ -54,8 +53,9 @@ function SayHi(sender_id) {
 Right now I'm have three features\n
 Send me one of your code options below:\n
 1. Search course by keyword\n
-2. Accept course by category\n
+2. Browse courses by category\n
 3. View course detail\n
+4. Accept courses by category \n
 Which feature do you want to use?\n
 Note: whenever you wanna call me, just send "bot" :)
   `;
@@ -68,8 +68,9 @@ function SayNotFound(sender_id) {
 Right now I have three features.\n
 Send me one of your code options below:\n
 1. Search course by keyword\n
-2. Accept course by category\n
+2. Browse courses by category\n
 3. View course detail\n
+4. Accept courses by category \n
 Which feature do you want to use?\n\n
 Note: whenever you wanna call me, just send "bot" :)
   `;
@@ -105,8 +106,8 @@ These are the detail of the course:
 - Students: ${course_detail.num_stu_enroll ? course_detail.num_stu_enroll : 0}
 - Category: ${course_detail.subject_name}
 - Instructor: ${course_detail.user_name}
-- Status: ${course_detail.is_finished ? "Completed" : "Not completed"}
-- Rate: ${course_detail.avg_rate ? course_detail.avg_rate : "No rate"}`;
+- Status: ${course_detail.is_finished ? 'Completed' : 'Not completed'}
+- Rate: ${course_detail.avg_rate ? course_detail.avg_rate : 'No rate'}`;
 
   return ret;
 }
@@ -122,17 +123,17 @@ async function handleThreeFeature(sender_id, text) {
     switch (+text) {
       case 1:
         //  Search course by keyword\n
-        const message = "Enter keyword";
+        const message = 'Enter keyword';
         await sendMessage(sender_id, message);
         break;
       case 2:
         //  Accept course by category\n
-        const message2 = "There are categories list";
+        const message2 = 'There are categories list';
         await sendMessage(sender_id, message2);
 
         const allCat = await subCatModel.all();
 
-        let mess_cat = "";
+        let mess_cat = '';
         for (let i = 0; i < allCat.length; ++i) {
           mess_cat += `Cat ${i + 1}: ${allCat[i].subject_name}\n`;
         }
@@ -142,7 +143,7 @@ async function handleThreeFeature(sender_id, text) {
         setTimeout(async () => {
           await sendMessage(
             sender_id,
-            "Which category that you want to accept courses?\nPlease follow this syntax to enter: 'cat:1'"
+            "Which category that you want to browse courses?\nPlease follow this syntax to enter: 'cat:1'"
           );
         }, 400);
         break;
@@ -152,20 +153,52 @@ async function handleThreeFeature(sender_id, text) {
         await sendMessage(sender_id, message3);
         break;
 
+      case 4:
+        const message4 = 'There are categories list';
+
+        const case_4_allCat = await subCatModel.all();
+
+        let case_4_mess_cat = '';
+        for (let i = 0; i < case_4_allCat.length; ++i) {
+          case_4_mess_cat += `Cat ${i + 1}: ${case_4_allCat[i].subject_name}\n`;
+        }
+
+        setTimeout(async () => {
+          await sendMessage(sender_id, message4);
+        }, 400);
+
+        setTimeout(async () => {
+          await sendMessage(sender_id, case_4_mess_cat);
+        }, 800);
+
+        setTimeout(async () => {
+          await sendMessage(
+            sender_id,
+            '  "Which category that you want to accept courses?\nPlease follow this syntax to enter:`accept_by_cat_id:1` '
+          );
+        }, 1200);
+
+        break;
+
       default:
         await sendMessage(
           sender_id,
-          "This message was sent from Online Academy API Service server!"
+          'This message was sent from Online Academy API Service server!'
         );
         await SayHi(sender_id);
         break;
     }
-  } else if (text.includes("bot")) {
+  } else if (
+    text.includes('bot') ||
+    text.includes('hi') ||
+    text.includes('hello') ||
+    text.includes('abc')
+  ) {
     await SayHi(sender_id);
-  } else if (text.includes("cat")) {
+  } else if (text.includes('cat') && !text.includes('by')) {
     const curr_text = text;
 
-    const id = curr_text.trim().split(":")[1];
+    const id = curr_text.trim().split(':')[1];
 
     // const ret = await detailCat(id);
 
@@ -193,7 +226,7 @@ async function handleThreeFeature(sender_id, text) {
               }\n- Category:  ${allCourseInCat[i].subject_name}\n- Price: ${
                 allCourseInCat[i].course_fee
               }\n- Status: ${
-                allCourseInCat[i].is_finished ? "Completed" : "Not completed"
+                allCourseInCat[i].is_finished ? 'Completed' : 'Not completed'
               }\n- Students: ${
                 allCourseInCat[i].num_stu_enroll
                   ? allCourseInCat[i].num_stu_enroll
@@ -201,7 +234,7 @@ async function handleThreeFeature(sender_id, text) {
               }\n- Rate: ${
                 allCourseInCat[i].avg_rate
                   ? allCourseInCat[i].avg_rate
-                  : "No rate"
+                  : 'No rate'
               }`
             );
           }
@@ -223,11 +256,11 @@ async function handleThreeFeature(sender_id, text) {
     } else {
       await sendMessage(sender_id, `Category not found!`);
     }
-  } else if (text.includes("course_id")) {
+  } else if (text.includes('course_id')) {
     const curr_text = text;
-    let id = "";
+    let id = '';
 
-    for (let i = curr_text.indexOf(":") + 1; i < curr_text.length; ++i) {
+    for (let i = curr_text.indexOf(':') + 1; i < curr_text.length; ++i) {
       id += curr_text[i];
     }
     const ret = await detailCourse(id);
@@ -237,6 +270,19 @@ async function handleThreeFeature(sender_id, text) {
     } else {
       await sendMessage(sender_id, `Course not found!`);
     }
+  } else if (text.includes('accept_by_cat_id')) {
+    const catId = +text.trim().split(':')[1];
+
+    const catName = await subCatModel.getSubCatNameById(catId);
+
+    const acceptedCourse = await handleAcceptByCat(catId);
+
+    setTimeout(async () => {
+      await sendMessage(
+        sender_id,
+        `There are ${acceptedCourse} course in category:${catName} were accepted!`
+      );
+    }, 200);
   } else {
     const courses_by_keyword = await searchCourseByKeyword(text);
 
@@ -252,7 +298,7 @@ async function handleThreeFeature(sender_id, text) {
               ? courses_by_keyword[i].num_stu_enroll
               : 0
           }\n- Status: ${
-            courses_by_keyword[i].is_finished ? "Completed" : "Not completed"
+            courses_by_keyword[i].is_finished ? 'Completed' : 'Not completed'
           }\n- Category:  ${courses_by_keyword[i].subject_name}\n- Rate: ${
             courses_by_keyword[i].avg_rate
           }`
