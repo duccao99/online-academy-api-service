@@ -30,9 +30,9 @@ const instructorModel = {
     return db.load(sql);
   },
 
-  edit(user_id, name, email) {
+  edit(user_id, name, email, is_verified) {
     const sql = `update ${tbl_users} u
-      set u.user_name='${name}', u.email = '${email}' 
+      set u.user_name='${name}', u.email = '${email}', u.is_verified='${is_verified}'
       where u.role_id = 3
       and u.user_id = ${user_id};`;
 

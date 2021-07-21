@@ -524,7 +524,8 @@ router.patch("/:id", async function (req, res) {
   const ret = await instructorModel.edit(
     +req.params.id,
     req.body.user_name,
-    req.body.email
+    req.body.email,
+    +req.body.is_verified
   );
 
   if (+ret.affectedRows === 1) {
