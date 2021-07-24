@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const db = require('../config/db');
 const tbl_courses = `courses`;
 const tbl_subjects = `subjects`;
 const tbl_categories = `categories`;
@@ -472,11 +472,14 @@ const courseModel = {
     group by ste.course_id
     ) ste
     on ste.course_id = c.course_id
-    where match(c.course_name)
+    where
+    c.is_finished = true
+    and
+    match(c.course_name)
     against ('${text}' in natural language mode)
-    or  match(sj.subject_name)
+    or  
+    match(sj.subject_name)
     against ('${text}' in natural language mode)
-    and c.is_finished = true
     group by c.course_id
     limit ${limit}
     offset ${offset}; `;
@@ -781,7 +784,7 @@ const courseModel = {
     on le.lesson_id = ins.lesson_id 
     where ins.course_id = ${course_id} ;`;
     return db.load(sql);
-  },
+  }
 };
 
 module.exports = courseModel;

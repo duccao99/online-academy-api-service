@@ -381,7 +381,7 @@ CREATE TABLE `student_favorites` (
   `fav_id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `course_id` int NOT NULL,
-  `is_favorite` tinyint(1) NOT NULL,
+  `is_favorite` tinyint(1) NOT NULL, 
   PRIMARY KEY (`fav_id`),
   KEY `user_id` (`user_id`),
   KEY `course_id` (`course_id`),

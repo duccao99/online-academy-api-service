@@ -789,6 +789,43 @@ from `users` u
 where u.user_name not  regexp'^[aeoui]';
 
 
+-- ---------------
+--	Bug full text search 
+-- ----------------
+select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
+    u.user_id, u.user_name, rt.avg_rate, rt.total_review, ste.num_stu_enroll
+    from `courses` c 
+    left join `subjects` sj
+    on sj.subject_id = c.subject_id
+    left join `instructor_courses_uploaded` ins
+    on ins.course_id = c.course_id
+    left join `users` u
+    on u.user_id = ins.user_id
+    left join (
+    select *, count(*) as total_review, avg(star) as avg_rate
+    from course_reviews crw 
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id
+    left join (
+    select *,count(*) as num_stu_enroll
+    from `student_enrolls` ste
+    group by ste.course_id
+    ) ste
+    on ste.course_id = c.course_id
+    where 
+	c.is_finished = true
+    and 
+    match(c.course_name)
+    against ('shiba' in natural language mode)
+    or  
+    match(sj.subject_name)
+    against ('shiba' in natural language mode)
+    group by c.course_id
+    limit 20
+    offset 0;
+
 
 
 
