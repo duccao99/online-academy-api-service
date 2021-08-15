@@ -39,7 +39,7 @@ const courseModel = {
 
   allWithFinished() {
     const sql = `select * from ${tbl_courses} c
-    where c.is_finished = true `;
+    where c.is_finished = true or is_finished = false `;
     return db.load(sql);
   },
   allWithNoPagi() {
@@ -59,7 +59,6 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id
-    where c.is_finished = true
     group by c.course_id
      ; `;
     return db.load(sql);
@@ -81,7 +80,6 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id
-    where c.is_finished = true
     group by c.course_id
     limit ${limit}
     offset ${offset} ; `;
@@ -106,7 +104,7 @@ const courseModel = {
     ) rt
     on rt.course_id = c.course_id
     where sj.subject_name = '${sub_cat}'
-    and c.is_finished = true
+    and c.is_finished = true or is_finished = false
     group by c.course_id;`;
     return db.load(sql);
   },
@@ -128,7 +126,7 @@ const courseModel = {
     ) rt
     on rt.course_id = c.course_id
     where sj.subject_name = '${sub_cat}'
-    and c.is_finished = true
+    and c.is_finished = true or is_finished = false
     group by c.course_id
     limit ${limit}
     offset ${offset} ;`;
@@ -162,7 +160,7 @@ const courseModel = {
     ) ste
     on ste.course_id = c.course_id
     where c.course_id = ${course_id}
-    and c.is_finished = true ;`;
+    and c.is_finished = true or is_finished = false ;`;
     const ret = await db.load(sql);
     return ret[0];
   },
@@ -217,7 +215,7 @@ const courseModel = {
     on ins.course_id = c.course_id
     left join ${tbl_users} u
     on u.user_id = ins.user_id
-    where c.is_finished = 1
+    where c.is_finished = 1 or c.is_finished = 0
     group by c.course_id
     order by c.course_last_updated desc
     limit 10;
@@ -243,7 +241,7 @@ const courseModel = {
     group by cr.course_id
     ) rt
     on rt.course_id = c.course_id
-    where c.is_finished = 1
+    where c.is_finished = 1 or c.is_finished = 0
     group by c.course_id
     order by c.views desc 
     limit 10;
@@ -350,7 +348,7 @@ const courseModel = {
     ) scb
     on scb.course_id = c.course_id
     where sj.subject_id = ${subject_id}
-    and c.is_finished = true
+    and c.is_finished = true or is_finished = false
     and c.course_id != ${course_id}
     group by c.course_id
     order by scb.num_stu_bought desc
@@ -392,7 +390,7 @@ const courseModel = {
     on rt.course_id = c.course_id
     where match(c.course_name)
     against ('${name}' in natural language mode)
-    and c.is_finished = true
+    and c.is_finished = true or is_finished = false
     group by c.course_id
     limit ${limit}
     offset ${offset}; `;
@@ -417,7 +415,7 @@ const courseModel = {
     on rt.course_id = c.course_id
     where match(sj.subject_name)
     against ('${subcat}' in natural language mode)
-    and c.is_finished = true
+    and c.is_finished = true or is_finished = false
     group by c.course_id
     limit ${limit}
     offset ${offset}; `;
@@ -444,7 +442,7 @@ const courseModel = {
     against ('${text}' in natural language mode)
     or  match(sj.subject_name)
     against ('${text}' in natural language mode)
-    and c.is_finished = true
+    and c.is_finished = true or is_finished = false
     group by c.course_id
     `;
     return db.load(sql);
@@ -473,7 +471,7 @@ const courseModel = {
     ) ste
     on ste.course_id = c.course_id
     where
-    c.is_finished = true
+    c.is_finished = true or is_finished = false
     and
     match(c.course_name)
     against ('${text}' in natural language mode)
@@ -502,7 +500,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-    where c.is_finished = true
+    where c.is_finished = true or is_finished = false
     group by c.course_id
     order by rt.avg_rate asc;`;
     return db.load(sql);
@@ -524,7 +522,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-    where c.is_finished = true
+    where c.is_finished = true or is_finished = false
     group by c.course_id
     order by rt.avg_rate asc
     limit ${limit}
@@ -548,7 +546,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-    where c.is_finished = true
+    where c.is_finished = true or is_finished = false
     group by c.course_id
     order by rt.avg_rate desc;`;
     return db.load(sql);
@@ -570,7 +568,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-    where c.is_finished = true
+    where c.is_finished = true or is_finished = false
     group by c.course_id
     order by rt.avg_rate desc
     limit ${limit}
@@ -594,7 +592,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-    where c.is_finished = true
+    where c.is_finished = true or is_finished = false
     group by c.course_id
     order by c.course_fee asc;`;
     return db.load(sql);
@@ -616,7 +614,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-    where c.is_finished = true
+    where c.is_finished = true or is_finished = false
     group by c.course_id
     order by c.course_fee asc
     limit ${limit}
@@ -640,7 +638,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-    where c.is_finished = true
+    where c.is_finished = true or is_finished = false
     group by c.course_id
     order by c.course_fee desc;`;
     return db.load(sql);
@@ -684,7 +682,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-    where c.is_finished = true
+    where c.is_finished = true or is_finished = false
     group by c.course_id
     order by c.course_fee desc
     limit ${limit}
@@ -722,7 +720,7 @@ const courseModel = {
     group by ste.course_id
     ) num_stu_en
     on num_stu_en.course_id = c.course_id
-    where c.is_finished = true
+    where c.is_finished = true or is_finished = false
     and c.course_id = ${course_id}`;
     const ret = await db.load(sql);
 
@@ -769,7 +767,7 @@ const courseModel = {
   },
   acceptAllCourseBySubcat(subject_id) {
     const sql = `update ${tbl_courses} c 
-    set c.is_finished = true
+    set c.is_finished = true or is_finished = false
     where c.subject_id = ${subject_id};
     `;
     return db.load(sql);

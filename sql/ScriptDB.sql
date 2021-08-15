@@ -502,3 +502,25 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2021-07-17 17:04:16
+
+
+-- extra sql - fix bug
+-- select * from `orders_details`;
+-- select * from `student_enrolls`;
+-- select * from `orders`;
+-- select * from `courses`;
+select * from `lessons`;
+
+insert into `student_enrolls` values (19,20,10);
+insert into `orders_details` values (23,12,10,9);
+
+update courses c
+set c.is_finished = false
+where c.course_id = 20 
+or c.course_id = 21 
+or c.course_id = 6;
+
+
+update lessons ls 
+set ls.flag_reviewable = 0
+where ls.lesson_id = 1

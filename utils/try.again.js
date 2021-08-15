@@ -57,7 +57,6 @@ upload(req, res, async function (er) {
       return res.status(500).json({ er });
     } else {
       const lesson = req.body;
-      console.log(lesson);
 
       console.log('video file: ', req.file);
     }

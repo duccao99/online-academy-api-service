@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const db = require('../config/db');
 const tbl_courses = `courses`;
 const tbl_subjects = `subjects`;
 const tbl_categories = `categories`;
@@ -70,7 +70,8 @@ const studentModel = {
   },
 
   getPurchasedCourses(email) {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, sj.subject_name,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, 
+    c.is_finished ,sj.subject_name,
     c.course_fee, c.views, u.user_name as ins_name , u.user_id, ste.num_stu_enroll, rt.avg_rate, rt.total_review
     from ${tbl_orders} od
     inner join ${tbl_orders_details} odd
@@ -193,7 +194,7 @@ const studentModel = {
     (user_id,course_id,is_favorite) 
     values (${user_id},${course_id},true);`;
     return db.load(sql);
-  },
+  }
 };
 
 module.exports = studentModel;

@@ -17,6 +17,10 @@ router.get('/', async function (req, res) {
   });
 });
 
+router.get('/bug/all-with-no-pagi', async function (req, res) {
+  res.json(await courseModel.allWithNoPagi());
+});
+
 router.get('/all-with-finished', async function (req, res) {
   const ret = await courseModel.allWithNoPagi();
 
@@ -473,8 +477,6 @@ router.get('/:id', async function (req, res) {
   const id = +req.params.id;
 
   const course_detail = await courseModel.detail(id);
-
-  console.log('alo', course_detail);
 
   if (course_detail === undefined) {
     return res.status(400).json({ message: 'Course not found!' });

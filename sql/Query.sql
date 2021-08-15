@@ -831,7 +831,17 @@ select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
 
 use `SPA_ONLINE_ACADEMY`;
 select * from `users`;
+
+select * from `users` 
+where user_name = any 
+union
 select * from `courses`;
+
+select * from `courses` c
+where c.is_finished = false 
+or c.is_finished = true ;
+
+
 select * from `instructor_courses_uploaded`;
 select * from `chapters`;
 select * from `lessons`;
