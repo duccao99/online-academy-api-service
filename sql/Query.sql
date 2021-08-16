@@ -54,7 +54,7 @@ inner join `instructor_courses_uploaded` ins
 on ins.course_id = c.course_id
 inner join `users` u
 on u.user_id = ins.user_id
-where c.is_finished = 1
+
 group by c.course_id
 order by c.course_last_updated desc
 limit 10;
@@ -827,6 +827,14 @@ select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     offset 0;
 
 
+-- check is purchased course
+select od.order_id, od.user_id,oddt.course_id
+from `orders` od
+left join `orders_details` oddt 
+on oddt.order_id = od.order_id
+where  od.user_id = 22
+and oddt.course_id = 1
+
 
 
 use `SPA_ONLINE_ACADEMY`;
@@ -870,5 +878,38 @@ select * from `student_enrolls`;
 delete from `users` u
 where u.email='caovanducs@gmail.com';
 
+
+
+select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
+    u.user_id, u.user_name, rt.avg_rate, rt.total_review, ste.num_stu_enroll
+    from courses c 
+    left join subjects sj
+    on sj.subject_id = c.subject_id
+    left join instructor_courses_uploaded ins
+    on ins.course_id = c.course_id
+    left join users u
+    on u.user_id = ins.user_id
+    left join (
+    select *, count(*) as total_review, avg(star) as avg_rate
+    from course_reviews crw 
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id
+    left join (
+    select *,count(*) as num_stu_enroll
+    from student_enrolls ste
+    group by ste.course_id
+    ) ste
+    on ste.course_id = c.course_id
+    where 
+    match(c.course_name)
+    against ('${react}' in natural language mode)
+    or  
+    match(sj.subject_name)
+    against ('${react}' in natural language mode)
+    group by c.course_id
+    limit 10
+    offset 0; 
 
 

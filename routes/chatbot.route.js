@@ -55,7 +55,6 @@ Send me one of your code options below:\n
 1. Search course by keyword\n
 2. Browse courses by category\n
 3. View course detail\n
-4. Accept courses by category \n
 Which feature do you want to use?\n
 Note: whenever you wanna call me, just send "bot" :)
   `;

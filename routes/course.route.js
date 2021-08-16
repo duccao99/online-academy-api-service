@@ -519,4 +519,28 @@ router.delete('/:id', async function (req, res) {
   return res.status(500).json({ error_message: 'Something broke!' });
 });
 
+router.post('/is-purchased', async function (req, res) {
+  console.log(req.body);
+
+  if (!req.body.student_id || !req.body.course_id) {
+    return res.status(400).json({
+      message: 'Body error'
+    });
+  }
+
+  const body = {
+    student_id: req.body.student_id,
+    course_id: req.body.course_id
+  };
+
+  const is_purchased = await courseModel.checkIsPurchasedCourse(
+    body.student_id,
+    body.course_id
+  );
+
+  return res.json({
+    is_purchased
+  });
+});
+
 module.exports = router;
