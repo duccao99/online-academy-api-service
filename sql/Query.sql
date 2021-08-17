@@ -851,6 +851,24 @@ where ins.user_id = 10
 group by c.course_id
 order by c.course_id asc;
 
+-- --------------- ------------
+-- filter course by subject_id
+-- -----------------------------
+select ins.user_id , u.user_name, c.course_id,c.course_name,c.course_fee
+,c.views, s.sale_percent, subj.subject_id,subj.subject_name
+from `courses` c
+left join `instructor_courses_uploaded` ins
+on ins.course_id = c.course_id
+left join `users` u
+on u.user_id = ins.user_id
+left join `sales` s 
+on s.course_id = c.course_id
+left join `subjects` subj
+on subj.subject_id = c.subject_id
+where c.subject_id = 10
+group by c.course_id
+order by c.course_id asc;
+
 -- instructor detail course
 
 select ins.user_id, u.user_name, u.email,
@@ -863,10 +881,10 @@ on u.user_id = ins.user_id
 left join (
 select count(*) as total , ins_up.user_id
 from `instructor_courses_uploaded` ins_up 
-where ins_up.user_id = 9
+
 ) as total_course_uploaded
 on total_course_uploaded.user_id = u.user_id
-where c.course_id = 2
+where c.course_id = 1
 group by c.course_id;
 
 select *
