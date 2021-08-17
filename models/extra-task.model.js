@@ -47,6 +47,9 @@ const extraTaskModel = {
     group by c.course_id
     order by c.course_id asc;`;
     return db.load(sql);
+  },
+  async checkIsCourseBestSeller() {
+    const sql = ``;
   }
 };
 

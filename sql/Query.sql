@@ -16,7 +16,7 @@ from `users` u
 where u.role_id=2;
 
 ----------------------------------------------------------
---  top 10 outstanding courses (most bought)
+--  top 10 ing courses (most bought)
 ----------------------------------------------------------
 select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.course_fee,
 sj.subject_id, sj.subject_name, c.views, u.user_name, rt.avg_rate, c.course_last_updated
@@ -887,6 +887,43 @@ on total_course_uploaded.user_id = u.user_id
 where c.course_id = 1
 group by c.course_id;
 
+
+-- check course is best seller
+
+select *
+from courses as c
+where c.course_id 
+in (
+select c.course_id, c.course_name, c.course_avatar_url, c.course_fee,
+    c.views, c.course_last_updated, c.is_finished, sj.subject_id,  rt.avg_rate, rt.total_review,
+    sj.subject_name, ins.user_id, u.user_name, sal.sale_percent, ste.num_stu_enroll
+    from courses c
+    left join subjects sj
+    on sj.subject_id = c.subject_id 
+    left join instructor_courses_uploaded ins
+    on ins.course_id = c.course_id
+    left join users u
+    on u.user_id = ins.user_id
+    left join (
+    select *, count(*) as total_review, avg(star) as avg_rate
+    from course_reviews crw
+    group by crw.course_id
+    ) rt
+    on rt.course_id = c.course_id 
+    left join sales sal 
+    on sal.course_id = c.course_id
+    left join (
+    select *,count(*) as num_stu_enroll
+    from student_enrolls ste
+    group by ste.course_id
+    ) ste
+    on ste.course_id = c.course_id
+    group by c.course_id 
+    limit 3
+);
+
+
+
 select *
 from `courses` c
 where c.course_id= 3;
@@ -968,10 +1005,10 @@ select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
     on ste.course_id = c.course_id
     where 
     match(c.course_name)
-    against ('${react}' in natural language mode)
+    against ('react' in natural language mode)
     or  
     match(sj.subject_name)
-    against ('${react}' in natural language mode)
+    against ('react' in natural language mode)
     group by c.course_id
     limit 10
     offset 0; 
