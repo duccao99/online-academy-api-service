@@ -508,13 +508,13 @@ UNLOCK TABLES;
 
 
 -- use `SPA_ONLINE_ACADEMY`;
-select * from `lessons`;
-select * from `users`;
-select * from `orders`;
-select * from `orders_details`;
-select * from `student_enrolls`;
+-- select * from `lessons`;
+-- select * from `users`;
+-- select * from `orders`;
+-- select * from `orders_details`;
+-- select * from `student_enrolls`;
 
-select * from `courses`;
+-- select * from `courses`;
 
 
 insert into `student_enrolls` values (19,20,10);
@@ -534,5 +534,5 @@ where ls.lesson_id between 2 and 4;
 insert into `users` values (22,"duccao","$2a$10$rZcQO8vXA/VDe7XOvp2i1eNlEwm7HOhR4dUApGTiql0/LcLAYifPi","caovanducs@gmail.com",null,1,null,null,2,null);
 insert into `users` values (23,"Kha Huy","$2a$10$lGCv2jUPiMDooNv3R..X/eGd961cV2Qn7fxZWG0RHQGaY2bqLs69O","khahuy@ins.com",null,1,null,null,3,null);
 
-
+delete from `courses` where course_id = 22;
 

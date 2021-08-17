@@ -59,6 +59,7 @@ app.use('/api/webhook', require('./routes/webhook.route'));
 app.use('/api/chatbot', require('./routes/chatbot.route'));
 app.use('/api/order', require('./routes/order.route'));
 app.use('/api/sales', require('./routes/sales.route'));
+app.use('/api/extra-task', require('./routes/extra-task'));
 
 require('./config/passport')(app);
 app.get('/api/facebook/callback', function (req, res) {});

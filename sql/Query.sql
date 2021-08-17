@@ -833,12 +833,50 @@ from `orders` od
 left join `orders_details` oddt 
 on oddt.order_id = od.order_id
 where  od.user_id = 22
-and oddt.course_id = 1
+and oddt.course_id = 1;
+
+-- --------------- ------------
+-- filter course by instructor
+-- -----------------------------
+select ins.user_id , u.user_name, c.course_id,c.course_name,c.course_fee
+,c.views, s.sale_percent
+from `courses` c
+left join `instructor_courses_uploaded` ins
+on ins.course_id = c.course_id
+left join `users` u
+on u.user_id = ins.user_id
+left join `sales` s 
+on s.course_id = c.course_id
+where ins.user_id = 10
+group by c.course_id
+order by c.course_id asc;
+
+select ins.user_id, u.user_name
+from `courses` c
+left join `instructor_courses_uploaded` ins
+on ins.course_id = c.course_id
+left join `users` u 
+on u.user_id = ins.user_id
+where ins.user_id = 10
+and c.course_id = 3
+group by c.course_id;
+
+select *
+from `courses` c
+where c.course_id= 3;
+
+select *
+from `instructor_courses_uploaded` c
+where c.course_id= 3;
+
 
 
 
 use `SPA_ONLINE_ACADEMY`;
-select * from `users`;
+
+select * from `users`
+where user_id  = 1
+union all select  1,2,3;
 
 select * from `users` 
 where user_name = any 
