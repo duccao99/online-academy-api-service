@@ -507,14 +507,6 @@ UNLOCK TABLES;
 -- extra sql for fix bug
 
 
--- use `SPA_ONLINE_ACADEMY`;
--- select * from `lessons`;
--- select * from `users`;
--- select * from `orders`;
--- select * from `orders_details`;
--- select * from `student_enrolls`;
-
--- select * from `courses`;
 
 
 insert into `student_enrolls` values (19,20,10);
@@ -535,4 +527,32 @@ insert into `users` values (22,"duccao","$2a$10$rZcQO8vXA/VDe7XOvp2i1eNlEwm7HOhR
 insert into `users` values (23,"Kha Huy","$2a$10$lGCv2jUPiMDooNv3R..X/eGd961cV2Qn7fxZWG0RHQGaY2bqLs69O","khahuy@ins.com",null,1,null,null,3,null);
 
 delete from `courses` where course_id = 22;
+
+
+
+
+ 
+insert into `instructor_courses_uploaded` values (15,8,8,null,null,'2021-05-21 00:00:00');
+insert into `instructor_courses_uploaded` values (16 ,8,12,null,null,'2021-05-21 00:00:00');
+insert into `instructor_courses_uploaded` values (17,8,13,null,null,'2021-05-21 00:00:00');
+insert into `instructor_courses_uploaded` values (18,8,14,null,null,'2021-05-21 00:00:00'); 
+insert into `instructor_courses_uploaded` values (19,8,15,null,null,'2021-05-21 00:00:00');
+insert into `instructor_courses_uploaded` values (20,8,16,null,null,'2021-05-22 00:00:00');
+insert into `instructor_courses_uploaded` values (21,8,17,null,null,'2021-05-23 00:00:00');
+insert into `instructor_courses_uploaded` values (22,8,18,null,null,'2021-05-21 00:00:00');
+insert into `instructor_courses_uploaded` values (23,8,19,null,null,'2021-05-26 00:00:00');
+insert into `instructor_courses_uploaded` values (24,8,20,null,null,'2021-05-27 00:00:00');
+insert into `instructor_courses_uploaded` values (25,8,21,null,null,'2021-05-28 00:00:00'); 
+
+
+
+
+-- use `SPA_ONLINE_ACADEMY`;
+-- select * from `lessons`;
+select * from `users`;
+-- select * from `orders`;
+-- select * from `orders_details`;
+-- select * from `student_enrolls`;
+select * from `instructor_courses_uploaded`;
+-- select * from `courses`;
 

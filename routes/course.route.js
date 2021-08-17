@@ -363,9 +363,7 @@ router.get('/detail/instructor/:id', async function (req, res) {
     return res.status(400).json({ message: 'Course not found!' });
   }
 
-  return res.json({
-    course_instructor: ret
-  });
+  return res.json(ret[0]);
 });
 
 router.get('/detail/five-relative-bought-most/:id', async function (req, res) {

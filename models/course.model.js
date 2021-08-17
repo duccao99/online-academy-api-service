@@ -310,14 +310,21 @@ const courseModel = {
   },
 
   detailCourseInstructor(course_id) {
-    const sql = `select c.course_id, u.user_name,
-    u.email, u.role_id, u.user_avatar_url, r.role_name, u.user_id
+    const sql = `select ins.user_id, u.user_name, u.email,
+    total_course_uploaded.total
     from ${tbl_courses} c
-    left join ${tbl_users} u
-    on u.user_id = c.instructor_id
-    left join ${tbl_roles} r
-    on r.role_id = u.role_id
-    where c.course_id = ${course_id};
+    left join ${tbl_instructor_courses_uploaded} ins
+    on ins.course_id = c.course_id
+    left join users u 
+    on u.user_id = ins.user_id
+    left join (
+    select count(*) as total , ins_up.user_id
+    from instructor_courses_uploaded ins_up 
+    where ins_up.user_id = 9
+    ) as total_course_uploaded
+    on total_course_uploaded.user_id = u.user_id
+    where c.course_id = ${course_id}
+    group by c.course_id;
     `;
     return db.load(sql);
   },
