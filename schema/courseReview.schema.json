@@ -1,0 +1,25 @@
+{
+	"type":"object",
+	"required": [
+		"user_id",
+		"course_id",
+		"star",
+		"review_content"
+
+	],
+	"additionalProperties": true,
+	"properties": {
+		"user_id":{
+			"type":"number"
+		},
+		"course_id":{
+			"type":"number"
+		},	
+			"star":{
+			"type":"number"
+		},
+		"review_content":{
+			"type":"string"
+		}
+	}
+}
