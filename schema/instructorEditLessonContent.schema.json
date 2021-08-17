@@ -1,0 +1,16 @@
+{
+	"type":"object",
+	"required": [
+		"lesson_id",
+		"lesson_content"
+	],
+	"additionalProperties": true,
+	"properties": {
+		"lesson_content":{
+			"type":"string"
+		},
+		"lesson_id":{
+			"type":"number"
+		}
+	}
+}

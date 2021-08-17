@@ -502,48 +502,56 @@ router.patch(
   }
 );
 
-router.patch('/edit-full-des', async function (req, res) {
-  const data = {
-    user_id: req.body.user_id,
-    course_full_description: req.body.course_full_description,
-    course_id: req.body.course_id
-  };
+router.patch(
+  '/edit-full-des',
+  bodyValidate(require('../schema/instructorEditFullDes.schema.json')),
+  async function (req, res) {
+    const data = {
+      user_id: req.body.user_id,
+      course_full_description: req.body.course_full_description,
+      course_id: req.body.course_id
+    };
 
-  const ret_check_ins_course = await insUploadModel.checkInsUploadCourse(
-    data.user_id,
-    data.course_id
-  );
+    const ret_check_ins_course = await insUploadModel.checkInsUploadCourse(
+      data.user_id,
+      data.course_id
+    );
 
-  if (ret_check_ins_course === false) {
-    return res.status(400).json({
-      message: 'This course is not uploaded by this instructor!'
+    if (ret_check_ins_course === false) {
+      return res.status(400).json({
+        message: 'This course is not uploaded by this instructor!'
+      });
+    }
+
+    const ret = await instructorModel.editFullDes(
+      data.course_id,
+      data.course_full_description
+    );
+
+    return res.json({
+      edit_full_des_ret: ret
     });
   }
+);
 
-  const ret = await instructorModel.editFullDes(
-    data.course_id,
-    data.course_full_description
-  );
+router.patch(
+  '/edit-lesson-content',
+  bodyValidate(require('../schema/instructorEditLessonContent.schema.json')),
+  async function (req, res) {
+    const en = {
+      lesson_content: req.body.lesson_content
+    };
 
-  return res.json({
-    edit_full_des_ret: ret
-  });
-});
+    const con = {
+      lesson_id: req.body.lesson_id
+    };
+    const ret = await lessonModel.edit(en, con);
 
-router.patch('/edit-lesson-content', async function (req, res) {
-  const en = {
-    lesson_content: req.body.lesson_content
-  };
-
-  const con = {
-    lesson_id: req.body.lesson_id
-  };
-  const ret = await lessonModel.edit(en, con);
-
-  return res.json({
-    edit_lesson_content_ret: ret
-  });
-});
+    return res.json({
+      edit_lesson_content_ret: ret
+    });
+  }
+);
 
 router.patch('/:id', async function (req, res) {
   const ret = await instructorModel.edit(
