@@ -1,0 +1,20 @@
+{
+	"type":"object",
+	"required": [
+		"user_id",
+  "course_ids",
+  "total_money"
+	],
+	"additionalProperties": true,
+	"properties": {
+		"user_id":{
+			"type":"number"
+		},
+		"course_ids":{
+			"type":"array"
+		},
+  "total_money":{
+			"type":"number"
+		}
+	}
+}

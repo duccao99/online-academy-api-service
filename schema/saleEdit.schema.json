@@ -1,0 +1,20 @@
+{
+	"type":"object",
+	"required": [
+		"sale_percent",
+		"course_id",
+  "add_new"
+	],
+	"additionalProperties": true,
+	"properties": {
+		"sale_percent":{
+			"type":"number"
+		},
+		"course_id":{
+			"type":"number"
+		},
+  "add_new":{
+			"type":"boolean"
+		}
+	}
+}

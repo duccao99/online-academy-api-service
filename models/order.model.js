@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const db = require('../config/db');
 const tbl_courses = `courses`;
 const tbl_subjects = `subjects`;
 const tbl_categories = `categories`;
@@ -25,6 +25,10 @@ const orderModel = {
   addOrderDetail(entity) {
     return db.add(entity, tbl_orders_details);
   },
+  all() {
+    const sql = `select * from ${tbl_orders}`;
+    return db.load(sql);
+  }
 };
 
 module.exports = orderModel;
