@@ -4,7 +4,7 @@
 		"user_name",
 		"user_id"
 	],
-	"additionalProperties": false,
+	"additionalProperties": true,
 	"properties": {
 		"user_name":{
 			"type":"string"

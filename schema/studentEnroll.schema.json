@@ -1,0 +1,16 @@
+{
+	"type":"object",
+	"required": [
+		"user_id",
+		"course_id"
+	],
+	"additionalProperties": false,
+	"properties": {
+		"user_id":{
+			"type":"number"
+		},
+		"course_id":{
+			"type":"number"
+		}
+	}
+}

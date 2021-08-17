@@ -1,15 +1,15 @@
 {
 	"type":"object",
 	"required": [
-		"email",
-		"user_id"
+		"user_id",
+		"course_id"
 	],
 	"additionalProperties": true,
 	"properties": {
-		"email":{
-			"type":"string"
-		},
 		"user_id":{
+			"type":"number"
+		},
+		"course_id":{
 			"type":"number"
 		}
 	}

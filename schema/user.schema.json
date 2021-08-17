@@ -5,7 +5,7 @@
 		"email",
 		"password"
 	],
-	"additionalProperties": false,
+	"additionalProperties": true,
 	"properties": {
 		"user_name":{
 			"type":"string"

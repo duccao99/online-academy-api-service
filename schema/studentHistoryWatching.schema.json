@@ -2,19 +2,22 @@
 	"type":"object",
 	"required": [
 		"user_id",
-		"old_pass",
-  "new_pass"
+		"start_time",
+		"lesson_id"
+
 	],
 	"additionalProperties": true,
 	"properties": {
-		"old_pass":{
-			"type":"string"
-		},
-  "new_pass":{
-			"type":"string"
-		},
 		"user_id":{
 			"type":"number"
+		},
+		"start_time":{
+			"type":"number"
+		},
+		"lesson_id":{
+			"type":"number"
 		}
+  
+  
 	}
 }
