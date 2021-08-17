@@ -5,6 +5,7 @@ const feedbackModel = require('../models/feedback.model');
 const historyModel = require('../models/history.model');
 const enrollModel = require('../models/enroll.model');
 const bodyValidator = require('../middlewares/validate.mdw');
+const auth = require('../middlewares/auth.mdw')
 
 router.get('/', async function (req, res) {
   const student_data = await studentModel.all();
@@ -127,7 +128,7 @@ router.get('/purchases-course-id/:user_id', async function (req, res) {
   });
 });
 
-router.get('/purchased-courses/:email', async function (req, res) {
+router.get('/purchased-courses/:email', auth, async function (req, res) {
   const email = req.params.email;
 
   const ret = await studentModel.getPurchasedCourses(email);

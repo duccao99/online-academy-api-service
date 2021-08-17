@@ -34,6 +34,7 @@ const studentModel = {
     const ret = await db.load(sql);
     return ret[0];
   },
+
   patchRFToken(id, rfToken) {
     const entity = {
       rfToken: rfToken,
@@ -41,8 +42,10 @@ const studentModel = {
     const condition = {
       user_id: id,
     };
+    console.log(entity, condition)
     return db.edit(entity, condition, tbl_users);
   },
+
   async isValidRFToken(userId, rfToken) {
     const sql = `select * from ${tbl_users} 
       where user_id = ${userId}

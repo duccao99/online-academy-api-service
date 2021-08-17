@@ -1,7 +1,7 @@
 const jsonwebtoken = require("jsonwebtoken");
 
 module.exports = function (req, res, next) {
-  const accessToken = req.headers["x-access-token"];
+  const accessToken = req.headers["x-auth-token"];
   if (accessToken) {
     try {
       const decoded = jsonwebtoken.verify(

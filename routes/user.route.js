@@ -3,6 +3,7 @@ const bcryptjs = require('bcryptjs');
 const validate = require('../middlewares/validate.mdw');
 const userModel = require('../models/user.model');
 const userSchema = require('../schema/user.schema.json');
+const jsonwebtoken = require("jsonwebtoken");
 
 const randomstring = require('randomstring');
 const {
@@ -71,6 +72,7 @@ router.post(
   validate(require('../schema/userNormalSignIn.schema.json')),
   async function (req, res) {
     const user = req.body;
+    const SECRET_KEY = process.env.SECRET_KEY_AUTH_ACCESS_TOKEN;
 
     const check_user = await userModel.singleByEmail(user.email);
 
@@ -80,6 +82,14 @@ router.post(
       });
     }
 
+    const payload = {
+      userId: check_user.user_id,
+    };
+
+    const options = {
+      expiresIn: 10 * 60, // seconds
+    };
+
     if (+check_user.role_id === 4) {
       // if admin
       const check_pass = await userModel.checkPass(
@@ -87,11 +97,17 @@ router.post(
         user.password
       );
       if (check_pass === true) {
+        const accessToken = jsonwebtoken.sign(payload, SECRET_KEY, options);
+        const refreshToken = randomstring.generate(80);
+        await userModel.patchRFToken(user.user_id, refreshToken);
+    
         req.session.authUser = user;
         return res.json({
           message: 'Sign in success!',
           href: '/admin',
-          user_info: check_user
+          user_info: check_user,
+          accessToken,
+          refreshToken
         });
       } else {
         return res.status(400).json({
@@ -112,12 +128,17 @@ router.post(
         user.email === 'instructor03@gmail.com')
     ) {
       // if pure instructor
+      const accessToken = jsonwebtoken.sign(payload, SECRET_KEY, options);
+      const refreshToken = randomstring.generate(80);
+      await userModel.patchRFToken(user.user_id, refreshToken);
 
       req.session.authUser = user;
       return res.json({
         message: 'Sign in success!',
         href: '/',
-        user_info: check_user
+        user_info: check_user,
+        accessToken,
+        refreshToken
       });
     }
 
@@ -126,12 +147,19 @@ router.post(
       check_user.password
     );
 
+    const accessToken = jsonwebtoken.sign(payload, SECRET_KEY, options);
+    const refreshToken = randomstring.generate(80);
+
+    await userModel.patchRFToken(check_user.user_id, refreshToken);
+
     if (check_pass === true) {
       req.session.authUser = user;
       return res.json({
         message: 'Sign in success!',
         href: '/',
-        user_info: check_user
+        user_info: check_user,
+        accessToken,
+        refreshToken
       });
     }
 

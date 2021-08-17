@@ -4,7 +4,7 @@ require('express-async-errors');
 
 const cors = require('cors');
 const chalk = require('chalk');
-const auth = require('./middlewares/auth.mdw');
+
 const bodyParser = require('body-parser');
 const { check_fb_signature } = require('./utils/utils.func.js');
 const expressSession = require('express-session');
