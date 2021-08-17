@@ -1,0 +1,20 @@
+{
+	"type":"object",
+	"required": [
+		"course_id",
+		"chap_name",
+		"user_id"
+	],
+	"additionalProperties": true,
+	"properties": {
+		"course_id":{
+			"type":"number"
+		},
+		"chap_name":{
+			"type":"string"
+		},
+		"user_id":{
+			"type":"number"
+		}
+	}
+}

@@ -310,33 +310,37 @@ router.post('/upload-course', async function (req, res) {
   }
 });
 
-router.post('/upload-chapter', async function (req, res) {
-  // course_id, chap_name, user_id
-  const body = req.body;
+router.post(
+  '/upload-chapter',
+  bodyValidate(require('../schema/instructorUploadChapter.schema.json')),
+  async function (req, res) {
+    // course_id, chap_name, user_id
+    const body = req.body;
 
-  const chapter = {
-    chap_name: body.chap_name
-  };
+    const chapter = {
+      chap_name: body.chap_name
+    };
 
-  // add chap
-  const ret_add_chap = await chapterModel.add(chapter);
+    // add chap
+    const ret_add_chap = await chapterModel.add(chapter);
 
-  // add chap to ins up
-  const entity_insUp = {
-    chap_id: ret_add_chap.insertId,
-    user_id: body.user_id,
-    course_id: body.course_id,
-    uploaded_day: moment(Date.now()).format('YYYY/MM/DD HH:mm:ss')
-  };
-  const ret_add_chap_to_insUp = await insUploadModel.addChapToInsUp(
-    entity_insUp
-  );
+    // add chap to ins up
+    const entity_insUp = {
+      chap_id: ret_add_chap.insertId,
+      user_id: body.user_id,
+      course_id: body.course_id,
+      uploaded_day: moment(Date.now()).format('YYYY/MM/DD HH:mm:ss')
+    };
+    const ret_add_chap_to_insUp = await insUploadModel.addChapToInsUp(
+      entity_insUp
+    );
 
-  return res.json({
-    ret_add_chap,
-    ret_add_chap_to_insUp
-  });
-});
+    return res.json({
+      ret_add_chap,
+      ret_add_chap_to_insUp
+    });
+  }
+);
 
 router.post('/upload-lesson', async function (req, res) {
   const saveVideoPath = path.join(__dirname, '../public/videos');
@@ -417,78 +421,86 @@ router.post('/upload-lesson', async function (req, res) {
   });
 });
 
-router.post('/', async function (req, res) {
-  const ins = req.body;
+router.post(
+  '/',
+  bodyValidate(require('../schema/instructorAdd.schema.json')),
+  async function (req, res) {
+    const ins = req.body;
 
-  const ret_check_mail = await instructorModel.checkEmail(ins.email);
+    const ret_check_mail = await instructorModel.checkEmail(ins.email);
 
-  if (ret_check_mail !== undefined) {
-    return res.status(400).json({
-      message: 'Email has been use!'
-    });
+    if (ret_check_mail !== undefined) {
+      return res.status(400).json({
+        message: 'Email has been use!'
+      });
+    }
+
+    const hashed_pass = await bcryptjs.hashSync(ins.password, 10);
+
+    const ins_add = {
+      ...ins,
+      role_id: 3,
+      is_verified: false,
+      otp_verify_url: '',
+      password: hashed_pass
+    };
+
+    const ret = await instructorModel.add(ins_add);
+
+    // send otp
+    const link_otp = `${process.env.DEV_URL}/${randomstring.generate(80)}`;
+
+    const ret_add_link_otp = await instructorModel.addLinkOTP(
+      link_otp,
+      ins_add.email
+    );
+
+    sendOTP(ins_add.email, link_otp);
+
+    if (+ret.affectedRows === 1) {
+      return res.json({
+        message: 'Instructor was created!',
+        ins_info: ins_add,
+        ret_add_link_otp: ret_add_link_otp.message,
+        link_otp
+      });
+    }
+
+    return res.status(500).json({ error_message: 'Something broke!' });
   }
+);
 
-  const hashed_pass = await bcryptjs.hashSync(ins.password, 10);
+router.patch(
+  '/edit-short-des',
+  bodyValidate(require('../schema/instructorEditShortDes.schema.json')),
+  async function (req, res) {
+    const data = {
+      user_id: req.body.user_id,
+      course_short_description: req.body.course_short_description,
+      course_id: req.body.course_id
+    };
 
-  const ins_add = {
-    ...ins,
-    role_id: 3,
-    is_verified: false,
-    otp_verify_url: '',
-    password: hashed_pass
-  };
+    const ret_check_ins_course = await insUploadModel.checkInsUploadCourse(
+      data.user_id,
+      data.course_id
+    );
 
-  const ret = await instructorModel.add(ins_add);
+    if (ret_check_ins_course === false) {
+      return res.status(400).json({
+        message: 'This course is not uploaded by this instructor!'
+      });
+    }
 
-  // send otp
-  const link_otp = `${process.env.DEV_URL}/${randomstring.generate(80)}`;
+    const ret = await instructorModel.editShortDes(
+      data.course_id,
+      data.course_short_description
+    );
 
-  const ret_add_link_otp = await instructorModel.addLinkOTP(
-    link_otp,
-    ins_add.email
-  );
-
-  sendOTP(ins_add.email, link_otp);
-
-  if (+ret.affectedRows === 1) {
     return res.json({
-      message: 'Instructor was created!',
-      ins_info: ins_add,
-      ret_add_link_otp: ret_add_link_otp.message,
-      link_otp
+      edit_short_des_ret: ret
     });
   }
-
-  return res.status(500).json({ error_message: 'Something broke!' });
-});
-
-router.patch('/edit-short-des', async function (req, res) {
-  const data = {
-    user_id: req.body.user_id,
-    course_short_description: req.body.course_short_description,
-    course_id: req.body.course_id
-  };
-
-  const ret_check_ins_course = await insUploadModel.checkInsUploadCourse(
-    data.user_id,
-    data.course_id
-  );
-
-  if (ret_check_ins_course === false) {
-    return res.status(400).json({
-      message: 'This course is not uploaded by this instructor!'
-    });
-  }
-
-  const ret = await instructorModel.editShortDes(
-    data.course_id,
-    data.course_short_description
-  );
-
-  return res.json({
-    edit_short_des_ret: ret
-  });
-});
+);
 
 router.patch('/edit-full-des', async function (req, res) {
   const data = {
