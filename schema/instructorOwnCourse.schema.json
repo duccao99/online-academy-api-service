@@ -1,0 +1,12 @@
+{
+	"type":"object",
+	"required": [
+		"instructor_id"
+	],
+	"additionalProperties": true,
+	"properties": {
+		"instructor_id":{
+			"type":"number"
+		}
+	}
+}

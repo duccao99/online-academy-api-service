@@ -14,6 +14,8 @@ const streamifier = require('streamifier');
 const { Base64 } = require('js-base64');
 const chapterModel = require('../models/chapter.model');
 const lessonModel = require('./../models/lesson.model');
+const bodyValidate = require('../middlewares/validate.mdw');
+
 cloudinary.config({
   cloud_name: 'duccao',
   api_key: `${process.env.CLOUNDINARY_API_KEY}`,
@@ -34,61 +36,73 @@ router.get('/', async function (req, res) {
   });
 });
 
-router.post('/ownCourseQuantity', async function (req, res) {
-  const { instructor_id } = req.body;
+router.post(
+  '/ownCourseQuantity',
+  bodyValidate(require('../schema/instructorOwnCourse.schema.json')),
+  async function (req, res) {
+    const { instructor_id } = req.body;
 
-  const ret = await instructorModel.getOwnCourseQuantity(instructor_id);
+    const ret = await instructorModel.getOwnCourseQuantity(instructor_id);
 
-  if (!ret) {
-    return res.status(404).json({
-      message: 'Instructor not found!'
+    if (!ret) {
+      return res.status(404).json({
+        message: 'Instructor not found!'
+      });
+    }
+
+    return res.json({
+      own_course_quantity: ret[0].course_quantity
     });
   }
+);
 
-  return res.json({
-    own_course_quantity: ret[0].course_quantity
-  });
-});
+router.patch(
+  '/toggle-finished-course',
+  bodyValidate(require('../schema/instructorToggleFinishedCourse.schema.json')),
+  async function (req, res) {
+    const body = req.body;
+    const en_update = {
+      is_finished: body.is_finished
+    };
+    const con1_update = {
+      course_id: +body.course_id
+    };
+    const con2_update = {
+      user_id: +body.user_id
+    };
 
-router.patch('/toggle-finished-course', async function (req, res) {
-  const body = req.body;
-  const en_update = {
-    is_finished: body.is_finished
-  };
-  const con1_update = {
-    course_id: +body.course_id
-  };
-  const con2_update = {
-    user_id: +body.user_id
-  };
+    const ret = await instructorModel.toggleFinishedCourse(
+      en_update,
+      con1_update
+    );
 
-  const ret = await instructorModel.toggleFinishedCourse(
-    en_update,
-    con1_update
-  );
+    return res.json({
+      ret_finished_course: ret
+    });
+  }
+);
 
-  return res.json({
-    ret_finished_course: ret
-  });
-});
+router.patch(
+  '/toggle-preview',
+  bodyValidate(require('../schema/instructorTogglePreview.json')),
+  async function (req, res) {
+    const update_entity = {
+      flag_reviewable: req.body.flag_reviewable
+    };
+    const update_condition = {
+      lesson_id: req.body.lesson_id
+    };
 
-router.patch('/toggle-preview', async function (req, res) {
-  const update_entity = {
-    flag_reviewable: req.body.flag_reviewable
-  };
-  const update_condition = {
-    lesson_id: req.body.lesson_id
-  };
+    const ret = await instructorModel.togglePreviewLesson(
+      update_entity,
+      update_condition
+    );
 
-  const ret = await instructorModel.togglePreviewLesson(
-    update_entity,
-    update_condition
-  );
-
-  return res.json({
-    ret_preview_update: ret
-  });
-});
+    return res.json({
+      ret_preview_update: ret
+    });
+  }
+);
 
 router.get('/uploaded-course/:email', async function (req, res) {
   const email = req.params.email;

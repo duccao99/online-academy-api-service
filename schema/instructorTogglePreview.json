@@ -1,0 +1,16 @@
+{
+	"type":"object",
+	"required": [
+		"flag_reviewable",
+		"lesson_id"
+	],
+	"additionalProperties": true,
+	"properties": {
+		"flag_reviewable":{
+			"type":"boolean"
+		},
+		"lesson_id":{
+			"type":"number"
+		}
+	}
+}
