@@ -3,6 +3,7 @@ const bcryptjs = require('bcryptjs');
 const validate = require('../middlewares/validate.mdw');
 const userModel = require('../models/user.model');
 const userSchema = require('../schema/user.schema.json');
+
 const randomstring = require('randomstring');
 const {
   sendOTP,
@@ -65,124 +66,107 @@ router.post('/sign-up', validate(userSchema), async function (req, res) {
   return res.status(500).json({ error_message: 'Something broke!' });
 });
 
-router.post('/sign-in', async function (req, res) {
-  const user = req.body;
+router.post(
+  '/sign-in',
+  validate(require('../schema/userNormalSignIn.schema.json')),
+  async function (req, res) {
+    const user = req.body;
 
-  const check_user = await userModel.singleByEmail(user.email);
+    const check_user = await userModel.singleByEmail(user.email);
 
-  if (check_user === undefined) {
-    return res.status(400).json({
-      error_message: 'Email not found!'
-    });
-  }
+    if (check_user === undefined) {
+      return res.status(400).json({
+        error_message: 'Email not found!'
+      });
+    }
 
-  if (+check_user.role_id === 4) {
-    // if admin
-    const check_pass = await userModel.checkPass(
-      check_user.email,
-      user.password
+    if (+check_user.role_id === 4) {
+      // if admin
+      const check_pass = await userModel.checkPass(
+        check_user.email,
+        user.password
+      );
+      if (check_pass === true) {
+        req.session.authUser = user;
+        return res.json({
+          message: 'Sign in success!',
+          href: '/admin',
+          user_info: check_user
+        });
+      } else {
+        return res.status(400).json({
+          check_pass
+        });
+      }
+    }
+
+    const check_pass = await bcryptjs.compareSync(
+      user.password,
+      check_user.password
     );
+
     if (check_pass === true) {
       req.session.authUser = user;
       return res.json({
         message: 'Sign in success!',
-        href: '/admin',
+        href: '/',
         user_info: check_user
       });
-    } else {
-      return res.status(400).json({
-        check_pass
-      });
     }
-  }
 
-  const check_pass = await bcryptjs.compareSync(
-    user.password,
-    check_user.password
-  );
-
-  if (check_pass === true) {
-    req.session.authUser = user;
-    return res.json({
-      message: 'Sign in success!',
-      href: '/',
-      user_info: check_user
-    });
-  }
-
-  return res.status(400).json({
-    check_pass
-  });
-});
-
-router.post('/facebook/sign-in', async function (req, res) {
-  const user = req.body;
-
-  const check_email = await userModel.singleByEmail(user.email);
-
-  if (check_email === undefined) {
-    user.password = '123123';
-    const hashed_pass = await bcryptjs.hashSync(user.password, 10);
-    const new_user = {
-      ...user,
-      role_id: 2,
-      is_verified: false,
-      otp_verify_url: '',
-      password: hashed_pass
-    };
-    const check_register = await userModel.add(new_user);
-
-    // send otp
-    const link_otp = `${process.env.DEV_URL}/${randomstring.generate(80)}`;
-
-    const ret_add_link_otp = await userModel.addLinkOTP(link_otp, user.email);
-
-    await sendOTPWithThirdPartySignIn(new_user.email, link_otp, '123123');
-
-    if (+check_register.affectedRows === 1) {
-      return res.json({
-        message: 'User was created!',
-        user_info: {
-          user_id: check_register.insertId,
-          user_name: new_user['user_name'],
-          email: new_user['email'],
-          role_id: new_user['role_id']
-        },
-        href: '/',
-        ret_add_link_otp: ret_add_link_otp.message,
-        link_otp
-      });
-    } else {
-      return res.status(500).json({ error_message: 'Something broke!' });
-    }
-  }
-
-  req.session.authUser = user;
-
-  return res.json({
-    message: 'Sign in success!',
-    href: '/',
-    user_info: {
-      user_id: check_email['user_id'],
-      user_name: check_email['user_name'],
-      email: check_email['email'],
-      role_id: check_email['role_id']
-    }
-  });
-});
-
-router.post('/google/sign-in', async function (req, res) {
-  const user = req.body;
-
-  if (!user.email) {
     return res.status(400).json({
-      message: 'Email invalid!'
+      check_pass
     });
   }
+);
 
-  const check_email = await userModel.singleByEmail(user.email);
+router.post(
+  '/facebook/sign-in',
+  validate(require('../schema/userFacebookSignIn.Schema.json')),
+  async function (req, res) {
+    const user = req.body;
 
-  if (check_email) {
+    const check_email = await userModel.singleByEmail(user.email);
+
+    if (check_email === undefined) {
+      user.password = '123123';
+      const hashed_pass = await bcryptjs.hashSync(user.password, 10);
+      const new_user = {
+        ...user,
+        role_id: 2,
+        is_verified: false,
+        otp_verify_url: '',
+        password: hashed_pass
+      };
+      const check_register = await userModel.add(new_user);
+
+      // send otp
+      const link_otp = `${process.env.DEV_URL}/${randomstring.generate(80)}`;
+
+      const ret_add_link_otp = await userModel.addLinkOTP(link_otp, user.email);
+
+      await sendOTPWithThirdPartySignIn(new_user.email, link_otp, '123123');
+
+      if (+check_register.affectedRows === 1) {
+        return res.json({
+          message: 'User was created!',
+          user_info: {
+            user_id: check_register.insertId,
+            user_name: new_user['user_name'],
+            email: new_user['email'],
+            role_id: new_user['role_id']
+          },
+          href: '/',
+          ret_add_link_otp: ret_add_link_otp.message,
+          link_otp
+        });
+      } else {
+        return res.status(500).json({ error_message: 'Something broke!' });
+      }
+    }
+
+    req.session.authUser = user;
+
     return res.json({
       message: 'Sign in success!',
       href: '/',
@@ -194,43 +178,75 @@ router.post('/google/sign-in', async function (req, res) {
       }
     });
   }
+);
 
-  user.password = '123123';
-  const hashed_pass = await bcryptjs.hashSync(user.password, 10);
-  const new_user = {
-    ...user,
-    role_id: 2,
-    is_verified: false,
-    otp_verify_url: '',
-    password: hashed_pass
-  };
+router.post(
+  '/google/sign-in',
+  validate(require('../schema/userFacebookSignIn.schema.json')),
+  async function (req, res) {
+    const user = req.body;
 
-  const check_add_user = await userModel.add(new_user);
+    if (!user.email) {
+      return res.status(400).json({
+        message: 'Email invalid!'
+      });
+    }
 
-  // send otp
-  const link_otp = `${process.env.DEV_URL}/${randomstring.generate(80)}`;
-  await sendOTPWithThirdPartySignIn(new_user.email, link_otp, '123123');
-  const ret_add_link_otp = await userModel.addLinkOTP(link_otp, new_user.email);
+    const check_email = await userModel.singleByEmail(user.email);
 
-  if (+check_add_user.affectedRows === 1) {
-    return res.json({
-      message: 'User was created!',
-      user_info: {
-        user_id: check_add_user.insertId,
-        user_name: new_user['user_name'],
-        email: new_user['email'],
-        role_id: new_user['role_id']
-      },
-      href: '/',
-      ret_add_link_otp: ret_add_link_otp.message,
-      link_otp
-    });
-  } else {
-    return res.status(500).json({
-      message: 'Something broke!'
-    });
+    if (check_email) {
+      return res.json({
+        message: 'Sign in success!',
+        href: '/',
+        user_info: {
+          user_id: check_email['user_id'],
+          user_name: check_email['user_name'],
+          email: check_email['email'],
+          role_id: check_email['role_id']
+        }
+      });
+    }
+
+    user.password = '123123';
+    const hashed_pass = await bcryptjs.hashSync(user.password, 10);
+    const new_user = {
+      ...user,
+      role_id: 2,
+      is_verified: false,
+      otp_verify_url: '',
+      password: hashed_pass
+    };
+
+    const check_add_user = await userModel.add(new_user);
+
+    // send otp
+    const link_otp = `${process.env.DEV_URL}/${randomstring.generate(80)}`;
+    await sendOTPWithThirdPartySignIn(new_user.email, link_otp, '123123');
+    const ret_add_link_otp = await userModel.addLinkOTP(
+      link_otp,
+      new_user.email
+    );
+
+    if (+check_add_user.affectedRows === 1) {
+      return res.json({
+        message: 'User was created!',
+        user_info: {
+          user_id: check_add_user.insertId,
+          user_name: new_user['user_name'],
+          email: new_user['email'],
+          role_id: new_user['role_id']
+        },
+        href: '/',
+        ret_add_link_otp: ret_add_link_otp.message,
+        link_otp
+      });
+    } else {
+      return res.status(500).json({
+        message: 'Something broke!'
+      });
+    }
   }
-});
+);
 
 router.get('/check-verify-account/:email', async function (req, res) {
   const email = req.params.email;
@@ -272,101 +288,94 @@ router.get('/access-link-otp/:link', async function (req, res) {
   });
 });
 
-router.patch('/change-name', async function (req, res) {
-  if (
-    req.body.user_name === '' ||
-    req.body.user_name === undefined ||
-    req.body.user_name === null
-  ) {
-    return res.status(400).json({ message: 'Cannot empty!' });
-  }
+router.patch(
+  '/change-name',
+  validate(require('../schema/userChangeName.schema.json')),
+  async function (req, res) {
+    const entity = {
+      user_name: req.body.user_name
+    };
+    const condition = {
+      user_id: +req.body.user_id
+    };
 
-  const entity = {
-    user_name: req.body.user_name
-  };
-  const condition = {
-    user_id: +req.body.user_id
-  };
+    const ret = await userModel.edit(entity, condition);
 
-  const ret = await userModel.edit(entity, condition);
-
-  return res.json({
-    ret_edit_user_name: ret
-  });
-});
-
-router.patch('/change-email', async function (req, res) {
-  if (
-    req.body.email === '' ||
-    req.body.email === undefined ||
-    req.body.email === null ||
-    req.body.user_id === null ||
-    req.body.user_id === undefined ||
-    req.body.user_id === ''
-  ) {
-    return res.status(400).json({ message: 'Cannot empty!' });
-  }
-
-  if (validator.isEmail(req.body.email) === false) {
-    return res.status(400).json({ message: 'Email error!' });
-  }
-
-  const ret_check_email = await userModel.singleByEmail(req.body.email);
-
-  if (ret_check_email !== undefined) {
-    return res.status(400).json({ message: 'Email has been used!' });
-  }
-
-  const entity = {
-    email: req.body.email
-  };
-  const condition = {
-    user_id: +req.body.user_id
-  };
-
-  const ret = await userModel.edit(entity, condition);
-
-  return res.json({
-    ret_edit_user_email: ret
-  });
-});
-
-router.patch('/change-password', async function (req, res) {
-  const body = {
-    user_id: req.body.user_id,
-    old_pass: req.body.old_pass,
-    new_pass: req.body.new_pass
-  };
-
-  const user = await userModel.detail(+body.user_id);
-
-  const ret_check_old_pass = await bcryptjs.compareSync(
-    body.old_pass,
-    user.password
-  );
-
-  if (ret_check_old_pass === false) {
-    return res.status(400).json({
-      message: 'Old password invalid!'
+    return res.json({
+      ret_edit_user_name: ret
     });
   }
+);
 
-  const hash_new_pass = await bcryptjs.hashSync(body.new_pass, 10);
+router.patch(
+  '/change-email',
+  validate(require('../schema/userChangeMail.schema.json')),
+  async function (req, res) {
+    if (validator.isEmail(req.body.email) === false) {
+      return res.status(400).json({ message: 'Email error!' });
+    }
 
-  const entity = {
-    password: hash_new_pass
-  };
+    const ret_check_email = await userModel.singleByEmail(req.body.email);
 
-  const condition = {
-    user_id: body.user_id
-  };
+    if (ret_check_email !== undefined) {
+      return res.status(400).json({ message: 'Email has been used!' });
+    }
 
-  const ret = await userModel.edit(entity, condition);
+    const entity = {
+      email: req.body.email
+    };
+    const condition = {
+      user_id: +req.body.user_id
+    };
 
-  return res.json({
-    ret_change_pass: ret
-  });
-});
+    const ret = await userModel.edit(entity, condition);
+
+    return res.json({
+      ret_edit_user_email: ret
+    });
+  }
+);
+
+router.patch(
+  '/change-password',
+  validate(require('../schema/userChangePass.schema.json')),
+  async function (req, res) {
+    const body = {
+      user_id: req.body.user_id,
+      old_pass: req.body.old_pass,
+      new_pass: req.body.new_pass
+    };
+
+    const user = await userModel.detail(+body.user_id);
+
+    const ret_check_old_pass = await bcryptjs.compareSync(
+      body.old_pass,
+      user.password
+    );
+
+    if (ret_check_old_pass === false) {
+      return res.status(400).json({
+        message: 'Old password invalid!'
+      });
+    }
+
+    const hash_new_pass = await bcryptjs.hashSync(body.new_pass, 10);
+
+    const entity = {
+      password: hash_new_pass
+    };
+
+    const condition = {
+      user_id: body.user_id
+    };
+
+    const ret = await userModel.edit(entity, condition);
+
+    return res.json({
+      ret_change_pass: ret
+    });
+  }
+);
 
 router.get('/:id', async function (req, res) {
   const id = +req.params.id;

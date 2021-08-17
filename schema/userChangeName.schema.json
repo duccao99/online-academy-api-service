@@ -1,0 +1,16 @@
+{
+	"type":"object",
+	"required": [
+		"user_name",
+		"user_id"
+	],
+	"additionalProperties": false,
+	"properties": {
+		"user_name":{
+			"type":"string"
+		},
+		"user_id":{
+			"type":"number"
+		}
+	}
+}
