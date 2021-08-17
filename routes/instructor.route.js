@@ -553,24 +553,28 @@ router.patch(
   }
 );
 
-router.patch('/:id', async function (req, res) {
-  const ret = await instructorModel.edit(
-    +req.params.id,
-    req.body.user_name,
-    req.body.email,
-    +req.body.is_verified
-  );
+router.patch(
+  '/:id',
+  bodyValidate(require('../schema/instructorEditItSelf.json')),
+  async function (req, res) {
+    const ret = await instructorModel.edit(
+      +req.params.id,
+      req.body.user_name,
+      req.body.email,
+      +req.body.is_verified
+    );
 
-  if (+ret.affectedRows === 1) {
-    return res.json({
-      message: 'Edited!',
-      ret_update_ins: ret
+    if (+ret.affectedRows === 1) {
+      return res.json({
+        message: 'Edited!',
+        ret_update_ins: ret
+      });
+    }
+    return res.status(500).json({
+      message: 'Something broke!'
     });
   }
-  return res.status(500).json({
-    message: 'Something broke!'
-  });
-});
+);
 
 router.delete('/:id', async function (req, res) {
   const id = +req.params.id;
