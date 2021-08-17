@@ -1,0 +1,16 @@
+{
+	"type":"object",
+	"required": [
+		"course_fee",
+		"course_id"
+	],
+	"additionalProperties": true,
+	"properties": {
+		"course_fee":{
+			"type":"number"
+		},
+		"course_id":{
+			"type":"number"
+		}
+	}
+}

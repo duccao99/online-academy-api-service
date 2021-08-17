@@ -402,45 +402,56 @@ router.get('/detail/course-review/:id', async function (req, res) {
   });
 });
 
-router.patch('/', async function (req, res) {
-  const { course_fee, course_id } = req.body;
+router.patch(
+  '/',
+  validate(require('../schema/coursePatch.schema.json')),
+  async function (req, res) {
+    const { course_fee, course_id } = req.body;
 
-  const ret = await courseModel.edit({ course_fee, course_id }, { course_id });
+    const ret = await courseModel.edit(
+      { course_fee, course_id },
+      { course_id }
+    );
 
-  if (+ret.affectedRows === 1) {
+    if (+ret.affectedRows === 1) {
+      return res.json({
+        message: 'Course was updated!'
+      });
+    }
+    return res.status(500).json({ error_message: 'Something broke!' });
+  }
+);
+
+router.post(
+  '/course-review',
+  validate(require('../schema/courseReview.schema.json')),
+  async function (req, res) {
+    const { user_id, course_id, star, review_content } = req.body;
+
+    const course_detail = await courseModel.addReview({
+      user_id,
+      course_id,
+      star,
+      review_content
+    });
+
+    if (course_detail === undefined) {
+      return res.status(400).json({ message: 'Cannot add this review!' });
+    }
+
+    const ret = await courseModel.feedback(course_id);
+
+    if (ret === undefined) {
+      return res.status(400).json({
+        message: 'Course not found!'
+      });
+    }
+
     return res.json({
-      message: 'Course was updated!'
+      feedback: ret
     });
   }
-  return res.status(500).json({ error_message: 'Something broke!' });
-});
-
-router.post('/course-review', async function (req, res) {
-  const { user_id, course_id, star, review_content } = req.body;
-
-  const course_detail = await courseModel.addReview({
-    user_id,
-    course_id,
-    star,
-    review_content
-  });
-
-  if (course_detail === undefined) {
-    return res.status(400).json({ message: 'Cannot add this review!' });
-  }
-
-  const ret = await courseModel.feedback(course_id);
-
-  if (ret === undefined) {
-    return res.status(400).json({
-      message: 'Course not found!'
-    });
-  }
-
-  return res.json({
-    feedback: ret
-  });
-});
+);
 
 router.get('/detail/cat-price-num/:id', async function (req, res) {
   const id = +req.params.id;
@@ -489,17 +500,10 @@ router.get('/:id', async function (req, res) {
 router.delete('/:id', async function (req, res) {
   const id = +req.params.id;
 
-  // // del ins upload
   const del_ins_upload_con = {
     course_id: id
   };
   const ret_del_ins_upload = await insUploadModel.del(del_ins_upload_con);
-
-  // // del chapter
-  // const del_chap_con = {
-  //   course_id: id,
-  // };
-  // const ret_del_chap = await chapterModel.del(del_chap_con);
 
   const condition = {
     course_id: id
@@ -510,8 +514,7 @@ router.delete('/:id', async function (req, res) {
   if (+ret.affectedRows === 1) {
     return res.json({
       message: 'Course was deleted!',
-      // chap_del_info: ret_del_chap,
-      // ret_del_ins_upload,
+
       course_del_info: ret
     });
   }
