@@ -147,6 +147,8 @@ CREATE TABLE `courses` (
   `subject_id` int DEFAULT NULL,
   `views` int DEFAULT NULL,
   `instructor_id` int DEFAULT NULL,
+
+  
   PRIMARY KEY (`course_id`),
   KEY `subject_id` (`subject_id`),
   KEY `course_user_idx` (`instructor_id`),
@@ -545,8 +547,13 @@ insert into `instructor_courses_uploaded` values (24,8,20,null,null,'2021-05-27 
 insert into `instructor_courses_uploaded` values (25,8,21,null,null,'2021-05-28 00:00:00'); 
 
 
-update courses
+alter table `courses`
+add column is_banned tinyint(1) after instructor_id;
+
+update courses c
 set is_banned = 0
+where c.course_id < 30;
+
 
 -- use `SPA_ONLINE_ACADEMY`;
 -- select * from `lessons`;

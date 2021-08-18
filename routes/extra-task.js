@@ -1,20 +1,25 @@
 const router = require('express').Router();
 const extraTaskModel = require('./../models/extra-task.model');
 const courseModel = require('../models/course.model');
+const auth = require('../middlewares/auth.mdw');
 
-router.get('/filter-course-by-instructor', async function (req, res) {
+router.get('/filter-course-by-instructor', auth, async function (req, res) {
   const instructor_id = req.query.instructor_id;
   const data = await extraTaskModel.filterCourseByInstructor(instructor_id);
 
   return res.json(data);
 });
 
-router.get('/filter-course-by-category/:subject_id', async function (req, res) {
-  const subject_id = +req.params.subject_id;
-  const data = await extraTaskModel.filterCourseByCat(subject_id);
+router.get(
+  '/filter-course-by-category/:subject_id',
+  auth,
+  async function (req, res) {
+    const subject_id = +req.params.subject_id;
+    const data = await extraTaskModel.filterCourseByCat(subject_id);
 
-  return res.json(data);
-});
+    return res.json(data);
+  }
+);
 
 router.get('/is-best-seller/:course_id', async function (req, res) {
   const course_id = +req.params.course_id;

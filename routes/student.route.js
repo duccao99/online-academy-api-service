@@ -4,8 +4,9 @@ const feedbackModel = require('../models/feedback.model');
 const historyModel = require('../models/history.model');
 const enrollModel = require('../models/enroll.model');
 const bodyValidator = require('../middlewares/validate.mdw');
+const auth = require('../middlewares/auth.mdw');
 
-router.get('/', async function (req, res) {
+router.get('/', auth, async function (req, res) {
   const student_data = await studentModel.all();
 
   if (student_data.length === 0) {
@@ -21,6 +22,7 @@ router.get('/', async function (req, res) {
 
 router.post(
   '/enroll',
+  auth,
   bodyValidator(require('../schema/studentEnroll.schema.json')),
   async function (req, res) {
     // check if exists then not add
@@ -73,6 +75,7 @@ router.get('/favorite-courses/:user_id', async function (req, res) {
 
 router.patch(
   '/toggle-favorite',
+  auth,
   bodyValidator(require('../schema/studentFavoriteCourse.schema.json')),
   async function (req, res) {
     const data = {
@@ -110,7 +113,7 @@ router.patch(
   }
 );
 
-router.get('/purchases-course-id/:user_id', async function (req, res) {
+router.get('/purchases-course-id/:user_id', auth, async function (req, res) {
   const user_id = req.params.user_id;
 
   const ret = await studentModel.getPurchasedCoursesId(user_id);
@@ -126,7 +129,7 @@ router.get('/purchases-course-id/:user_id', async function (req, res) {
   });
 });
 
-router.get('/purchased-courses/:email', async function (req, res) {
+router.get('/purchased-courses/:email', auth, async function (req, res) {
   const email = req.params.email;
 
   const ret = await studentModel.getPurchasedCourses(email);
@@ -142,6 +145,7 @@ router.get('/purchased-courses/:email', async function (req, res) {
 
 router.post(
   '/upload-feedback',
+  auth,
   bodyValidator(require('../schema/studentUploadFeedback.schema.json')),
   async function (req, res) {
     const isExists = await feedbackModel.isExists(
@@ -173,7 +177,7 @@ router.post(
   }
 );
 
-router.get('/your-feedback', async function (req, res) {
+router.get('/your-feedback', auth, async function (req, res) {
   if (!req.query.user_id || !req.query.course_id) {
     return res.status(400).json({
       message: 'Cannot empty!'
@@ -200,6 +204,7 @@ router.get('/your-feedback', async function (req, res) {
 
 router.post(
   '/history-watching',
+  auth,
   bodyValidator(require('../schema/studentHistoryWatching.schema.json')),
   async function (req, res) {
     if (!req.body.user_id || !req.body.start_time) {
@@ -252,7 +257,7 @@ router.post(
   }
 );
 
-router.get('/history', async function (req, res) {
+router.get('/history', auth, async function (req, res) {
   if (!req.query.user_id || !req.query.lesson_id) {
     return res.status(400).json({
       message: 'Cannot empty!'
@@ -280,7 +285,7 @@ router.get('/history', async function (req, res) {
   });
 });
 
-router.get('/:id', async function (req, res) {
+router.get('/:id', auth, async function (req, res) {
   const user_id = +req.params.id;
 
   const user_detail = await studentModel.detail(user_id);
@@ -296,7 +301,7 @@ router.get('/:id', async function (req, res) {
   });
 });
 
-router.delete('/:id', async function (req, res) {
+router.delete('/:id', auth, async function (req, res) {
   const student_id = req.params.id;
 
   // check if student id is in db
@@ -328,6 +333,7 @@ router.delete('/:id', async function (req, res) {
 
 router.patch(
   '/:id',
+  auth,
   bodyValidator(require('../schema/studentEditInfo.schema.json')),
   async function (req, res) {
     const student_edit_info = req.body;
