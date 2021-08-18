@@ -923,6 +923,23 @@ select c.course_id, c.course_name, c.course_avatar_url, c.course_fee,
 );
 
 
+-- 10 new course not contains best seller
+select c.course_id, c.course_name, c.course_title,
+     c.course_avatar_url, c.course_fee, 
+    sj.subject_id, sj.subject_name, c.views, u.user_id, u.user_name, c.course_last_updated
+    from courses c
+    left join subjects sj
+    on sj.subject_id = c.subject_id
+    left join instructor_courses_uploaded ins
+    on ins.course_id = c.course_id
+    left join users u
+    on u.user_id = ins.user_id
+    where c.course_id != 1
+    and c.course_id !=2
+	and c.course_id !=3
+    group by c.course_id
+    order by c.course_last_updated desc
+    limit 10
 
 select *
 from `courses` c

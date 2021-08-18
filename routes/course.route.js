@@ -5,6 +5,7 @@ const subCatModel = require('../models/subCategory.model');
 const insUploadModel = require('../models/insUpload.model');
 const salesModel = require('../models/sales.model');
 const auth = require('../middlewares/auth.mdw');
+const validate = require('../middlewares/validate.mdw');
 
 router.get('/', async function (req, res) {
   const courses = await courseModel.all();
