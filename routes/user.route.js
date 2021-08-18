@@ -3,7 +3,8 @@ const bcryptjs = require('bcryptjs');
 const validate = require('../middlewares/validate.mdw');
 const userModel = require('../models/user.model');
 const userSchema = require('../schema/user.schema.json');
-const jsonwebtoken = require("jsonwebtoken");
+const jsonwebtoken = require('jsonwebtoken');
+const auth = require('../middlewares/auth.mdw');
 
 const randomstring = require('randomstring');
 const {
@@ -12,7 +13,7 @@ const {
 } = require('../config/nodemailer');
 const { default: validator } = require('validator');
 
-router.get('/', async function (req, res) {
+router.get('/', auth, async function (req, res) {
   const user_data = await userModel.all();
 
   if (user_data.length === 0) {
@@ -83,11 +84,11 @@ router.post(
     }
 
     const payload = {
-      userId: check_user.user_id,
+      userId: check_user.user_id
     };
 
     const options = {
-      expiresIn: 10 * 60, // seconds
+      expiresIn: 10 * 60 // seconds
     };
 
     if (+check_user.role_id === 4) {
@@ -100,7 +101,7 @@ router.post(
         const accessToken = jsonwebtoken.sign(payload, SECRET_KEY, options);
         const refreshToken = randomstring.generate(80);
         await userModel.patchRFToken(user.user_id, refreshToken);
-    
+
         req.session.authUser = user;
         return res.json({
           message: 'Sign in success!',
@@ -339,6 +340,7 @@ router.get('/access-link-otp/:link', async function (req, res) {
 
 router.patch(
   '/change-name',
+  auth,
   validate(require('../schema/userChangeName.schema.json')),
   async function (req, res) {
     const entity = {
@@ -358,6 +360,7 @@ router.patch(
 
 router.patch(
   '/change-email',
+  auth,
   validate(require('../schema/userChangeMail.schema.json')),
   async function (req, res) {
     if (validator.isEmail(req.body.email) === false) {
@@ -387,6 +390,7 @@ router.patch(
 
 router.patch(
   '/change-password',
+  auth,
   validate(require('../schema/userChangePass.schema.json')),
   async function (req, res) {
     const body = {
@@ -426,7 +430,7 @@ router.patch(
   }
 );
 
-router.get('/:id', async function (req, res) {
+router.get('/:id', auth, async function (req, res) {
   const id = +req.params.id;
 
   const ret = await userModel.detail(id);

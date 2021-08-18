@@ -550,10 +550,10 @@ set is_banned = 0
 
 -- use `SPA_ONLINE_ACADEMY`;
 -- select * from `lessons`;
-select * from `users`;
+-- select * from `users`;
 -- select * from `orders`;
 -- select * from `orders_details`;
 -- select * from `student_enrolls`;
-select * from `instructor_courses_uploaded`;
+-- select * from `instructor_courses_uploaded`;
 -- select * from `courses`;
 

@@ -2,7 +2,7 @@ const router = require('express').Router();
 const orderModel = require('../models/order.model');
 const moment = require('moment');
 const bodySchemaValidate = require('../middlewares/validate.mdw');
-
+const auth = require('../middlewares/auth.mdw');
 router.get('/', async function (req, res) {
   const ret = await orderModel.all();
   return res.json(ret);
@@ -10,6 +10,7 @@ router.get('/', async function (req, res) {
 
 router.post(
   '/add',
+  auth,
   bodySchemaValidate(require('../schema/order.schema.json')),
   async function (req, res) {
     const body = req.body;

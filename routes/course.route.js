@@ -5,6 +5,7 @@ const subCatModel = require('../models/subCategory.model');
 const insUploadModel = require('../models/insUpload.model');
 const salesModel = require('../models/sales.model');
 const auth = require('../middlewares/auth.mdw');
+const validate = require('../middlewares/validate.mdw');
 
 router.get('/', async function (req, res) {
   const courses = await courseModel.all();
@@ -404,7 +405,8 @@ router.get('/detail/course-review/:id', async function (req, res) {
 
 router.patch(
   '/',
-  // validate(require('../schema/coursePatch.schema.json')),
+  auth,
+  validate(require('../schema/coursePatch.schema.json')),
   async function (req, res) {
     const { course_fee, course_id, is_banned } = req.body;
 
@@ -424,7 +426,8 @@ router.patch(
 
 router.post(
   '/course-review',
-  // validate(require('../schema/courseReview.schema.json')),
+  auth,
+  validate(require('../schema/courseReview.schema.json')),
   async function (req, res) {
     const { user_id, course_id, star, review_content } = req.body;
 
@@ -497,7 +500,7 @@ router.get('/:id', async function (req, res) {
   });
 });
 
-router.delete('/:id', async function (req, res) {
+router.delete('/:id', auth, async function (req, res) {
   const id = +req.params.id;
 
   const del_ins_upload_con = {
@@ -521,9 +524,7 @@ router.delete('/:id', async function (req, res) {
   return res.status(500).json({ error_message: 'Something broke!' });
 });
 
-router.post('/is-purchased', async function (req, res) {
-  console.log(req.body);
-
+router.post('/is-purchased', auth, async function (req, res) {
   if (!req.body.student_id || !req.body.course_id) {
     return res.status(400).json({
       message: 'Body error'
