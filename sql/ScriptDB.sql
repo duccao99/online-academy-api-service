@@ -550,17 +550,29 @@ insert into `instructor_courses_uploaded` values (25,8,21,null,null,'2021-05-28 
 alter table `courses`
 add column is_banned tinyint(1) after instructor_id;
 
+
+
+
+
 update courses c
 set is_banned = 0
-where c.course_id < 30;
+where c.course_id < 40;
 
 
--- use `SPA_ONLINE_ACADEMY`;
--- select * from `lessons`;
--- select * from `users`;
--- select * from `orders`;
--- select * from `orders_details`;
--- select * from `student_enrolls`;
--- select * from `instructor_courses_uploaded`;
--- select * from `courses`;
+update courses c
+set course_avatar_url = 'https://blog.codemagic.io/uploads/covers/react-native-firebase-codemagic.png'
+where c.course_id = 7;
+
+update courses c
+set course_avatar_url = 'https://media.onlinecoursebay.com/2019/03/14034012/1589310_8f97.jpg'
+where c.course_id = 16;
+
+update courses c
+set course_avatar_url = 'https://1.bp.blogspot.com/-NQKQ9wx4Cps/YE7wgc9la4I/AAAAAAAAIh8/TMHoCrFK_XMVuzfFiK-2DV7C6JkitDw9gCLcBGAsYHQ/s506/Complete-React-Native-in-2021-Zero-to-Mastery-with-Hooks.jpg'
+where c.course_id = 17;
+
+
+
+
+
 

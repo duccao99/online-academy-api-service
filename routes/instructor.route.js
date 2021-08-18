@@ -264,6 +264,7 @@ router.post('/upload-course', auth, async function (req, res) {
                     course_full_description: course.course_full_description,
                     course_short_description: course.course_short_description,
                     subject_id: course.subject_id,
+                    is_banned: false,
                     is_finished: false,
                     views: 0,
                     course_last_updated: moment(toDay).format(
