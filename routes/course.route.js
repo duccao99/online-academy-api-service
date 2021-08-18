@@ -524,7 +524,7 @@ router.delete('/:id', auth, async function (req, res) {
   return res.status(500).json({ error_message: 'Something broke!' });
 });
 
-router.post('/is-purchased', auth, async function (req, res) {
+router.post('/is-purchased', async function (req, res) {
   if (!req.body.student_id || !req.body.course_id) {
     return res.status(400).json({
       message: 'Body error'

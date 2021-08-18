@@ -15,6 +15,7 @@ const { Base64 } = require('js-base64');
 const chapterModel = require('../models/chapter.model');
 const lessonModel = require('./../models/lesson.model');
 const bodyValidate = require('../middlewares/validate.mdw');
+const auth = require('../middlewares/auth.mdw');
 
 cloudinary.config({
   cloud_name: 'duccao',
@@ -22,7 +23,7 @@ cloudinary.config({
   api_secret: `${process.env.CLOUNDINARY_API_SECRET}`
 });
 
-router.get('/', async function (req, res) {
+router.get('/', auth, async function (req, res) {
   const ret = await instructorModel.all();
 
   if (ret.length === 0) {
@@ -58,6 +59,7 @@ router.post(
 
 router.patch(
   '/toggle-finished-course',
+  auth,
   bodyValidate(require('../schema/instructorToggleFinishedCourse.schema.json')),
   async function (req, res) {
     const body = req.body;
@@ -84,6 +86,7 @@ router.patch(
 
 router.patch(
   '/toggle-preview',
+  auth,
   bodyValidate(require('../schema/instructorTogglePreview.json')),
   async function (req, res) {
     const update_entity = {
@@ -104,7 +107,7 @@ router.patch(
   }
 );
 
-router.get('/uploaded-course/:email', async function (req, res) {
+router.get('/uploaded-course/:email', auth, async function (req, res) {
   const email = req.params.email;
   const ret = await instructorModel.uploadedCourse(email);
 
@@ -147,7 +150,7 @@ router.get('/lesson-exists/:chap_id', async function (req, res) {
   });
 });
 
-router.post('/upload-course', async function (req, res) {
+router.post('/upload-course', auth, async function (req, res) {
   try {
     const saveImagePath = path.join(__dirname, '../public/images');
 
@@ -312,6 +315,7 @@ router.post('/upload-course', async function (req, res) {
 
 router.post(
   '/upload-chapter',
+  auth,
   bodyValidate(require('../schema/instructorUploadChapter.schema.json')),
   async function (req, res) {
     // course_id, chap_name, user_id
@@ -342,7 +346,7 @@ router.post(
   }
 );
 
-router.post('/upload-lesson', async function (req, res) {
+router.post('/upload-lesson', auth, async function (req, res) {
   const saveVideoPath = path.join(__dirname, '../public/videos');
 
   const storage = multer.diskStorage({
@@ -423,6 +427,7 @@ router.post('/upload-lesson', async function (req, res) {
 
 router.post(
   '/',
+  auth,
   bodyValidate(require('../schema/instructorAdd.schema.json')),
   async function (req, res) {
     const ins = req.body;
@@ -472,6 +477,7 @@ router.post(
 
 router.patch(
   '/edit-short-des',
+  auth,
   bodyValidate(require('../schema/instructorEditShortDes.schema.json')),
   async function (req, res) {
     const data = {
@@ -504,6 +510,7 @@ router.patch(
 
 router.patch(
   '/edit-full-des',
+  auth,
   bodyValidate(require('../schema/instructorEditFullDes.schema.json')),
   async function (req, res) {
     const data = {
@@ -536,6 +543,7 @@ router.patch(
 
 router.patch(
   '/edit-lesson-content',
+  auth,
   bodyValidate(require('../schema/instructorEditLessonContent.schema.json')),
   async function (req, res) {
     const en = {
@@ -555,6 +563,7 @@ router.patch(
 
 router.patch(
   '/:id',
+  auth,
   bodyValidate(require('../schema/instructorEditItSelf.json')),
   async function (req, res) {
     const ret = await instructorModel.edit(
@@ -576,7 +585,7 @@ router.patch(
   }
 );
 
-router.delete('/:id', async function (req, res) {
+router.delete('/:id', auth, async function (req, res) {
   const id = +req.params.id;
 
   // del ins upload first

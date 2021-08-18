@@ -75,7 +75,6 @@ router.get('/favorite-courses/:user_id', async function (req, res) {
 
 router.patch(
   '/toggle-favorite',
-  auth,
   bodyValidator(require('../schema/studentFavoriteCourse.schema.json')),
   async function (req, res) {
     const data = {
@@ -113,7 +112,7 @@ router.patch(
   }
 );
 
-router.get('/purchases-course-id/:user_id', auth, async function (req, res) {
+router.get('/purchases-course-id/:user_id', async function (req, res) {
   const user_id = req.params.user_id;
 
   const ret = await studentModel.getPurchasedCoursesId(user_id);
