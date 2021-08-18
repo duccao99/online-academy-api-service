@@ -80,7 +80,7 @@ const instructorModel = {
   },
   uploadedCourse(email) {
     const sql = `select iu.user_id, u.user_name, iu.course_id, iu.chap_id, 
-    iu.lesson_id, iu.uploaded_day, c.course_name, c.course_title,
+    iu.lesson_id, iu.uploaded_day, c.course_name, c.course_title, c.is_banned,
     c.course_avatar_url, c.course_fee, sj.subject_id, sj.subject_name,
     c.is_finished
         from ${tbl_instructor_courses_uploaded} iu
@@ -97,7 +97,7 @@ const instructorModel = {
   getOwnCourseQuantity(instructor_id) {
     const sql = `select count(c.course_id) as course_quantity
     from ${tbl_courses} c
-    where c.instructor_id = ${instructor_id}`;
+    where c.instructor_id = ${instructor_id} and c.is_banned = 0`;
     return db.load(sql);
   },
   toggleFinishedCourse(en, con) {

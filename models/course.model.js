@@ -44,7 +44,7 @@ const courseModel = {
     return db.load(sql);
   },
   allWithNoPagi() {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
@@ -60,12 +60,13 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id
+    where c.is_banned = 0
     group by c.course_id
      ; `;
     return db.load(sql);
   },
   allWithPagi(limit, offset) {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
@@ -81,6 +82,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id
+    where c.is_banned = 0
     group by c.course_id
     limit ${limit}
     offset ${offset} ; `;
@@ -88,7 +90,7 @@ const courseModel = {
   },
 
   allCourseBySubCatNoPagi(sub_cat) {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
@@ -104,13 +106,12 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id
-    where sj.subject_name = '${sub_cat}'
-   
+    where sj.subject_name = '${sub_cat}' and c.is_banned = 0
     group by c.course_id;`;
     return db.load(sql);
   },
   allCourseBySubCatPagi(sub_cat, limit, offset) {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
@@ -126,8 +127,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id
-    where sj.subject_name = '${sub_cat}'
-  
+    where sj.subject_name = '${sub_cat}' and c.is_banned = 0
     group by c.course_id
     limit ${limit}
     offset ${offset} ;`;
@@ -135,7 +135,7 @@ const courseModel = {
   },
   async detail(course_id) {
     const sql = `select c.course_id, c.course_name, c.course_title, 
-    c.course_thumbnail, c.course_avatar_url, c.course_fee ,
+    c.course_thumbnail, c.course_avatar_url, c.course_fee, c.is_banned,
     c.course_full_description, c.course_short_description,
     c.course_last_updated, c.is_finished, c.subject_id,c.views , sal.sale_percent,
     sj.subject_name,  u.user_name, u.user_id, ste.num_stu_enroll, rt.avg_rate, rt.total_review
@@ -160,24 +160,22 @@ const courseModel = {
     group by ste.course_id
     ) ste
     on ste.course_id = c.course_id
-    where c.course_id = ${course_id}
-     ;`;
+    where c.course_id = ${course_id} and c.is_banned = 0`;
     const ret = await db.load(sql);
     return ret[0];
   },
 
   async singleByCourseName(course_name) {
     const sql = `select * from ${tbl_courses} as c
-    where c.course_name = '${course_name}'`;
+    where c.course_name = '${course_name}' and c.is_banned = 0`;
     const ret = await db.load(sql);
     return ret[0];
   },
 
   getOutstandingCourse() {
-    const sql = `select c.course_id, c.course_name, c.course_avatar_url, c.course_fee,
+    const sql = `select c.course_id, c.course_name, c.course_avatar_url, c.course_fee, c.is_banned,
     c.views, c.course_last_updated, c.is_finished, sj.subject_id,  rt.avg_rate, rt.total_review,
     sj.subject_name, ins.user_id, u.user_name, sal.sale_percent, ste.num_stu_enroll
-   
     from ${tbl_courses} c
     left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id 
@@ -199,6 +197,7 @@ const courseModel = {
     group by ste.course_id
     ) ste
     on ste.course_id = c.course_id
+    where c.is_banned = 0
     group by c.course_id 
     limit 3
     ;`;
@@ -207,7 +206,7 @@ const courseModel = {
   },
   tenNewestCourses() {
     const sql = `select c.course_id, c.course_name, c.course_title,
-    c.course_avatar_url, c.course_fee, 
+    c.course_avatar_url, c.course_fee, c.is_banned,
    sj.subject_id, sj.subject_name, c.views, u.user_id, u.user_name, c.course_last_updated
    from courses c
    left join subjects sj
@@ -218,7 +217,8 @@ const courseModel = {
    on u.user_id = ins.user_id
    where c.course_id != 1
    and c.course_id !=2
- and c.course_id !=3
+    and c.course_id !=3
+    and c.is_banned = 0
    group by c.course_id
    order by c.course_last_updated desc
    limit 10
@@ -228,7 +228,7 @@ const courseModel = {
   },
   tenMostViewedCourses() {
     const sql = `select c.course_id, c.course_name, c.course_title, 
-    c.course_avatar_url, c.course_fee,
+    c.course_avatar_url, c.course_fee, c.is_banned,
     c.course_last_updated, c.is_finished, c.views, sj.subject_name, u.user_id,
     u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c 
@@ -244,7 +244,7 @@ const courseModel = {
     group by cr.course_id
     ) rt
     on rt.course_id = c.course_id
-
+    where c.is_banned = 0
     group by c.course_id
     order by c.views desc 
     limit 10;
@@ -272,7 +272,7 @@ const courseModel = {
     join (
       select c.subject_id, count(se.course_id) as students
         from ${tbl_student_enrolls} se, ${tbl_courses} c, ${tbl_subjects} s
-        where se.course_id = c.course_id and c.subject_id = s.subject_id
+        where se.course_id = c.course_id and c.subject_id = s.subject_id and c.is_banned = 0
         group by se.course_id
     ) res
     on sj.subject_id = res.subject_id
@@ -290,14 +290,14 @@ const courseModel = {
     on ct.course_id = c.course_id
     left join ${tbl_lessons} l
     on l.chap_id = ct.chap_id 
-    where c.course_id = ${course_id};
-    `;
+    where c.course_id = ${course_id}
+    and c.is_banned = 0`;
     return db.load(sql);
   },
   allChapters(course_id) {
     const sql = `select *
     from ${tbl_chapters} c
-    where c.course_id = ${course_id} ;`;
+    where c.course_id = ${course_id} and c.is_banned = 0`;
     return db.load(sql);
   },
   allLessons(course_id) {
@@ -306,7 +306,7 @@ const courseModel = {
     from ${tbl_lessons} l
     left join ${tbl_chapters} c 
     on c.chap_id = l.chap_id
-    where c.course_id = ${course_id};
+    where c.course_id = ${course_id} and c.is_banned = 0;
     `;
     return db.load(sql);
   },
@@ -325,14 +325,14 @@ const courseModel = {
     where ins_up.user_id = 9
     ) as total_course_uploaded
     on total_course_uploaded.user_id = u.user_id
-    where c.course_id = ${course_id}
+    where c.course_id = ${course_id} and c.is_banned = 0
     group by c.course_id;
     `;
     return db.load(sql);
   },
   detailFiveRelativeCourseBoughtTheMost(course_id, subject_id) {
     const sql = `select c.course_id, c.course_name, c.course_title
-    , c.course_thumbnail, c.course_avatar_url, c.course_fee ,
+    , c.course_thumbnail, c.course_avatar_url, c.course_fee , c.is_banned,
     c.course_full_description, c.course_short_description
     ,c.course_last_updated, c.is_finished, c.subject_id,c.views 
     ,sj.subject_name, scb.num_stu_bought, u.user_name, rt.avg_rate, rt.total_review
@@ -358,7 +358,7 @@ const courseModel = {
     ) scb
     on scb.course_id = c.course_id
     where sj.subject_id = ${subject_id}
-
+    and c.is_banned = 0
     and c.course_id != ${course_id}
     group by c.course_id
     order by scb.num_stu_bought desc
@@ -377,12 +377,13 @@ const courseModel = {
     on u.user_id = cr.user_id
     left join ${tbl_roles} r
     on u.role_id = r.role_id
-    where c.course_id = ${course_id};`;
+    where c.course_id = ${course_id}
+    and c.is_banned = 0`;
     return db.load(sql);
   },
 
   fullTextByName(name, limit, offset) {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c 
@@ -400,14 +401,14 @@ const courseModel = {
     on rt.course_id = c.course_id
     where match(c.course_name)
     against ('${name}' in natural language mode)
-
+    and c.is_banned = 0
     group by c.course_id
     limit ${limit}
     offset ${offset}; `;
     return db.load(sql);
   },
   fullTextBySubcat(subcat, limit, offset) {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c 
@@ -425,14 +426,14 @@ const courseModel = {
     on rt.course_id = c.course_id
     where match(sj.subject_name)
     against ('${subcat}' in natural language mode)
- 
+    and c.is_banned = 0
     group by c.course_id
     limit ${limit}
     offset ${offset}; `;
     return db.load(sql);
   },
-  fullTextSearchNoPagi(text) {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+  fullTextSearchNoPagi(text) { 
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c 
@@ -452,13 +453,13 @@ const courseModel = {
     against ('${text}' in natural language mode)
     or  match(sj.subject_name)
     against ('${text}' in natural language mode)
-  
+    and c.is_banned = 0
     group by c.course_id
     `;
     return db.load(sql);
   },
   fullTextSearchPagi(text, limit, offset) {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_id, sj.subject_name,
     u.user_id, u.user_name, rt.avg_rate, rt.total_review, ste.num_stu_enroll
     from ${tbl_courses} c 
@@ -486,13 +487,14 @@ const courseModel = {
     or  
     match(sj.subject_name)
     against ('${text}' in natural language mode)
+    and c.is_banned = 0
     group by c.course_id
     limit ${limit}
     offset ${offset}; `;
     return db.load(sql);
   },
   byRateASCNoPagi() {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
@@ -508,13 +510,13 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
- 
+    where c.is_banned = 0
     group by c.course_id
     order by rt.avg_rate asc;`;
     return db.load(sql);
   },
   byRateASCPagi(limit, offset) {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
@@ -530,7 +532,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
- 
+    where c.is_banned = 0
     group by c.course_id
     order by rt.avg_rate asc
     limit ${limit}
@@ -538,7 +540,7 @@ const courseModel = {
     return db.load(sql);
   },
   byRateDESCNoPagi() {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
@@ -554,13 +556,13 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-  
+    where c.is_banned = 0
     group by c.course_id
     order by rt.avg_rate desc;`;
     return db.load(sql);
   },
   byRateDESCPagi(limit, offset) {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
@@ -576,7 +578,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
- 
+    where c.is_banned = 0
     group by c.course_id
     order by rt.avg_rate desc
     limit ${limit}
@@ -584,7 +586,7 @@ const courseModel = {
     return db.load(sql);
   },
   byPriceASCNoPagi() {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
@@ -600,13 +602,13 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-
+    where c.is_banned = 0
     group by c.course_id
     order by c.course_fee asc;`;
     return db.load(sql);
   },
   byPriceASCPagi(limit, offset) {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
@@ -622,7 +624,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
- 
+    where c.is_banned = 0
     group by c.course_id
     order by c.course_fee asc
     limit ${limit}
@@ -630,7 +632,7 @@ const courseModel = {
     return db.load(sql);
   },
   byPriceDESCNoPagi() {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
@@ -646,14 +648,14 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
- 
+    where c.is_banned = 0
     group by c.course_id
     order by c.course_fee desc;`;
     return db.load(sql);
   },
 
   bySubjectId(subject_id) {
-    const sql = `select c.course_id, c.course_name, c.course_fee, c.is_finished, sj.subject_name, rt.avg_rate, rt.total_review, ste.num_stu_enroll
+    const sql = `select c.course_id, c.course_name, c.course_fee, c.is_banned, c.is_finished, sj.subject_name, rt.avg_rate, rt.total_review, ste.num_stu_enroll
     from ${tbl_courses} c 
     left join ${tbl_subjects} sj
     on sj.subject_id = c.subject_id
@@ -669,12 +671,12 @@ const courseModel = {
     group by ste.course_id
     ) ste
     on ste.course_id = c.course_id
-    where c.subject_id = ${subject_id}`;
+    where c.subject_id = ${subject_id} and c.is_banned = 0`;
     return db.load(sql);
   },
 
   byPriceDESCPagi(limit, offset) {
-    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url,
+    const sql = `select c.course_id, c.course_name, c.course_title, c.course_avatar_url, c.is_banned,
     c.course_fee, c.course_last_updated, c.is_finished, c.views, sj.subject_name,
     ins.user_id, u.user_name, rt.avg_rate, rt.total_review
     from ${tbl_courses} c
@@ -690,7 +692,7 @@ const courseModel = {
     group by crw.course_id
     ) rt
     on rt.course_id = c.course_id 
-   
+    where c.is_banned = 0
     group by c.course_id
     order by c.course_fee desc
     limit ${limit}
@@ -699,7 +701,7 @@ const courseModel = {
   },
 
   async detailCatPriceNum(course_id) {
-    const sql = `select c.course_id, sj.subject_name, 
+    const sql = `select c.course_id, sj.subject_name, c.is_banned, 
     c.course_fee, sal.sale_percent, rt.avg_rate, rt.total_review, num_stu.num_stu_rate, num_stu_en.num_stu_enrolls
     from ${tbl_courses} c
     left join ${tbl_subjects} sj
@@ -728,14 +730,14 @@ const courseModel = {
     group by ste.course_id
     ) num_stu_en
     on num_stu_en.course_id = c.course_id
-    where c.course_id = ${course_id}`;
+    where c.course_id = ${course_id} and c.is_banned = 0`;
     const ret = await db.load(sql);
 
     return ret[0];
   },
 
   mostStudentEnroll() {
-    const sql = `select c.course_id, c.course_name, c.course_avatar_url, c.course_fee,
+    const sql = `select c.course_id, c.course_name, c.course_avatar_url, c.course_fee, c.is_banned,
     c.views, c.course_last_updated, c.is_finished, sj.subject_id, rt.avg_rate, rt.total_review
     sj.subject_name, ins.user_id, u.user_name, sal.sale_percent, ste.num_stu_enroll
     from ${tbl_courses} c
@@ -759,24 +761,25 @@ const courseModel = {
     group by ste.course_id
     ) ste
     on ste.course_id = c.course_id
+    where c.is_banned = 0
     group by c.course_id ;`;
     return db.load(sql);
   },
 
   feedback(course_id) {
-    const sql = `select cr.user_id, cr.course_id, cr.review_content, cr.star ,
+    const sql = `select cr.user_id, cr.course_id, cr.review_content, cr.star,
     u.user_name
     from ${tbl_course_reviews} cr
     left join ${tbl_users} u
     on u.user_id = cr.user_id
-    where cr.course_id = ${course_id};`;
+    where cr.course_id = ${course_id}`;
     return db.load(sql);
   },
   acceptAllCourseBySubcat(subject_id) {
     const sql = `update ${tbl_courses} c 
     set c.is_finished = true
-    where c.subject_id = ${subject_id};
-    `;
+    where c.subject_id = ${subject_id}
+    and where c.is_banned = 0`;
     return db.load(sql);
   },
   syllabus(course_id) {
@@ -787,7 +790,7 @@ const courseModel = {
     on ch.chap_id = ins.chap_id 
     left join ${tbl_lessons} le 
     on le.lesson_id = ins.lesson_id 
-    where ins.course_id = ${course_id} ;`;
+    where ins.course_id = ${course_id}`;
     return db.load(sql);
   },
   async checkIsPurchasedCourse(student_id, course_id) {
@@ -801,8 +804,6 @@ const courseModel = {
     `;
 
     let ret = await db.load(sql);
-
-    console.log(ret);
 
     if (ret.length > 0) {
       return true;

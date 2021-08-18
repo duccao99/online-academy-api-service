@@ -71,7 +71,7 @@ const subCatModel = {
     inner join ${tbl_categories} cat
     on cat.cat_id = sj.cat_id 
     inner join ${tbl_courses} c
-    on c.subject_id = sj.subject_id
+    on c.subject_id = sj.subject_id and c.is_banned = 0
     group by  sj.subject_id
     order by count_course desc;`;
     return db.load(sql);

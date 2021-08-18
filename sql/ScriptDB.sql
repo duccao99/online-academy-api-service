@@ -545,7 +545,8 @@ insert into `instructor_courses_uploaded` values (24,8,20,null,null,'2021-05-27 
 insert into `instructor_courses_uploaded` values (25,8,21,null,null,'2021-05-28 00:00:00'); 
 
 
-
+update courses
+set is_banned = 0
 
 -- use `SPA_ONLINE_ACADEMY`;
 -- select * from `lessons`;

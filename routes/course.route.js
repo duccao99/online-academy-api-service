@@ -404,12 +404,12 @@ router.get('/detail/course-review/:id', async function (req, res) {
 
 router.patch(
   '/',
-  validate(require('../schema/coursePatch.schema.json')),
+  // validate(require('../schema/coursePatch.schema.json')),
   async function (req, res) {
-    const { course_fee, course_id } = req.body;
+    const { course_fee, course_id, is_banned } = req.body;
 
     const ret = await courseModel.edit(
-      { course_fee, course_id },
+      { course_fee, course_id, is_banned },
       { course_id }
     );
 
@@ -424,7 +424,7 @@ router.patch(
 
 router.post(
   '/course-review',
-  validate(require('../schema/courseReview.schema.json')),
+  // validate(require('../schema/courseReview.schema.json')),
   async function (req, res) {
     const { user_id, course_id, star, review_content } = req.body;
 

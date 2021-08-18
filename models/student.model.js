@@ -77,7 +77,7 @@ const studentModel = {
     inner join ${tbl_orders_details} odd
     on od.order_id = odd.order_id
     inner join ${tbl_courses} c
-    on c.course_id = odd.course_id 
+    on c.course_id = odd.course_id and c.is_banned = 0
     inner join ${tbl_users} u
     on u.user_id = od.user_id 
     inner join ${tbl_subjects} sj
@@ -110,7 +110,7 @@ const studentModel = {
    inner join ${tbl_users} u 
    on u.user_id = od.user_id 
    inner join ${tbl_courses} c
-   on c.course_id = odd.course_id
+   on c.course_id = odd.course_id  and c.is_banned = 0
    inner join ${tbl_subjects} sj 
    on sj.subject_id = c.subject_id
    select *, avg(star) as avg_rate
@@ -135,12 +135,12 @@ const studentModel = {
      left join ${tbl_users} u
      on u.user_id = sf.user_id
      left join ${tbl_courses} c
-     on c.course_id = sf.course_id 
+     on c.course_id = sf.course_id and c.is_banned = 0
      left join (
      select u.user_name, ins.user_id, c.course_id
      from ${tbl_instructor_courses_uploaded} ins
      inner join ${tbl_courses} c
-     on ins.course_id = c.course_id 
+     on ins.course_id = c.course_id and c.is_banned = 0
      inner join ${tbl_users} u
      on u.user_id = ins.user_id
      ) ins
