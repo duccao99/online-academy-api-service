@@ -1,11 +1,9 @@
 const router = require('express').Router();
-const db = require('../config/db');
 const studentModel = require('../models/student.model');
 const feedbackModel = require('../models/feedback.model');
 const historyModel = require('../models/history.model');
 const enrollModel = require('../models/enroll.model');
 const bodyValidator = require('../middlewares/validate.mdw');
-const auth = require('../middlewares/auth.mdw');
 
 router.get('/', async function (req, res) {
   const student_data = await studentModel.all();
@@ -60,7 +58,7 @@ router.get('/is-favorite', async function (req, res) {
     is_favorite: ret
   });
 });
-router.get('/favorite-courses/:user_id', auth, async function (req, res) {
+router.get('/favorite-courses/:user_id', async function (req, res) {
   const user_id = +req.params.user_id;
   const ret = await studentModel.getFavoriteCourse(user_id);
 
@@ -128,7 +126,7 @@ router.get('/purchases-course-id/:user_id', async function (req, res) {
   });
 });
 
-router.get('/purchased-courses/:email', auth, async function (req, res) {
+router.get('/purchased-courses/:email', async function (req, res) {
   const email = req.params.email;
 
   const ret = await studentModel.getPurchasedCourses(email);

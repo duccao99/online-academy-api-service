@@ -1,10 +1,11 @@
 const salesModel = require('../models/sales.model');
 const bodySchemaValidate = require('../middlewares/validate.mdw');
-
+const auth = require('../middlewares/auth.mdw');
 const router = require('express').Router();
 
 router.patch(
   '/',
+  auth,
   bodySchemaValidate(require('../schema/saleEdit.schema.json')),
   async function (req, res) {
     const { sale_percent, add_new, course_id } = req.body;
